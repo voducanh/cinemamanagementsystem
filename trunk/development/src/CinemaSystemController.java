@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * including its screens, screenings and its films - also handling the rotational,
  * statistical and recording system. 
  * 
- * @author Scott
+ * @author Scotty
  *
  */
 public class CinemaSystemController {
