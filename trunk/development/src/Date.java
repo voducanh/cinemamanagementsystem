@@ -49,4 +49,12 @@ public class Date {
 		
 	}
 	
+	public boolean before(Date date){
+		if(this.getDate().before(date.getDate())){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 }
