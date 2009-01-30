@@ -13,6 +13,13 @@ public class Date {
 
 	private Calendar calendar;
 	
+	/**
+	 * Sets up a really simple calendar in natural text form.
+	 * 
+	 * @param day
+	 * @param month
+	 * @param year
+	 */
 	public Date(int day, int month, int year){
 		// Create and empty calendar instance
 		this.calendar = Calendar.getInstance();
@@ -23,10 +30,20 @@ public class Date {
 		this.calendar.set(Calendar.YEAR, year);
 	}
 	
+	/**
+	 * Returns the calendar object
+	 * 
+	 * @return	calendar object
+	 */
 	public Calendar getDate(){
 		return this.calendar;
 	}
 	
+	/**
+	 * Returns the current date in the form DD/MM/YYYY in string format
+	 * 
+	 * @return	string format date
+	 */
 	public String toString(){
 		return this.calendar.get(Calendar.DAY_OF_MONTH) + "/" + this.calendar.get(Calendar.MONTH) + "/" + this.calendar.get(Calendar.YEAR); 
 		
