@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class Screen {
+public class Screen { e
 
 	private int screen_ID_number;
 	private int screen_seat_count;
@@ -31,7 +31,7 @@ public class Screen {
 		return this.screen_seat_count;
 	}
 	
-	public void addScreening(Screening screening){
+	public void addScreening(Screening screening){ asdfsdf
 		screenings.add(screening);
 	}
 	
