@@ -98,7 +98,7 @@ public class Film {
     *
     * @param      expected popularity of the film.
     */
-    public void setExpectedViewingFigures(int film_expected_popularity) throws IllegalArgumentException
+    public void setExpectedAudienceFigures(int film_expected_popularity) throws IllegalArgumentException
     {
         // Sets the films expected popularity
         this.film_expected_viewings_per_day = film_expected_popularity;
@@ -185,7 +185,7 @@ public class Film {
     *
     * @return      expected popularity of the film.
     */
-    public int getExpectedPopularity()
+    public int getExpectedAudienceFigures()
     {
         return this.film_expected_viewings_per_day;
     }

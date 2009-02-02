@@ -24,7 +24,7 @@ public class RotationEngine {
 		
 				
 			int film_viewing_figures = screening.getFilm().getViewingFigures(new Date(14,3,2009).toString());
-			int film_expected_viewing_figures = screening.getFilm().getExpectedPopularity();
+			int film_expected_viewing_figures = screening.getFilm().getExpectedAudienceFigures();
 			
 			
 			if(film_viewing_figures < film_expected_viewing_figures){

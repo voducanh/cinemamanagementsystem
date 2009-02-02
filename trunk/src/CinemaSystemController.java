@@ -68,7 +68,7 @@ public class CinemaSystemController {
 		
 		// Set some information related to the film
 		new_film.setLength(film_length);
-		new_film.setExpectedViewingFigures(film_expected_views_per_day);
+		new_film.setExpectedAudienceFigures(film_expected_views_per_day);
 		
 		// Set the film ticket price
 		new_film.setTicketPrice(film_ticket_price);
@@ -77,5 +77,58 @@ public class CinemaSystemController {
 		
 	}
 	
+	/**
+	 * Returns an ArrayList of screens that have the capacity to cater for the
+	 * expected audience figures for a film.
+	 * 
+	 * @param film
+	 * @param date
+	 * @return
+	 */
+	public ArrayList<Screen> getBestScreen(Film film, Date date){
+		// Get the expected audience figures
+		int viewing_figures = film.getExpectedAudienceFigures();
+		
+		ArrayList<Screen> found_screens = new ArrayList<Screen>();
+		
+		if(viewing_figures > 500){
+			// Get the best screen based on audience figures
+			found_screens = getScreenBySeats(500, 1000);
+			
+			for(Screen screen : found_screens){
+				
+			}
+		}
+		
+		if(viewing_figures > 200){
+			return getScreenBySeats(200, 500);
+		}
+		
+		if(viewing_figures > 100){
+			return getScreenBySeats(100, 200);
+		}
+		
+		return getScreenBySeats(0, 100);
+		
+	}
+
+	/**
+	 * Returns an ArrayList of screens that contain a minimum and max number of seats
+	 * to facilitate for the audience figures.
+	 * 
+	 * @param min_seats
+	 * @param max_seats
+	 * @return
+	 */
+	public ArrayList<Screen> getScreenBySeats(int min_seats, int max_seats){
+		ArrayList<Screen> screens = new ArrayList<Screen>();
+		
+		for(Screen screen : this.cinema_screens){
+			if(screen.getSeats() >= min_seats && screen.getSeats() <= max_seats){
+				screens.add(screen);
+			}
+		}
+		return screens;
+	}
 	
 }

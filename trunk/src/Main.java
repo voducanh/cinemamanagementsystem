@@ -22,7 +22,7 @@ public class Main {
 		// Create a new film
 		Film film = new Film("007 Live and Let Die", "Steven Pielberg", "PG", null);
 		film.setLength(new Time(1,30));
-		film.setExpectedViewingFigures(12);
+		film.setExpectedAudienceFigures(12);
 		film.updateViewingFigures(new Date(14,3,2009).toString(), 4000);
 		
 		// Create the new screening date for the showing

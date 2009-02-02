@@ -47,8 +47,6 @@ public class FilmManager {
 	/**
 	 * Creates a new film screening.
 	 * 
-	 * TODO: NOT SURE IF THIS SHOULD BE HERE OR IN A SCREENMANAGER?!?
-	 * 
 	 * @param film
 	 * @param date
 	 * @param time
@@ -63,4 +61,5 @@ public class FilmManager {
 			new Screening(film, date.toString(), time);
 		}
 	}
+	
 }
