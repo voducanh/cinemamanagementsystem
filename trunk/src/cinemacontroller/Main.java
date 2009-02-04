@@ -1,5 +1,7 @@
 package cinemacontroller;
 
+import javax.swing.UIManager;
+
 
 /**
  * TESTER
@@ -13,12 +15,19 @@ package cinemacontroller;
 
 public class Main {
 
+	
+	
 	/**
 	 * @param args
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		new CinemaSystemController();
+		
+		UIManager.setLookAndFeel(
+	            UIManager.getSystemLookAndFeelClassName());
+		
+		new NewJFrame().setVisible(true);
+		
 	}
 
 }
