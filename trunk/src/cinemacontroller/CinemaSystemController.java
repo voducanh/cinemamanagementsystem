@@ -12,8 +12,8 @@ import cinemacontroller.screencontroller.ScreenManager;
  *
  */
 public class CinemaSystemController {
-	private ScreenManager screen_manager;
-	private FilmManager film_manager;
+	public ScreenManager screen_manager;
+	public FilmManager film_manager;
 	
 	public CinemaSystemController(){
 		screen_manager = new ScreenManager();
