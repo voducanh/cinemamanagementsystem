@@ -15,18 +15,24 @@ import javax.swing.UIManager;
 
 public class Main {
 
-	
-	
 	/**
 	 * @param args
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
 		
-		UIManager.setLookAndFeel(
-	            UIManager.getSystemLookAndFeelClassName());
+		// Set the default look and feel of the window to be the native OS look and feel.
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		
-		new NewJFrame().setVisible(true);
+		// Create a new GUI for the system
+		NewJFrame graphicaluserinterface = new NewJFrame();
+		
+		// Set the default controller of the GUI
+		graphicaluserinterface.setController(new CinemaSystemController());
+		
+		// Show the GUI
+		graphicaluserinterface.setVisible(true);
+		
 		
 	}
 
