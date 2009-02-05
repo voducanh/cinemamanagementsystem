@@ -60,4 +60,57 @@ public class FilmManager {
 		}
 	}
 	
+	/**
+	 * Returns and ArrayList of all the films stored in the cinema management system.
+	 * 
+	 * @return
+	 */
+	public ArrayList<Film> getAllFilms(){
+		return this.cinema_film_list;
+	}
+	
+	/**
+	 * Returns a film if stored in the cinemas database that contains a specified title.
+	 * 
+	 * @param title
+	 * @return
+	 * @throws Exception
+	 */
+	public Film getFilmByTitle(String title) throws Exception{
+		// Cycle through all the films stored in the cinemas film database.
+		for(Film film : this.cinema_film_list){
+			// If the current film has the same title as expected, return the film.
+			if(film.getTitle() == title){
+				return film;
+			}
+		}
+		// Throw and exception if the film is not stored in the database.
+		throw new Exception();
+	}
+	
+	/**
+	 * Returns a list of films by a specific director.
+	 * 
+	 * @param director
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<Film> getFilmByDirector(String director) throws Exception{
+		ArrayList<Film> found_films = new ArrayList<Film>();
+		
+		// Cycle all the films in the cinema's database.
+		for(Film film : this.cinema_film_list){
+			if(film.getDirector() == director){
+				// If a film by a specific director has been found, add it to found films.
+				found_films.add(film);
+			}
+		}
+		
+		// Throw an exception if no film has been found
+		if(found_films.size() == 0){
+			throw new Exception();
+		}
+		
+		return found_films;		
+	}
 }
