@@ -1,7 +1,12 @@
 package cinemacontroller;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
+import timeanddate.Date;
+import timeanddate.Time;
+
+import cinemacontroller.filmcontroller.Film;
 import cinemacontroller.filmcontroller.FilmManager;
 
 /**
@@ -10,15 +15,18 @@ import cinemacontroller.filmcontroller.FilmManager;
  */
 public class NewJFrame extends javax.swing.JFrame {
 
-	private FilmManager film_controller;
+	private CinemaSystemController controller;
 	
     /** Creates new form NewJFrame */
     public NewJFrame() {
         initComponents();
-        
-        film_controller = new FilmManager();
     }
 
+    
+    public void setController(CinemaSystemController controller){
+    	this.controller = controller;
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -221,22 +229,36 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     	System.out.println("Add film to film manager");
-    	jTable1.getCellRenderer(1, 1).getTableCellRendererComponent(jTable1, new Object(), true, true, 1, 1).setBackground(Color.blue);
+
+		try {
+			this.controller.film_manager.addFilmToCinema("James Bond 007", "Steven Spielberg", "PG", new Date(12,12,2009) , new Time(3,30) , 1000, 10.0);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error adding new film");
+		}
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+    	
+    	try {
+			this.controller.film_manager.getFilmByTitle("James Bond 007").setDirector("SMEGGER");
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+    	
         // TODO add your handling code here:
-    }
-
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NewJFrame().setVisible(true);
-            }
-        });
+    	ArrayList<Film> films = this.controller.film_manager.getAllFilms();
+    	
+    	for(Film current_film : films){
+    		System.out.println(current_film.getTitle() + " by " + current_film.getDirector());
+    	}
     }
 
     // Variables declaration - do not modify
