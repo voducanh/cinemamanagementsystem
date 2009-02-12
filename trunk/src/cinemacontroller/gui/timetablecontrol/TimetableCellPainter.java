@@ -48,6 +48,7 @@ public class TimetableCellPainter extends BasicTableUI
     g.drawRect(area.x,area.y,area.width-1,area.height-1);
     g.setColor(c);
 
+
     area.setBounds(area.x + horizontalMargin/2,
                   area.y + verticalMargin/2,
 		      area.width - horizontalMargin,

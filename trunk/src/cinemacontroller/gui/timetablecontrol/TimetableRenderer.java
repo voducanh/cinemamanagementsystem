@@ -7,6 +7,7 @@ package cinemacontroller.gui.timetablecontrol;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Label;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JTable;

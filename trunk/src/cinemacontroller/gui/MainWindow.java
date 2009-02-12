@@ -119,7 +119,7 @@ public class MainWindow extends javax.swing.JFrame {
                                                       current_screening.getFilm().getTitle(),
                                                       new Point(current_screen.getIDNumber(), calculateStartingColumn(current_screening.getStartTime().getHourOfDay(),current_screening.getStartTime().getMinute())) ,
                                                       (calculateStartingColumn(current_screening.getEndTime().getHourOfDay(),current_screening.getEndTime().getMinute()) - calculateStartingColumn(current_screening.getStartTime().getHourOfDay(),current_screening.getStartTime().getMinute())),
-                                                      Color.blue,
+                                                      new java.awt.Color(91,142,180),
                                                       Color.white));
 
             }
@@ -209,6 +209,11 @@ public class MainWindow extends javax.swing.JFrame {
         actions_panel = new javax.swing.JPanel();
         toolbar = new javax.swing.JToolBar();
         create_new_screening_button = new javax.swing.JButton();
+        create_new_screening_button1 = new javax.swing.JButton();
+        create_new_screening_button2 = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        create_new_screening_button3 = new javax.swing.JButton();
+        create_new_screening_button4 = new javax.swing.JButton();
         status_bar = new javax.swing.JLabel();
         main_menu = new javax.swing.JMenuBar();
         file_menu = new javax.swing.JMenu();
@@ -229,6 +234,7 @@ public class MainWindow extends javax.swing.JFrame {
         jSplitPane_main.setDividerSize(0);
 
         timetable_scroll_pane.setBorder(null);
+        timetable_scroll_pane.setForeground(new java.awt.Color(240, 240, 240));
 
         timetable_date_picker_combo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Monday 12th of Decement 2008" }));
 
@@ -250,7 +256,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(timetable_date_picker_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timetable_scroll_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE))
+                .addComponent(timetable_scroll_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE))
         );
 
         jSplitPane_main.setRightComponent(timetable_panel);
@@ -263,7 +269,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
         summary_panelLayout.setVerticalGroup(
             summary_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGap(0, 617, Short.MAX_VALUE)
         );
 
         overview_tabbed_pane.addTab("Summary", summary_panel);
@@ -276,7 +282,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
         actions_panelLayout.setVerticalGroup(
             actions_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGap(0, 617, Short.MAX_VALUE)
         );
 
         overview_tabbed_pane.addTab("Actions", actions_panel);
@@ -285,11 +291,14 @@ public class MainWindow extends javax.swing.JFrame {
 
         toolbar.setFloatable(false);
         toolbar.setRollover(true);
+        toolbar.setMinimumSize(new java.awt.Dimension(117, 28));
+        toolbar.setPreferredSize(new java.awt.Dimension(168, 36));
 
-        create_new_screening_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/import.png"))); // NOI18N
+        create_new_screening_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/application_add.png"))); // NOI18N
         create_new_screening_button.setFocusable(false);
         create_new_screening_button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        create_new_screening_button.setMaximumSize(new java.awt.Dimension(24, 24));
+        create_new_screening_button.setMaximumSize(new java.awt.Dimension(26, 28));
+        create_new_screening_button.setMinimumSize(new java.awt.Dimension(28, 28));
         create_new_screening_button.setPreferredSize(new java.awt.Dimension(32, 32));
         create_new_screening_button.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         create_new_screening_button.addActionListener(new java.awt.event.ActionListener() {
@@ -298,6 +307,63 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         toolbar.add(create_new_screening_button);
+
+        create_new_screening_button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/main/application_edit.png"))); // NOI18N
+        create_new_screening_button1.setFocusable(false);
+        create_new_screening_button1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        create_new_screening_button1.setMaximumSize(new java.awt.Dimension(26, 28));
+        create_new_screening_button1.setMinimumSize(new java.awt.Dimension(28, 28));
+        create_new_screening_button1.setPreferredSize(new java.awt.Dimension(32, 32));
+        create_new_screening_button1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        create_new_screening_button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_new_screening_button1ActionPerformed(evt);
+            }
+        });
+        toolbar.add(create_new_screening_button1);
+
+        create_new_screening_button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/application_delete.png"))); // NOI18N
+        create_new_screening_button2.setFocusable(false);
+        create_new_screening_button2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        create_new_screening_button2.setMaximumSize(new java.awt.Dimension(26, 28));
+        create_new_screening_button2.setMinimumSize(new java.awt.Dimension(28, 28));
+        create_new_screening_button2.setPreferredSize(new java.awt.Dimension(32, 32));
+        create_new_screening_button2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        create_new_screening_button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_new_screening_button2ActionPerformed(evt);
+            }
+        });
+        toolbar.add(create_new_screening_button2);
+        toolbar.add(jSeparator2);
+
+        create_new_screening_button3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/script_gear.png"))); // NOI18N
+        create_new_screening_button3.setFocusable(false);
+        create_new_screening_button3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        create_new_screening_button3.setMaximumSize(new java.awt.Dimension(26, 28));
+        create_new_screening_button3.setMinimumSize(new java.awt.Dimension(28, 28));
+        create_new_screening_button3.setPreferredSize(new java.awt.Dimension(32, 32));
+        create_new_screening_button3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        create_new_screening_button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_new_screening_button3ActionPerformed(evt);
+            }
+        });
+        toolbar.add(create_new_screening_button3);
+
+        create_new_screening_button4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/chart_pie.png"))); // NOI18N
+        create_new_screening_button4.setFocusable(false);
+        create_new_screening_button4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        create_new_screening_button4.setMaximumSize(new java.awt.Dimension(26, 28));
+        create_new_screening_button4.setMinimumSize(new java.awt.Dimension(28, 28));
+        create_new_screening_button4.setPreferredSize(new java.awt.Dimension(32, 32));
+        create_new_screening_button4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        create_new_screening_button4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_new_screening_button4ActionPerformed(evt);
+            }
+        });
+        toolbar.add(create_new_screening_button4);
 
         status_bar.setText("  Idle.");
 
@@ -340,16 +406,16 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
             .addComponent(status_bar, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
+            .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
             .addComponent(jSplitPane_main, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+                .addComponent(jSplitPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(status_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -369,11 +435,31 @@ public class MainWindow extends javax.swing.JFrame {
         new AboutProgram(this).setVisible(true);
     }//GEN-LAST:event_about_menuitemActionPerformed
 
+    private void create_new_screening_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_button1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_create_new_screening_button1ActionPerformed
+
+    private void create_new_screening_button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_button2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_create_new_screening_button2ActionPerformed
+
+    private void create_new_screening_button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_button3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_create_new_screening_button3ActionPerformed
+
+    private void create_new_screening_button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_button4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_create_new_screening_button4ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about_menuitem;
     private javax.swing.JPanel actions_panel;
     private javax.swing.JMenuItem create_new_film_menuitem;
     private javax.swing.JButton create_new_screening_button;
+    private javax.swing.JButton create_new_screening_button1;
+    private javax.swing.JButton create_new_screening_button2;
+    private javax.swing.JButton create_new_screening_button3;
+    private javax.swing.JButton create_new_screening_button4;
     private javax.swing.JMenuItem create_new_screening_menuitem;
     private javax.swing.JMenu edit_menu;
     private javax.swing.JMenu file_menu;
@@ -381,6 +467,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JSplitPane jSplitPane_main;
     private javax.swing.JMenuBar main_menu;
     private javax.swing.JTabbedPane overview_tabbed_pane;
