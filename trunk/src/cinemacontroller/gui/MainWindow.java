@@ -242,7 +242,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timetable_panelLayout.createSequentialGroup()
                         .addComponent(timetable_date_picker_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(4, 4, 4))
-                    .addComponent(timetable_scroll_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 818, Short.MAX_VALUE)))
+                    .addComponent(timetable_scroll_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)))
         );
         timetable_panelLayout.setVerticalGroup(
             timetable_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,7 +259,7 @@ public class MainWindow extends javax.swing.JFrame {
         summary_panel.setLayout(summary_panelLayout);
         summary_panelLayout.setHorizontalGroup(
             summary_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 245, Short.MAX_VALUE)
+            .addGap(0, 240, Short.MAX_VALUE)
         );
         summary_panelLayout.setVerticalGroup(
             summary_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,7 +272,7 @@ public class MainWindow extends javax.swing.JFrame {
         actions_panel.setLayout(actions_panelLayout);
         actions_panelLayout.setHorizontalGroup(
             actions_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 245, Short.MAX_VALUE)
+            .addGap(0, 240, Short.MAX_VALUE)
         );
         actions_panelLayout.setVerticalGroup(
             actions_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,7 +286,7 @@ public class MainWindow extends javax.swing.JFrame {
         toolbar.setFloatable(false);
         toolbar.setRollover(true);
 
-        create_new_screening_button.setIcon(new javax.swing.ImageIcon("F:\\Documents\\Coursework\\Software Engineering\\Third Deliverable\\Icons\\import.png")); // NOI18N
+        create_new_screening_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/import.png"))); // NOI18N
         create_new_screening_button.setFocusable(false);
         create_new_screening_button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         create_new_screening_button.setMaximumSize(new java.awt.Dimension(24, 24));
@@ -325,6 +325,11 @@ public class MainWindow extends javax.swing.JFrame {
         help_menu.setText("Help");
 
         about_menuitem.setText("About");
+        about_menuitem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                about_menuitemActionPerformed(evt);
+            }
+        });
         help_menu.add(about_menuitem);
 
         main_menu.add(help_menu);
@@ -357,6 +362,12 @@ public class MainWindow extends javax.swing.JFrame {
         create_screening_window.setVisible(true);
         this.setEnabled(false);
 }//GEN-LAST:event_create_new_screening_buttonActionPerformed
+
+    private void about_menuitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_about_menuitemActionPerformed
+       
+        this.setEnabled(false);
+        new AboutProgram(this).setVisible(true);
+    }//GEN-LAST:event_about_menuitemActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about_menuitem;

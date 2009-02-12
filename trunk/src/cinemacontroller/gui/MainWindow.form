@@ -49,6 +49,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="About"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="about_menuitemActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -126,7 +129,7 @@
                               <Component id="timetable_date_picker_combo" min="-2" pref="224" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="timetable_scroll_pane" alignment="0" pref="818" max="32767" attributes="0"/>
+                          <Component id="timetable_scroll_pane" alignment="0" pref="823" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -184,7 +187,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="245" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="240" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -206,7 +209,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="245" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="240" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -231,7 +234,7 @@
         <Component class="javax.swing.JButton" name="create_new_screening_button">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="F:\Documents\Coursework\Software Engineering\Third Deliverable\Icons\import.png"/>
+              <Image iconType="3" name="/cinemacontroller/gui/icons/import.png"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>

@@ -58,7 +58,7 @@ public class CreateScreening2 extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(24, 24, 24));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Create New Screening");
 
@@ -74,9 +74,9 @@ public class CreateScreening2 extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
                 .addContainerGap())
@@ -86,29 +86,29 @@ public class CreateScreening2 extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(271, Short.MAX_VALUE))
         );
 
         jButton1.setText("Create Screening");
 
         jButton2.setText("Cancel");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Film");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Silent Hill (PG)" }));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Screen");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Screen 1 (500 seats) - Recommended" }));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Time");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Date");
 
         jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 23, 1));
@@ -121,7 +121,7 @@ public class CreateScreening2 extends javax.swing.JFrame {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AM", "PM" }));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("Additional Settings");
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -208,16 +208,6 @@ public class CreateScreening2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateScreening2().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
