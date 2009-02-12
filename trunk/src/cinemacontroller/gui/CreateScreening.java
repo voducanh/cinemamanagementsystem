@@ -272,7 +272,7 @@ public class CreateScreening extends javax.swing.JFrame {
         int hours = Integer.parseInt(this.time_hour.getSelectedItem().toString());
         int mins = Integer.parseInt(this.time_min.getSelectedItem().toString());
 
-        this.window.addTimetableItem(this.jComboBox_film.getSelectedItem().toString(), new Point(3,this.window.calculateStartingColumn(hours, mins)), 4, Color.green, Color.black);
+       // this.window.addTimetableItem(this.jComboBox_film.getSelectedItem().toString(), new Point(3,this.window.calculateStartingColumn(hours, mins)), 4, Color.green, Color.black);
         this.window.refreshTimetable();
         this.window.setEnabled(true);
         this.dispose();

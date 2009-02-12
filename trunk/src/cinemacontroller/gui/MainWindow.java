@@ -26,13 +26,13 @@ public class MainWindow extends javax.swing.JFrame {
     private CinemaSystemController core_controller;
 
     private final int timetable_hours = 15;
-    private ArrayList<TimetableItem> list_of_film_items;
+    private ArrayList<TimetableScreeningBox> list_of_box_controls;
     private TimetableTable timetable_control;
 
 
     /**
      * Constructer for the main window. This sets up all the required functionality and also
-     * renderes all the componenets.
+     * Renders all the components.
      */
     public MainWindow(CinemaSystemController core_controller) {
         // Set the main controller
@@ -47,7 +47,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
 
         try {
-            Screening screening1 = new Screening(core_controller.film_manager.getFilmByTitle("James Bond"), new Date(10, 10, 2009), new Time(15, 29));
+            Screening screening1 = new Screening(core_controller.film_manager.getFilmByTitle("James Bond"), new Date(10, 10, 2009), new Time(15, 30));
             core_controller.screen_manager.getScreen(1).addScreening(screening1);
 
              Screening screening2 = new Screening(core_controller.film_manager.getFilmByTitle("Bugs Life"), new Date(10, 10, 2009), new Time(18, 30));
@@ -63,8 +63,8 @@ public class MainWindow extends javax.swing.JFrame {
        
 
 
-        // Initialize the ArrayList that contains all the "TimeTableItems" on the timetable control.
-        this.list_of_film_items = new ArrayList<TimetableItem>();
+        // Initialise the ArrayList that contains all the "TimeTableItems" on the timetable control.
+        this.list_of_box_controls = new ArrayList<TimetableScreeningBox>();
 
         // Creates all the default controls.
         this.initComponents();
@@ -84,67 +84,23 @@ public class MainWindow extends javax.swing.JFrame {
 
 
     /**
-     * Calculates where the starting column will be for a new timetable instance. Takes a time
-     * and returns a int representing column number.
-     * 
-     * @param hours
-     * @param mins
-     * @return
-     */
-    public int calculateStartingColumn(int hours, int mins){
-
-        int block_per_hour = Math.round(this.timetable_control.getColumnCount() / timetable_hours);
-
-        int starting_block = block_per_hour * (hours - 9);
-
-        if(mins >= 30){ starting_block++; }
-
-        // Return the starting block
-        return starting_block + 1;
-    }
-
-      /**
-     * Calculates where the starting column will be for a new timetable instance. Takes a time
-     * and returns a int representing column number.
-     *
-     * @param hours
-     * @param mins
-     * @return
-     */
-    public int calculateEndColumn(int hours, int mins){
-
-        int block_per_hour = Math.round(this.timetable_control.getColumnCount() / timetable_hours);
-        int starting_block = block_per_hour * (hours);
-
-        if(mins >= 30){ starting_block++; }
-        
-        return starting_block + 1;
-    }
-
-    /**
      * This function cycles through all the screens stored within the internal screen database, gets
      * the relevant screenings and adds them to the timetable controller.
      * TODO: There is an error with the "get end time" calculation. Also provide a function to get length from film
      *       class directly.
      */
     public void automatedGetScreeningsAddToTimetable(){
-       for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
-         for(Screening current_screening : current_screen.getScreenings()){
-
-            if(current_screen.getScreenings().size() > 0){
-
-             list_of_film_items.add(new TimetableItem(
-                                                      current_screening.getFilm().getTitle(),
-                                                      new Point(current_screen.getIDNumber(), calculateStartingColumn(current_screening.getStartTime().getHourOfDay(),current_screening.getStartTime().getMinute())) ,
-                                                      calculateEndColumn(current_screening.getFilm().getLength().getHourOfDay(), current_screening.getFilm().getLength().getMinute()) ,
-                                                      new java.awt.Color(48,108,153),
-                                                      Color.white));
-
-            }
-
-
-         }
-       }
+    	// Cycles through all the screens stored on database
+        for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
+        	// Make sure the current screen actually have some screenings
+        	if(current_screen.getScreenings().size() > 0){
+        	// Cycle through all the screenings for each screen
+	          for(Screening current_screening : current_screen.getScreenings()){
+	        	  // Add each screening by creating a control and adding it to the list of controls
+	        	  list_of_box_controls.add(new TimetableScreeningBox(current_screening, new Color(76,166,207), Color.white, this.timetable_control, current_screen.getIDNumber()));
+	          }
+          }
+        }
     }
 
 
@@ -160,7 +116,7 @@ public class MainWindow extends javax.swing.JFrame {
      * @param textcolor
      */
     public void addTimetableItem(String title, Point point, int length, Color panelcolor, Color textcolor){
-        list_of_film_items.add(new TimetableItem(title, point, length, panelcolor, textcolor));
+       
     }
 
 
@@ -182,9 +138,8 @@ public class MainWindow extends javax.swing.JFrame {
 
 
 
-        TimetableTable timetable = new TimetableTable( new TimetableItemCellSizer(this.list_of_film_items), timetable_model);
-        timetable.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_film_items));
-       // timetable.setGridColor(Color.white);
+        TimetableTable timetable = new TimetableTable( new TimetableItemCellSizer(this.list_of_box_controls), timetable_model, 12, 9);
+        timetable.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_box_controls));
         timetable.setRowHeight(60);
         timetable.getTableHeader().setResizingAllowed(false);
         timetable.getTableHeader().setReorderingAllowed(false);
@@ -197,7 +152,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public void refreshTimetable(){
         // Refreshes the timetable control
-        this.timetable_control.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_film_items));
+        this.timetable_control.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_box_controls));
 
         // Refresh the control components and redraw them
         this.timetable_control.validate();

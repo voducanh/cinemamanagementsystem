@@ -7,8 +7,9 @@ package cinemacontroller.gui.timetablecontrol;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Label;
 import java.util.ArrayList;
+
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -18,13 +19,14 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author Scott
  */
+@SuppressWarnings("serial")
 public class TimetableRenderer extends DefaultTableCellRenderer {
 
-    private ArrayList<TimetableItem> films_on_timetable;
+    private ArrayList<TimetableScreeningBox> list_of_box_controls;
 
 
-    public TimetableRenderer(ArrayList<TimetableItem> films){
-       this.films_on_timetable = films;
+    public TimetableRenderer(ArrayList<TimetableScreeningBox> arrayList){
+       this.list_of_box_controls = arrayList;
     }
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,boolean hasFocus, int row, int column) {
@@ -33,16 +35,41 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
         Component cell_component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         cell_component.setBackground(Color.white);
     
-        for(TimetableItem current_film : films_on_timetable){
+        for(TimetableScreeningBox current_box : list_of_box_controls){
 
-            if(current_film.getPoint().x == row  && current_film.getPoint().y == column){
+        	
+        	
+        	
+            if(current_box.getTableRow() == row  && current_box.getStartColumn() == column){
 
-                JPanel cell = current_film.getPanel();
-                cell.add(current_film.getTitleLabel());
-                cell.add(current_film.getTitleLabel());
-
-                return cell;
+            	System.out.println(row + "." + current_box.getStartColumn());
+            	
+            	
+            	
+                JPanel box = new JPanel();
+                box.setLayout(new BoxLayout(box, BoxLayout.PAGE_AXIS));
+                box.setBackground(current_box.getBoxBackgroundColor());
+                
+                JLabel title_label = new JLabel(current_box.getScreening().getFilm().getTitle());
+                title_label.setForeground(current_box.getBoxForegroundColor());
+                
+                JLabel time_label = new JLabel(current_box.getScreening().getStartTime().toString());
+                time_label.setForeground(current_box.getBoxForegroundColor());
+                
+                title_label.setAlignmentX(Component.CENTER_ALIGNMENT);
+                time_label.setAlignmentX(Component.CENTER_ALIGNMENT);
+                
+                box.add(title_label);
+                box.add(time_label);
+                
+                box.setBackground(current_box.getBoxBackgroundColor());
+                box.setForeground(current_box.getBoxForegroundColor());
+                
+                return box;
             }
+            
+            
+            
         }
 
          JPanel cell = new JPanel();

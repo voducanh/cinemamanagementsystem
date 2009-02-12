@@ -91,4 +91,8 @@ public class Time {
 	public void setMinute(int mins){
 		this.time.set(Calendar.MINUTE, mins);
 	}
+	
+	public String toString(){
+		return this.getHourOfDay() + "" + this.getMinute();
+	}
 }
