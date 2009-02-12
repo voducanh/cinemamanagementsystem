@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Label;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -38,6 +39,7 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
 
                 JPanel cell = current_film.getPanel();
                 cell.add(current_film.getTitleLabel());
+                cell.add(current_film.getTitleLabel());
 
                 return cell;
             }
@@ -45,6 +47,10 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
 
          JPanel cell = new JPanel();
                 cell.setBackground(Color.white);
+                cell.setForeground(Color.black);
+                cell.add(new JLabel((String)value));
+
+                
                 return cell;
     }
 

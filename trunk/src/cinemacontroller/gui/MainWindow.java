@@ -1,6 +1,5 @@
 package cinemacontroller.gui;
 
-import cinemacontroller.filmcontroller.Film;
 import cinemacontroller.gui.timetablecontrol.*;
 import cinemacontroller.main.CinemaSystemController;
 import cinemacontroller.screencontroller.Screen;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ScrollPaneLayout;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import timeanddate.Date;
 import timeanddate.Time;
@@ -27,7 +25,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private CinemaSystemController core_controller;
 
-    private final int timetable_hours = 12;
+    private final int timetable_hours = 15;
     private ArrayList<TimetableItem> list_of_film_items;
     private TimetableTable timetable_control;
 
@@ -41,7 +39,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.core_controller = core_controller;
 
         try {
-            core_controller.film_manager.addFilmToCinema("James Bond", "Steven Pielberg", "PG", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
+            core_controller.film_manager.addFilmToCinema("James Bond", "Steven Pielberg", "PG", new Date(12, 10, 2009), new Time(2, 29), 100, 10.50);
             core_controller.film_manager.addFilmToCinema("Bugs Life", "Steven Pielberg", "X", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
             core_controller.film_manager.addFilmToCinema("Independance Day", "Steven Pielberg", "U", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
         } catch (Exception ex) {
@@ -49,13 +47,13 @@ public class MainWindow extends javax.swing.JFrame {
         }
 
         try {
-            Screening screening1 = new Screening(core_controller.film_manager.getFilmByTitle("James Bond"), new Date(10, 10, 2009), new Time(3, 30));
+            Screening screening1 = new Screening(core_controller.film_manager.getFilmByTitle("James Bond"), new Date(10, 10, 2009), new Time(15, 29));
             core_controller.screen_manager.getScreen(1).addScreening(screening1);
 
-             Screening screening2 = new Screening(core_controller.film_manager.getFilmByTitle("Bugs Life"), new Date(10, 10, 2009), new Time(6, 30));
+             Screening screening2 = new Screening(core_controller.film_manager.getFilmByTitle("Bugs Life"), new Date(10, 10, 2009), new Time(18, 30));
             core_controller.screen_manager.getScreen(9).addScreening(screening2);
 
-             Screening screening3 = new Screening(core_controller.film_manager.getFilmByTitle("Independance Day"), new Date(10, 10, 2009), new Time(1, 30));
+             Screening screening3 = new Screening(core_controller.film_manager.getFilmByTitle("Independance Day"), new Date(10, 10, 2009), new Time(13, 30));
             core_controller.screen_manager.getScreen(3).addScreening(screening3);
         } catch (Exception ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,20 +92,40 @@ public class MainWindow extends javax.swing.JFrame {
      * @return
      */
     public int calculateStartingColumn(int hours, int mins){
-        int block_per_hour = Math.round(this.timetable_control.getColumnCount() / timetable_hours);
-        int starting_block = block_per_hour * hours;
 
-        // Make sure we round to the nearest block
+        int block_per_hour = Math.round(this.timetable_control.getColumnCount() / timetable_hours);
+
+        int starting_block = block_per_hour * (hours - 9);
+
         if(mins >= 30){ starting_block++; }
 
         // Return the starting block
-        return starting_block;
+        return starting_block + 1;
     }
 
+      /**
+     * Calculates where the starting column will be for a new timetable instance. Takes a time
+     * and returns a int representing column number.
+     *
+     * @param hours
+     * @param mins
+     * @return
+     */
+    public int calculateEndColumn(int hours, int mins){
+
+        int block_per_hour = Math.round(this.timetable_control.getColumnCount() / timetable_hours);
+        int starting_block = block_per_hour * (hours);
+
+        if(mins >= 30){ starting_block++; }
+        
+        return starting_block + 1;
+    }
 
     /**
      * This function cycles through all the screens stored within the internal screen database, gets
      * the relevant screenings and adds them to the timetable controller.
+     * TODO: There is an error with the "get end time" calculation. Also provide a function to get length from film
+     *       class directly.
      */
     public void automatedGetScreeningsAddToTimetable(){
        for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
@@ -118,8 +136,8 @@ public class MainWindow extends javax.swing.JFrame {
              list_of_film_items.add(new TimetableItem(
                                                       current_screening.getFilm().getTitle(),
                                                       new Point(current_screen.getIDNumber(), calculateStartingColumn(current_screening.getStartTime().getHourOfDay(),current_screening.getStartTime().getMinute())) ,
-                                                      (calculateStartingColumn(current_screening.getEndTime().getHourOfDay(),current_screening.getEndTime().getMinute()) - calculateStartingColumn(current_screening.getStartTime().getHourOfDay(),current_screening.getStartTime().getMinute())),
-                                                      new java.awt.Color(91,142,180),
+                                                      calculateEndColumn(current_screening.getFilm().getLength().getHourOfDay(), current_screening.getFilm().getLength().getMinute()) ,
+                                                      new java.awt.Color(48,108,153),
                                                       Color.white));
 
             }
@@ -148,8 +166,21 @@ public class MainWindow extends javax.swing.JFrame {
 
     public TimetableTable createTimetableControl(){
         
-       TableModel timetable_model = new DefaultTableModel(20,20);
-        System.out.println(timetable_model.getColumnName(0));
+        TableModel timetable_model = new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"1", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {"2", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {"3", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {"4", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Screen", "0900", "", "1000", "", "1100", "", "1200", "", "1300", "", "1400", "", "1500", "", "1600", "", "1700", "", "1800", "", "1900", "", "2000", "", "2100", "", "2200", "", "2300", ""
+            }
+        );
+
+
+
+
 
         TimetableTable timetable = new TimetableTable( new TimetableItemCellSizer(this.list_of_film_items), timetable_model);
         timetable.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_film_items));
@@ -209,11 +240,14 @@ public class MainWindow extends javax.swing.JFrame {
         actions_panel = new javax.swing.JPanel();
         toolbar = new javax.swing.JToolBar();
         create_new_screening_button = new javax.swing.JButton();
-        create_new_screening_button1 = new javax.swing.JButton();
-        create_new_screening_button2 = new javax.swing.JButton();
+        edit_screening_jbutton = new javax.swing.JButton();
+        delete_screening_jbutton = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        create_new_screening_button3 = new javax.swing.JButton();
-        create_new_screening_button4 = new javax.swing.JButton();
+        view_actions_jbutton = new javax.swing.JButton();
+        view_statistical_data_jbutton = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        view_films_jbutton = new javax.swing.JButton();
+        view_screens_jbutton = new javax.swing.JButton();
         status_bar = new javax.swing.JLabel();
         main_menu = new javax.swing.JMenuBar();
         file_menu = new javax.swing.JMenu();
@@ -234,7 +268,6 @@ public class MainWindow extends javax.swing.JFrame {
         jSplitPane_main.setDividerSize(0);
 
         timetable_scroll_pane.setBorder(null);
-        timetable_scroll_pane.setForeground(new java.awt.Color(240, 240, 240));
 
         timetable_date_picker_combo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Monday 12th of Decement 2008" }));
 
@@ -295,6 +328,7 @@ public class MainWindow extends javax.swing.JFrame {
         toolbar.setPreferredSize(new java.awt.Dimension(168, 36));
 
         create_new_screening_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/application_add.png"))); // NOI18N
+        create_new_screening_button.setToolTipText("Add a screening into the database.");
         create_new_screening_button.setFocusable(false);
         create_new_screening_button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         create_new_screening_button.setMaximumSize(new java.awt.Dimension(26, 28));
@@ -308,62 +342,97 @@ public class MainWindow extends javax.swing.JFrame {
         });
         toolbar.add(create_new_screening_button);
 
-        create_new_screening_button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/main/application_edit.png"))); // NOI18N
-        create_new_screening_button1.setFocusable(false);
-        create_new_screening_button1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        create_new_screening_button1.setMaximumSize(new java.awt.Dimension(26, 28));
-        create_new_screening_button1.setMinimumSize(new java.awt.Dimension(28, 28));
-        create_new_screening_button1.setPreferredSize(new java.awt.Dimension(32, 32));
-        create_new_screening_button1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        create_new_screening_button1.addActionListener(new java.awt.event.ActionListener() {
+        edit_screening_jbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/application_edit.png"))); // NOI18N
+        edit_screening_jbutton.setToolTipText("Edit a screening from in database.");
+        edit_screening_jbutton.setFocusable(false);
+        edit_screening_jbutton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        edit_screening_jbutton.setMaximumSize(new java.awt.Dimension(26, 28));
+        edit_screening_jbutton.setMinimumSize(new java.awt.Dimension(28, 28));
+        edit_screening_jbutton.setPreferredSize(new java.awt.Dimension(32, 32));
+        edit_screening_jbutton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        edit_screening_jbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                create_new_screening_button1ActionPerformed(evt);
+                edit_screening_jbuttonActionPerformed(evt);
             }
         });
-        toolbar.add(create_new_screening_button1);
+        toolbar.add(edit_screening_jbutton);
 
-        create_new_screening_button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/application_delete.png"))); // NOI18N
-        create_new_screening_button2.setFocusable(false);
-        create_new_screening_button2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        create_new_screening_button2.setMaximumSize(new java.awt.Dimension(26, 28));
-        create_new_screening_button2.setMinimumSize(new java.awt.Dimension(28, 28));
-        create_new_screening_button2.setPreferredSize(new java.awt.Dimension(32, 32));
-        create_new_screening_button2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        create_new_screening_button2.addActionListener(new java.awt.event.ActionListener() {
+        delete_screening_jbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/application_delete.png"))); // NOI18N
+        delete_screening_jbutton.setToolTipText("Remove a screening from the database.");
+        delete_screening_jbutton.setFocusable(false);
+        delete_screening_jbutton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        delete_screening_jbutton.setMaximumSize(new java.awt.Dimension(26, 28));
+        delete_screening_jbutton.setMinimumSize(new java.awt.Dimension(28, 28));
+        delete_screening_jbutton.setPreferredSize(new java.awt.Dimension(32, 32));
+        delete_screening_jbutton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        delete_screening_jbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                create_new_screening_button2ActionPerformed(evt);
+                delete_screening_jbuttonActionPerformed(evt);
             }
         });
-        toolbar.add(create_new_screening_button2);
+        toolbar.add(delete_screening_jbutton);
         toolbar.add(jSeparator2);
 
-        create_new_screening_button3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/script_gear.png"))); // NOI18N
-        create_new_screening_button3.setFocusable(false);
-        create_new_screening_button3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        create_new_screening_button3.setMaximumSize(new java.awt.Dimension(26, 28));
-        create_new_screening_button3.setMinimumSize(new java.awt.Dimension(28, 28));
-        create_new_screening_button3.setPreferredSize(new java.awt.Dimension(32, 32));
-        create_new_screening_button3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        create_new_screening_button3.addActionListener(new java.awt.event.ActionListener() {
+        view_actions_jbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/script_gear.png"))); // NOI18N
+        view_actions_jbutton.setToolTipText("View Actions from the recommendation engine.");
+        view_actions_jbutton.setFocusable(false);
+        view_actions_jbutton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        view_actions_jbutton.setMaximumSize(new java.awt.Dimension(26, 28));
+        view_actions_jbutton.setMinimumSize(new java.awt.Dimension(28, 28));
+        view_actions_jbutton.setPreferredSize(new java.awt.Dimension(32, 32));
+        view_actions_jbutton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        view_actions_jbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                create_new_screening_button3ActionPerformed(evt);
+                view_actions_jbuttonActionPerformed(evt);
             }
         });
-        toolbar.add(create_new_screening_button3);
+        toolbar.add(view_actions_jbutton);
 
-        create_new_screening_button4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/chart_pie.png"))); // NOI18N
-        create_new_screening_button4.setFocusable(false);
-        create_new_screening_button4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        create_new_screening_button4.setMaximumSize(new java.awt.Dimension(26, 28));
-        create_new_screening_button4.setMinimumSize(new java.awt.Dimension(28, 28));
-        create_new_screening_button4.setPreferredSize(new java.awt.Dimension(32, 32));
-        create_new_screening_button4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        create_new_screening_button4.addActionListener(new java.awt.event.ActionListener() {
+        view_statistical_data_jbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/chart_pie.png"))); // NOI18N
+        view_statistical_data_jbutton.setToolTipText("View statistical data.");
+        view_statistical_data_jbutton.setFocusable(false);
+        view_statistical_data_jbutton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        view_statistical_data_jbutton.setMaximumSize(new java.awt.Dimension(26, 28));
+        view_statistical_data_jbutton.setMinimumSize(new java.awt.Dimension(28, 28));
+        view_statistical_data_jbutton.setPreferredSize(new java.awt.Dimension(32, 32));
+        view_statistical_data_jbutton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        view_statistical_data_jbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                create_new_screening_button4ActionPerformed(evt);
+                view_statistical_data_jbuttonActionPerformed(evt);
             }
         });
-        toolbar.add(create_new_screening_button4);
+        toolbar.add(view_statistical_data_jbutton);
+        toolbar.add(jSeparator3);
+
+        view_films_jbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/images.png"))); // NOI18N
+        view_films_jbutton.setToolTipText("View all the films stored and their attributes.");
+        view_films_jbutton.setFocusable(false);
+        view_films_jbutton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        view_films_jbutton.setMaximumSize(new java.awt.Dimension(26, 28));
+        view_films_jbutton.setMinimumSize(new java.awt.Dimension(28, 28));
+        view_films_jbutton.setPreferredSize(new java.awt.Dimension(32, 32));
+        view_films_jbutton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        view_films_jbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                view_films_jbuttonActionPerformed(evt);
+            }
+        });
+        toolbar.add(view_films_jbutton);
+
+        view_screens_jbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/house.png"))); // NOI18N
+        view_screens_jbutton.setToolTipText("View all the screens and their attributes.");
+        view_screens_jbutton.setFocusable(false);
+        view_screens_jbutton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        view_screens_jbutton.setMaximumSize(new java.awt.Dimension(26, 28));
+        view_screens_jbutton.setMinimumSize(new java.awt.Dimension(28, 28));
+        view_screens_jbutton.setPreferredSize(new java.awt.Dimension(32, 32));
+        view_screens_jbutton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        view_screens_jbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                view_screens_jbuttonActionPerformed(evt);
+            }
+        });
+        toolbar.add(view_screens_jbutton);
 
         status_bar.setText("  Idle.");
 
@@ -435,39 +504,46 @@ public class MainWindow extends javax.swing.JFrame {
         new AboutProgram(this).setVisible(true);
     }//GEN-LAST:event_about_menuitemActionPerformed
 
-    private void create_new_screening_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_button1ActionPerformed
+    private void edit_screening_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_screening_jbuttonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_create_new_screening_button1ActionPerformed
+}//GEN-LAST:event_edit_screening_jbuttonActionPerformed
 
-    private void create_new_screening_button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_button2ActionPerformed
+    private void delete_screening_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_screening_jbuttonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_create_new_screening_button2ActionPerformed
+}//GEN-LAST:event_delete_screening_jbuttonActionPerformed
 
-    private void create_new_screening_button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_button3ActionPerformed
+    private void view_actions_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_actions_jbuttonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_create_new_screening_button3ActionPerformed
+}//GEN-LAST:event_view_actions_jbuttonActionPerformed
 
-    private void create_new_screening_button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_button4ActionPerformed
+    private void view_statistical_data_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_statistical_data_jbuttonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_create_new_screening_button4ActionPerformed
+}//GEN-LAST:event_view_statistical_data_jbuttonActionPerformed
+
+    private void view_films_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_films_jbuttonActionPerformed
+        // TODO add your handling code here:
+}//GEN-LAST:event_view_films_jbuttonActionPerformed
+
+    private void view_screens_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_screens_jbuttonActionPerformed
+        // TODO add your handling code here:
+}//GEN-LAST:event_view_screens_jbuttonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about_menuitem;
     private javax.swing.JPanel actions_panel;
     private javax.swing.JMenuItem create_new_film_menuitem;
     private javax.swing.JButton create_new_screening_button;
-    private javax.swing.JButton create_new_screening_button1;
-    private javax.swing.JButton create_new_screening_button2;
-    private javax.swing.JButton create_new_screening_button3;
-    private javax.swing.JButton create_new_screening_button4;
     private javax.swing.JMenuItem create_new_screening_menuitem;
+    private javax.swing.JButton delete_screening_jbutton;
     private javax.swing.JMenu edit_menu;
+    private javax.swing.JButton edit_screening_jbutton;
     private javax.swing.JMenu file_menu;
     private javax.swing.JMenu help_menu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JSplitPane jSplitPane_main;
     private javax.swing.JMenuBar main_menu;
     private javax.swing.JTabbedPane overview_tabbed_pane;
@@ -477,6 +553,10 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel timetable_panel;
     private javax.swing.JScrollPane timetable_scroll_pane;
     private javax.swing.JToolBar toolbar;
+    private javax.swing.JButton view_actions_jbutton;
+    private javax.swing.JButton view_films_jbutton;
+    private javax.swing.JButton view_screens_jbutton;
+    private javax.swing.JButton view_statistical_data_jbutton;
     // End of variables declaration//GEN-END:variables
 
 }
