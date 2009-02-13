@@ -1,4 +1,5 @@
 package cinemacontroller.filmcontroller;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import timeanddate.Date;
@@ -20,8 +21,9 @@ public class Film {
     private String film_bbfc_rating;
     private double film_ticket_price;
     private int film_expected_viewings_per_day;
+    private int lowest_viewing_figure;
     
-    private HashMap<String, Integer> film_actual_viewings_per_day;
+    private ArrayList<ViewingFigure> film_actual_viewings_per_day;
 
     private Time film_length;
     private Date film_avaliability_date;
@@ -44,7 +46,7 @@ public class Film {
         this.setBBFCRating(film_bbfc_rating);
         this.setFilmavaliabilityDate(film_avaliability_date);
         
-        this.film_actual_viewings_per_day = new HashMap<String, Integer>();
+        this.film_actual_viewings_per_day = new ArrayList<ViewingFigure>();
     }
 
     /**
@@ -140,7 +142,11 @@ public class Film {
     */
     public void updateViewingFigures(String date, int viewings) throws Exception
     {
-        this.film_actual_viewings_per_day.put(date, viewings);
+        this.film_actual_viewings_per_day.add(new ViewingFigure(this, date, viewings));
+
+        if(viewings < this.lowest_viewing_figure){
+            this.lowest_viewing_figure = viewings;
+        }
     }
 
     /**
@@ -221,12 +227,14 @@ public class Film {
     */
     public int getViewingFigures(String date) throws Exception
     {
-   	
-    	if(!this.film_actual_viewings_per_day.containsKey(date)){
-    		throw new Exception();
-    	}
-    	
-        return this.film_actual_viewings_per_day.get(date);
+
+        for(ViewingFigure current_day_viewings : this.film_actual_viewings_per_day){
+            if(current_day_viewings.getDate().equals(date)){
+                return current_day_viewings.getViewingFigure();
+            }
+        }
+
+    	throw new Exception();
     }
     
     /**
@@ -234,7 +242,7 @@ public class Film {
      * 
      * @return		all the viewing figures
      */
-    public HashMap<String, Integer> getAllViewings(){
+    public ArrayList<ViewingFigure> getAllViewings(){
     	return this.film_actual_viewings_per_day;
     }
 
@@ -259,4 +267,30 @@ public class Film {
     }
 
 
+    /**
+     * Returns the total viewing figures accross all days.
+     * 
+     * @return
+     */
+    public int getTotalViewingFigures(){
+        int counter = 0;
+        for(ViewingFigure current_figures : this.getAllViewings()){
+            counter = counter + current_figures.getViewingFigure();
+        }
+        return counter;
+    }
+
+    /**
+     * Returns the lowest viewing figure
+     *
+     * @return
+     */
+    public int getAverageViewingFigure(){
+
+        if(this.getAllViewings().size() < 1){
+            return 0;
+        }
+
+        return this.getTotalViewingFigures() / this.getAllViewings().size();
+    }
 }

@@ -57,8 +57,6 @@ public class CinemaSystemController {
 			id_counter++;
 		}
 	}
-	
-	
-	
+
 	
 }

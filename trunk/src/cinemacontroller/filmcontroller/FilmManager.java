@@ -113,4 +113,55 @@ public class FilmManager {
 		
 		return found_films;		
 	}
+
+    public Film getLeastPopularFilm() throws Exception{
+
+        int current_average = 10000000;
+        Film found_film = null;
+
+        for(Film current_film : this.getAllFilms()){
+            if(current_film.getAverageViewingFigure() < current_average){
+                found_film = current_film;
+                current_average = current_film.getAverageViewingFigure();
+            }
+        }
+
+        if(found_film == null){
+            throw new Exception();
+        }
+        return found_film;
+        
+    }
+
+
+    public Film getMostPopularFilm() throws Exception {
+
+        int current_average = 0;
+        Film found_film = null;
+
+        for(Film current_film : this.getAllFilms()){
+            if(current_film.getAverageViewingFigure() > current_average){
+                found_film = current_film;
+                current_average = current_film.getAverageViewingFigure();
+            }
+        }
+
+        if(found_film == null){
+            throw new Exception();
+        }
+        return found_film;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+    
 }

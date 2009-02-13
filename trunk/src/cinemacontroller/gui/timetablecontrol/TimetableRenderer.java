@@ -52,6 +52,11 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
                 JLabel title_label = new JLabel((String)value);
                 title_label.setForeground(Color.black);
 
+
+                JLabel title_label2 = new JLabel((String)value);
+                title_label2.setForeground(Color.black);
+
+                
                 box.add(title_label, c);
                 return box;
             }

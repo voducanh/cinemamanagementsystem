@@ -5,6 +5,7 @@ import cinemacontroller.main.CinemaSystemController;
 import cinemacontroller.screencontroller.Screen;
 import cinemacontroller.screencontroller.Screening;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -49,7 +50,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
 
         try {
-            Screening screening1 = new Screening(core_controller.film_manager.getFilmByTitle("James Bond"), new Date(10, 10, 2009), new Time(15, 30));
+            Screening screening1 = new Screening(core_controller.film_manager.getFilmByTitle("James Bond"), new Date(10, 10, 2009), new Time(15, 00));
             core_controller.screen_manager.getScreen(1).addScreening(screening1);
 
              Screening screening2 = new Screening(core_controller.film_manager.getFilmByTitle("Bugs Life"), new Date(10, 10, 2009), new Time(18, 30));
@@ -62,7 +63,6 @@ public class MainWindow extends javax.swing.JFrame {
         }
 
 
-       
 
 
         // Initialise the ArrayList that contains all the "TimeTableItems" on the timetable control.
@@ -79,10 +79,29 @@ public class MainWindow extends javax.swing.JFrame {
         this.timetable_scroll_pane.setLayout(layout);
         this.timetable_scroll_pane.getViewport().add( timetable_control );
 
-
+        this.updateSummaryPane();
+        
         // Add all internal items to timetable control
         this.automatedGetScreeningsAddToTimetable();
         
+    }
+
+
+    public void updateSummaryPane(){
+        this.films_in_database_jlabel.setText(this.films_in_database_jlabel.getText() + " " + this.core_controller.film_manager.getAllFilms().size());
+        
+        try {
+            this.least_popular_jlabel.setText(this.most_popular_film_jlabel.getText() + " " + this.core_controller.film_manager.getLeastPopularFilm().getTitle());
+        }catch(Exception e){
+            this.least_popular_jlabel.setText("Not Available");
+        }
+
+        try {
+            this.most_popular_film_jlabel.setText(this.most_popular_film_jlabel.getText() + " " + this.core_controller.film_manager.getMostPopularFilm().getTitle());
+        }catch(Exception e){
+            this.most_popular_film_jlabel.setText("Not Available");
+        }
+                    
     }
 
 
@@ -208,6 +227,10 @@ public class MainWindow extends javax.swing.JFrame {
         timetable_date_picker_combo = new javax.swing.JComboBox();
         overview_tabbed_pane = new javax.swing.JTabbedPane();
         summary_panel = new javax.swing.JPanel();
+        film_summary_title_jlabel = new javax.swing.JLabel();
+        films_in_database_jlabel = new javax.swing.JLabel();
+        most_popular_film_jlabel = new javax.swing.JLabel();
+        least_popular_jlabel = new javax.swing.JLabel();
         actions_panel = new javax.swing.JPanel();
         toolbar = new javax.swing.JToolBar();
         create_new_screening_button = new javax.swing.JButton();
@@ -233,6 +256,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Multiplex Manager");
+        setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/images.png")));
 
         jSplitPane_main.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
         jSplitPane_main.setDividerLocation(250);
@@ -265,15 +289,40 @@ public class MainWindow extends javax.swing.JFrame {
 
         jSplitPane_main.setRightComponent(timetable_panel);
 
+        film_summary_title_jlabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        film_summary_title_jlabel.setText("Film Summary");
+
+        films_in_database_jlabel.setText("Films in Database: ");
+
+        most_popular_film_jlabel.setText("Most Popular Film: ");
+
+        least_popular_jlabel.setText("Least Popular Film: ");
+
         javax.swing.GroupLayout summary_panelLayout = new javax.swing.GroupLayout(summary_panel);
         summary_panel.setLayout(summary_panelLayout);
         summary_panelLayout.setHorizontalGroup(
             summary_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 240, Short.MAX_VALUE)
+            .addGroup(summary_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(summary_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(films_in_database_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                    .addComponent(film_summary_title_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                    .addComponent(most_popular_film_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                    .addComponent(least_popular_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
+                .addContainerGap())
         );
         summary_panelLayout.setVerticalGroup(
             summary_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 617, Short.MAX_VALUE)
+            .addGroup(summary_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(film_summary_title_jlabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(films_in_database_jlabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(most_popular_film_jlabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(least_popular_jlabel)
+                .addContainerGap(532, Short.MAX_VALUE))
         );
 
         overview_tabbed_pane.addTab("Summary", summary_panel);
@@ -509,6 +558,8 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu edit_menu;
     private javax.swing.JButton edit_screening_jbutton;
     private javax.swing.JMenu file_menu;
+    private javax.swing.JLabel film_summary_title_jlabel;
+    private javax.swing.JLabel films_in_database_jlabel;
     private javax.swing.JMenu help_menu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -516,7 +567,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JSplitPane jSplitPane_main;
+    private javax.swing.JLabel least_popular_jlabel;
     private javax.swing.JMenuBar main_menu;
+    private javax.swing.JLabel most_popular_film_jlabel;
     private javax.swing.JTabbedPane overview_tabbed_pane;
     private javax.swing.JLabel status_bar;
     private javax.swing.JPanel summary_panel;
