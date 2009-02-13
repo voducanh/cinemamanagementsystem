@@ -60,9 +60,8 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
         	
             if(current_box.getTableRow() == row  && current_box.getStartColumn() == column){
 
+            	JPanel box = new JPanel();
 
-            	
-                JPanel box = new JPanel();
                 box.setLayout(new BoxLayout(box, BoxLayout.PAGE_AXIS));
                 box.setBackground(current_box.getBoxBackgroundColor());
                 
@@ -89,9 +88,9 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
         }
 
          JPanel cell = new JPanel();
-                cell.setBackground(Color.white);
-                cell.setForeground(Color.black);
-                cell.add(new JLabel((String)value));
+         cell.setBackground(Color.white);
+         cell.setForeground(Color.black);
+         cell.add(new JLabel((String)value));
 
                 
                 return cell;
