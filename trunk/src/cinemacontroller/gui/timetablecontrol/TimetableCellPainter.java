@@ -8,6 +8,8 @@ package cinemacontroller.gui.timetablecontrol;
 import javax.swing.table.*;
 import javax.swing.plaf.basic.*;
 import java.awt.*;
+import java.awt.Color;
+
 import javax.swing.*;
 public class TimetableCellPainter extends BasicTableUI
 {
