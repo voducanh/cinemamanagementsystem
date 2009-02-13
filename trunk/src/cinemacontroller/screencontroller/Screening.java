@@ -98,7 +98,7 @@ public class Screening {
 	public Time getEndTime(){
 
 		Time film_end_time = screening_film.getLength();
-		
+
 		film_end_time.setHourOfDay(screening_film.getLength().getHourOfDay() + this.screening_date.get(Calendar.HOUR_OF_DAY));
 		film_end_time.setMinute(screening_film.getLength().getMinute() + this.screening_date.get(Calendar.MINUTE));
 		

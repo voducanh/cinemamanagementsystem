@@ -11,12 +11,6 @@
 
 package cinemacontroller.gui;
 
-import java.awt.Color;
-import java.awt.Point;
-import javax.swing.BorderFactory;
-import javax.swing.JColorChooser;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  *

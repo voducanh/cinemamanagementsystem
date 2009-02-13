@@ -7,9 +7,13 @@ import cinemacontroller.screencontroller.Screening;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 import javax.swing.ScrollPaneLayout;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import timeanddate.Date;
 import timeanddate.Time;
@@ -24,8 +28,6 @@ import timeanddate.Time;
 public class MainWindow extends javax.swing.JFrame {
 
     private CinemaSystemController core_controller;
-
-    private final int timetable_hours = 15;
     private ArrayList<TimetableScreeningBox> list_of_box_controls;
     private TimetableTable timetable_control;
 
@@ -80,6 +82,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         // Add all internal items to timetable control
         this.automatedGetScreeningsAddToTimetable();
+        
     }
 
 
@@ -115,22 +118,29 @@ public class MainWindow extends javax.swing.JFrame {
      * @param panelcolor
      * @param textcolor
      */
+    @SuppressWarnings("empty-statement")
     public void addTimetableItem(String title, Point point, int length, Color panelcolor, Color textcolor){
-       
+
+ 
     }
 
 
+
     public TimetableTable createTimetableControl(){
-        
+
+        Object[][] obj = new Object [this.core_controller.screen_manager.getScreens().size()][31];
+
+        for(int counter = 0; counter < this.core_controller.screen_manager.getScreens().size(); counter++){
+            obj[counter][0] = "" + (counter+1);
+            for(int counter2 = 1; counter2 < 31; counter2++){
+                obj[counter][counter2] = "";
+            }
+        }
+
         TableModel timetable_model = new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"1", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {"2", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {"3", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {"4", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
-            },
+            obj,
             new String [] {
-                "Screen", "0900", "", "1000", "", "1100", "", "1200", "", "1300", "", "1400", "", "1500", "", "1600", "", "1700", "", "1800", "", "1900", "", "2000", "", "2100", "", "2200", "", "2300", ""
+                "Screen #", "0900", "", "1000", "", "1100", "", "1200", "", "1300", "", "1400", "", "1500", "", "1600", "", "1700", "", "1800", "", "1900", "", "2000", "", "2100", "", "2200", "", "2300", ""
             }
         );
 
@@ -143,6 +153,12 @@ public class MainWindow extends javax.swing.JFrame {
         timetable.setRowHeight(60);
         timetable.getTableHeader().setResizingAllowed(false);
         timetable.getTableHeader().setReorderingAllowed(false);
+
+        
+        TableColumn col = timetable.getColumnModel().getColumn(0);
+        col.setMinWidth(50);
+
+        
 
         return timetable;
     }

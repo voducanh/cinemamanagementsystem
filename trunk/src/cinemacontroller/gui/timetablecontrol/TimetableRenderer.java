@@ -5,8 +5,11 @@
 
 package cinemacontroller.gui.timetablecontrol;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -38,13 +41,26 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
         for(TimetableScreeningBox current_box : list_of_box_controls){
 
         	
-        	
+        	if(column == 0){
+                JPanel box = new JPanel();
+                box.setLayout(new GridBagLayout());
+                GridBagConstraints c = new GridBagConstraints();
+                c.anchor = GridBagConstraints.CENTER;
+                
+                box.setBackground(new Color(228,227,227));
+
+                JLabel title_label = new JLabel((String)value);
+                title_label.setForeground(Color.black);
+
+                box.add(title_label, c);
+                return box;
+            }
+
+
         	
             if(current_box.getTableRow() == row  && current_box.getStartColumn() == column){
 
-            	System.out.println(row + "." + current_box.getStartColumn());
-            	
-            	
+
             	
                 JPanel box = new JPanel();
                 box.setLayout(new BoxLayout(box, BoxLayout.PAGE_AXIS));
@@ -52,7 +68,7 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
                 
                 JLabel title_label = new JLabel(current_box.getScreening().getFilm().getTitle());
                 title_label.setForeground(current_box.getBoxForegroundColor());
-                
+
                 JLabel time_label = new JLabel(current_box.getScreening().getStartTime().toString());
                 time_label.setForeground(current_box.getBoxForegroundColor());
                 

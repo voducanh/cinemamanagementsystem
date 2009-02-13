@@ -16,12 +16,12 @@ public class TimetableCellPainter extends BasicTableUI
 
     int firstRow = table.rowAtPoint(new Point(0,r.y));
     int lastRow = table.rowAtPoint(new Point(0,r.y+r.height));
-    
+
     // -1 is a flag that the ending point is outside the table
     if (lastRow<0)
-	lastRow=table.getRowCount()-1;
+        lastRow=table.getRowCount()-1;
     for (int i=firstRow; i<=lastRow; i++)
-     	paintRow(i,g);
+        paintRow(i,g);
   }
   private void paintRow(int row, Graphics g)
   {
@@ -51,7 +51,7 @@ public class TimetableCellPainter extends BasicTableUI
 
     area.setBounds(area.x + horizontalMargin/2,
                   area.y + verticalMargin/2,
-		      area.width - horizontalMargin,
+                      area.width - horizontalMargin,
                   area.height - verticalMargin);
 
     if (table.isEditing() && table.getEditingRow()==row &&
