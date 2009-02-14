@@ -28,7 +28,7 @@ import timeanddate.Time;
  */
 public class MainWindow extends javax.swing.JFrame {
 
-    private CinemaSystemController core_controller;
+    public CinemaSystemController core_controller;
     private ArrayList<TimetableScreeningBox> list_of_box_controls;
     private TimetableTable timetable_control;
 
@@ -541,7 +541,8 @@ public class MainWindow extends javax.swing.JFrame {
 }//GEN-LAST:event_view_statistical_data_jbuttonActionPerformed
 
     private void view_films_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_films_jbuttonActionPerformed
-        // TODO add your handling code here:
+        this.setEnabled(false);
+        new FilmList(this).setVisible(true);
 }//GEN-LAST:event_view_films_jbuttonActionPerformed
 
     private void view_screens_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_screens_jbuttonActionPerformed
