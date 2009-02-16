@@ -2,11 +2,14 @@ package cinemacontroller.gui;
 
 import cinemacontroller.gui.timetablecontrol.*;
 import cinemacontroller.main.CinemaSystemController;
-import cinemacontroller.screencontroller.Screen;
-import cinemacontroller.screencontroller.Screening;
+import cinemacontroller.screensystem.Screen;
+import cinemacontroller.screensystem.Screening;
+import databasecontroller.MySQLController;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -42,26 +45,52 @@ public class MainWindow extends javax.swing.JFrame {
         this.core_controller = core_controller;
 
         try {
-            core_controller.film_manager.addFilmToCinema("James Bond", "Steven Pielberg", "PG", new Date(12, 10, 2009), new Time(2, 29), 100, 10.50);
-            core_controller.film_manager.addFilmToCinema("Bugs Life", "Steven Pielberg", "X", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
-            core_controller.film_manager.addFilmToCinema("Independance Day", "Steven Pielberg", "U", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
+            core_controller.film_manager.addFilmToCinema("007 Tommorrow Never Dies", "Steven Spielberg", "PG", new Date(12, 10, 2009), new Time(4, 29), 100, 10.50);
+            core_controller.film_manager.addFilmToCinema("Batman Returns", "Steven Spielberg", "12", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
+            core_controller.film_manager.addFilmToCinema("Independance Day", "Steven Spielberg", "12", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
+            core_controller.film_manager.addFilmToCinema("X-Men Reloaded", "Steven Spielberg", "12", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
+            core_controller.film_manager.addFilmToCinema("Deep Impact", "Steven Spielberg", "15", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
+            core_controller.film_manager.addFilmToCinema("Armageddon", "Steven Spielberg", "15", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
         } catch (Exception ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
-            Screening screening1 = new Screening(core_controller.film_manager.getFilmByTitle("James Bond"), new Date(10, 10, 2009), new Time(15, 00));
+            Screening screening1 = new Screening(core_controller.film_manager.getFilmByTitle("007 Tommorrow Never Dies"), new Date(10, 10, 2009), new Time(15, 00));
             core_controller.screen_manager.getScreen(1).addScreening(screening1);
 
-             Screening screening2 = new Screening(core_controller.film_manager.getFilmByTitle("Bugs Life"), new Date(10, 10, 2009), new Time(18, 30));
-            core_controller.screen_manager.getScreen(9).addScreening(screening2);
+             Screening screening2 = new Screening(core_controller.film_manager.getFilmByTitle("Batman Returns"), new Date(10, 10, 2009), new Time(10, 30));
+            core_controller.screen_manager.getScreen(7).addScreening(screening2);
 
              Screening screening3 = new Screening(core_controller.film_manager.getFilmByTitle("Independance Day"), new Date(10, 10, 2009), new Time(13, 30));
             core_controller.screen_manager.getScreen(3).addScreening(screening3);
+
+            Screening screening4 = new Screening(core_controller.film_manager.getFilmByTitle("X-Men Reloaded"), new Date(10, 10, 2009), new Time(10, 30));
+            core_controller.screen_manager.getScreen(3).addScreening(screening4);
+
+             Screening screening9 = new Screening(core_controller.film_manager.getFilmByTitle("X-Men Reloaded"), new Date(10, 10, 2009), new Time(14, 30));
+            core_controller.screen_manager.getScreen(7).addScreening(screening9);
+
+
+             Screening screening10 = new Screening(core_controller.film_manager.getFilmByTitle("X-Men Reloaded"), new Date(10, 10, 2009), new Time(17, 30));
+            core_controller.screen_manager.getScreen(7).addScreening(screening10);
+
+
+            Screening screening8 = new Screening(core_controller.film_manager.getFilmByTitle("Armageddon"), new Date(10, 10, 2009), new Time(18, 30));
+            core_controller.screen_manager.getScreen(3).addScreening(screening8);
+
+            Screening screening5 = new Screening(core_controller.film_manager.getFilmByTitle("Deep Impact"), new Date(10, 10, 2009), new Time(16, 30));
+            core_controller.screen_manager.getScreen(4).addScreening(screening5);
+
+            Screening screening6 = new Screening(core_controller.film_manager.getFilmByTitle("Armageddon"), new Date(10, 10, 2009), new Time(18, 30));
+            core_controller.screen_manager.getScreen(5).addScreening(screening6);
+
         } catch (Exception ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        
+        
 
 
 
@@ -83,7 +112,34 @@ public class MainWindow extends javax.swing.JFrame {
         
         // Add all internal items to timetable control
         this.automatedGetScreeningsAddToTimetable();
-        
+
+
+
+      try {
+
+            MySQLController sql = new MySQLController();
+            ResultSet result = sql.getData("SELECT * FROM `film_main_database`");
+
+            while(result.next()){
+                this.film_summary_title_jlabel.setText(result.getString("film_title"));
+            }
+
+
+
+
+
+
+
+
+        }catch(Exception e){
+            System.out.println("Unabled to fetch from database!");
+        }
+
+
+
+
+
+
     }
 
 
@@ -112,6 +168,8 @@ public class MainWindow extends javax.swing.JFrame {
      *       class directly.
      */
     public void automatedGetScreeningsAddToTimetable(){
+        int counter = 0;
+        Color color = new Color(76,166,207);
     	// Cycles through all the screens stored on database
         for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
         	// Make sure the current screen actually have some screenings
@@ -119,7 +177,23 @@ public class MainWindow extends javax.swing.JFrame {
         	// Cycle through all the screenings for each screen
 	          for(Screening current_screening : current_screen.getScreenings()){
 	        	  // Add each screening by creating a control and adding it to the list of controls
-	        	  list_of_box_controls.add(new TimetableScreeningBox(current_screening, new Color(76,166,207), Color.white, this.timetable_control, current_screen.getIDNumber()));
+	        	  
+                if(counter % 2 == 0){
+                    color = new Color(102,204,0);
+                }
+                if(counter % 3 == 0){
+                    color = new Color(204,0,255);
+                }
+                if(counter % 4 == 0){
+                    color = new Color(255,153,0);
+                }
+                if(counter % 5 == 0){
+                    color = new Color(76,166,207);
+                }
+
+
+                  list_of_box_controls.add(new TimetableScreeningBox(current_screening, color, Color.white, this.timetable_control, current_screen.getIDNumber()));
+                  counter++;
 	          }
           }
         }
@@ -263,6 +337,7 @@ public class MainWindow extends javax.swing.JFrame {
         jSplitPane_main.setDividerSize(0);
 
         timetable_scroll_pane.setBorder(null);
+        timetable_scroll_pane.setForeground(new java.awt.Color(255, 153, 0));
 
         timetable_date_picker_combo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Monday 12th of Decement 2008" }));
 
@@ -289,7 +364,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jSplitPane_main.setRightComponent(timetable_panel);
 
-        film_summary_title_jlabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        film_summary_title_jlabel.setFont(new java.awt.Font("Tahoma", 1, 11));
         film_summary_title_jlabel.setText("Film Summary");
 
         films_in_database_jlabel.setText("Films in Database: ");

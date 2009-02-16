@@ -2,7 +2,7 @@ package cinemacontroller.main;
 
 import cinemacontroller.filmcontroller.FilmManager;
 import cinemacontroller.rotationalsystem.RotationEngine;
-import cinemacontroller.screencontroller.ScreenManager;
+import cinemacontroller.screensystem.ScreenManager;
 
 /**
  * Main controller class that deals with all the management of the cinema

@@ -73,12 +73,16 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
                 JLabel title_label = new JLabel(current_box.getScreening().getFilm().getTitle());
                 title_label.setForeground(current_box.getBoxForegroundColor());
 
+                JLabel title_null = new JLabel(" ");
+                title_null.setForeground(current_box.getBoxForegroundColor());
+
                 JLabel time_label = new JLabel(current_box.getScreening().getStartTime().toString());
                 time_label.setForeground(current_box.getBoxForegroundColor());
                 
                 title_label.setAlignmentX(Component.CENTER_ALIGNMENT);
                 time_label.setAlignmentX(Component.CENTER_ALIGNMENT);
-                
+
+                box.add(title_null);
                 box.add(title_label);
                 box.add(time_label);
                 

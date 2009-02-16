@@ -1,4 +1,4 @@
-package cinemacontroller.screencontroller;
+package cinemacontroller.screensystem;
 
 import java.util.ArrayList;
 import java.util.Calendar;

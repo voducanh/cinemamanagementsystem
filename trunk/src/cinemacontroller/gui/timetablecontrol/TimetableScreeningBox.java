@@ -1,7 +1,7 @@
 package cinemacontroller.gui.timetablecontrol;
 
 import java.awt.Color;
-import cinemacontroller.screencontroller.Screening;
+import cinemacontroller.screensystem.Screening;
 
 /**
  * Provides functionality of easy management of the box control. 
