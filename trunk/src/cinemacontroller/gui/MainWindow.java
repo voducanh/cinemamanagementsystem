@@ -44,7 +44,7 @@ public class MainWindow extends javax.swing.JFrame {
         // Set the main controller
         this.core_controller = core_controller;
 
-        try {
+      /**  try {
             core_controller.film_manager.addFilmToCinema("007 Tommorrow Never Dies", "Steven Spielberg", "PG", new Date(12, 10, 2009), new Time(4, 29), 100, 10.50);
             core_controller.film_manager.addFilmToCinema("Batman Returns", "Steven Spielberg", "12", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
             core_controller.film_manager.addFilmToCinema("Independance Day", "Steven Spielberg", "12", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
@@ -90,7 +90,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
 
         
-        
+        **/
 
 
 
@@ -108,35 +108,10 @@ public class MainWindow extends javax.swing.JFrame {
         this.timetable_scroll_pane.setLayout(layout);
         this.timetable_scroll_pane.getViewport().add( timetable_control );
 
-        this.updateSummaryPane();
+      //  this.updateSummaryPane();
         
         // Add all internal items to timetable control
         this.automatedGetScreeningsAddToTimetable();
-
-
-
-      try {
-
-            MySQLController sql = new MySQLController();
-            ResultSet result = sql.getData("SELECT * FROM `film_main_database`");
-
-            while(result.next()){
-                this.film_summary_title_jlabel.setText(result.getString("film_title"));
-            }
-
-
-
-
-
-
-
-
-        }catch(Exception e){
-            System.out.println("Unabled to fetch from database!");
-        }
-
-
-
 
 
 
@@ -144,19 +119,7 @@ public class MainWindow extends javax.swing.JFrame {
 
 
     public void updateSummaryPane(){
-        this.films_in_database_jlabel.setText(this.films_in_database_jlabel.getText() + " " + this.core_controller.film_manager.getAllFilms().size());
-        
-        try {
-            this.least_popular_jlabel.setText(this.most_popular_film_jlabel.getText() + " " + this.core_controller.film_manager.getLeastPopularFilm().getTitle());
-        }catch(Exception e){
-            this.least_popular_jlabel.setText("Not Available");
-        }
-
-        try {
-            this.most_popular_film_jlabel.setText(this.most_popular_film_jlabel.getText() + " " + this.core_controller.film_manager.getMostPopularFilm().getTitle());
-        }catch(Exception e){
-            this.most_popular_film_jlabel.setText("Not Available");
-        }
+       
                     
     }
 
@@ -313,6 +276,7 @@ public class MainWindow extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JToolBar.Separator();
         view_actions_jbutton = new javax.swing.JButton();
         view_statistical_data_jbutton = new javax.swing.JButton();
+        view_historical_data_jbutton = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         view_films_jbutton = new javax.swing.JButton();
         view_screens_jbutton = new javax.swing.JButton();
@@ -497,6 +461,21 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         toolbar.add(view_statistical_data_jbutton);
+
+        view_historical_data_jbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/hourglass.png"))); // NOI18N
+        view_historical_data_jbutton.setToolTipText("View statistical data.");
+        view_historical_data_jbutton.setFocusable(false);
+        view_historical_data_jbutton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        view_historical_data_jbutton.setMaximumSize(new java.awt.Dimension(26, 28));
+        view_historical_data_jbutton.setMinimumSize(new java.awt.Dimension(28, 28));
+        view_historical_data_jbutton.setPreferredSize(new java.awt.Dimension(32, 32));
+        view_historical_data_jbutton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        view_historical_data_jbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                view_historical_data_jbuttonActionPerformed(evt);
+            }
+        });
+        toolbar.add(view_historical_data_jbutton);
         toolbar.add(jSeparator3);
 
         view_films_jbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/images.png"))); // NOI18N
@@ -624,6 +603,10 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
 }//GEN-LAST:event_view_screens_jbuttonActionPerformed
 
+    private void view_historical_data_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_historical_data_jbuttonActionPerformed
+        new HistoricalDatabase().setVisible(true);
+}//GEN-LAST:event_view_historical_data_jbuttonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about_menuitem;
     private javax.swing.JPanel actions_panel;
@@ -655,6 +638,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JToolBar toolbar;
     private javax.swing.JButton view_actions_jbutton;
     private javax.swing.JButton view_films_jbutton;
+    private javax.swing.JButton view_historical_data_jbutton;
     private javax.swing.JButton view_screens_jbutton;
     private javax.swing.JButton view_statistical_data_jbutton;
     // End of variables declaration//GEN-END:variables

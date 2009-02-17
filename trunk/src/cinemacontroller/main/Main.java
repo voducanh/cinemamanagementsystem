@@ -6,7 +6,6 @@ import javax.swing.UIManager;
 
 
 /**
- * TESTER
  * 
  * Simple main class to test all the other classes and functions. Will be updated to the "bootstrapper"
  * that will set up the GUI and the rest of the core components.
