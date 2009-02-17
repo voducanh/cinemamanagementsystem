@@ -39,26 +39,27 @@ public class HistoricalDatabase extends javax.swing.JFrame {
     }
 
     public void LoadHistoricalData(){
-
-        // Set the historical table's model to that of a default table model
-        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
-
-        // Create a new arraylist to store all the films
-        ArrayList<Film> list_of_films = this.historical_controller.getAllFilms();
-
-
-        // Alert the user if there are no films to show
-        if(list_of_films.size() < 1){
-            JOptionPane.showMessageDialog(null, "There are current no historical records to show.", "No Records Available", JOptionPane.WARNING_MESSAGE);
-            this.jButton1.setEnabled(false);
-        }else{
-            this.jButton1.setEnabled(true);
+        try {
+            // Set the historical table's model to that of a default table model
+            DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
+            // Create a new arraylist to store all the films
+            ArrayList<Film> list_of_films = this.historical_controller.getAllFilms();
+            // Alert the user if there are no films to show
+            if (list_of_films.size() < 1) {
+                JOptionPane.showMessageDialog(null, "There are current no historical records to show.", "No Records Available", JOptionPane.WARNING_MESSAGE);
+                this.jButton1.setEnabled(false);
+            } else {
+                this.jButton1.setEnabled(true);
+            }
+            // Cycle through all the films, create a new row on table and add details for film
+            for (Film current_film : list_of_films) {
+                model.addRow(new Object[]{" " + current_film.getTitle(), " " + current_film.getDirector(), " " + current_film.getBBFCRating(), " " + current_film.getAvaliabilityDate().toString()});
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HistoricalDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(HistoricalDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-       // Cycle through all the films, create a new row on table and add details for film
-       for(Film current_film : list_of_films){
-            model.addRow(new Object []{" " + current_film.getTitle(), " " + current_film.getDirector(), " " + current_film.getBBFCRating(), " " + current_film.getAvaliabilityDate().toString()});
-       }
 
     }
     

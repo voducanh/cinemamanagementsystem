@@ -99,14 +99,15 @@ public class Screen {
 	 * @return				returns TRUE if screen is free, FALSE otherwise.
 	 */
 	public boolean checkScreenFree(Calendar date, Time start_time, Time end_time){
-
+        // Cycle through all the screenings for this screen
 		for(Screening screen : screenings){
-			
+			// Check to see if the supplied time lies within any other start or end time already currently stored
 			if(Integer.parseInt(start_time.getHourOfDay() + "" + start_time.getMinute()) >= Integer.parseInt(screen.getStartTime().getHourOfDay() + "" + screen.getStartTime().getMinute()) && Integer.parseInt(start_time.getHourOfDay() + "" + start_time.getMinute()) <= Integer.parseInt(screen.getEndTime().getHourOfDay() + "" + screen.getEndTime().getMinute())){
-				return false;
+				// Return false if the screen is not free
+                return false;
 			}
 		}
-		
+		// Return true if the screen is otherwise free
 		return true;
 	}
 }

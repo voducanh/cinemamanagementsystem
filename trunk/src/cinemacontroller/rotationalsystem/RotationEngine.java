@@ -18,11 +18,11 @@ public class RotationEngine {
 		// Cycle through all the films on database
 		for(Film current_film : films){
 			// Compare daily viewing figures to expected daily viewing figures
-			if(current_film.getViewingFigures("12/12/2009") < current_film.getExpectedAudienceFigures()){
+		//	if(current_film.getViewingFigures("12/12/2009") < current_film.getExpectedAudienceFigures()){
 				
 				// Function calls to rotate films here
 				
-			}
+			//}
 		}
 	}	
 	

@@ -27,11 +27,7 @@ public class Screening {
 	 */
 	public Screening(Film film, Date screening_date, Time start_time){
 		
-		// Clear the calendar so we are only dealing with hours, minutes and seconds if required.
-		// this.screening_start_time.clear();
-
         this.screening_date = new GregorianCalendar();
-
         this.screening_film = film;
 
 		// Sets the information about the screening.

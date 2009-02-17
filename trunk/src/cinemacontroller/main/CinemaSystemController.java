@@ -18,10 +18,12 @@ public class CinemaSystemController {
 	public RotationEngine rotation_manager;
 	
 	public CinemaSystemController(){
+        // Initialize all the controllers that this controller allows access too
 		screen_manager = new ScreenManager();
 		film_manager = new FilmManager();
 		rotation_manager = new RotationEngine();
 
+        // Setup all the cinema screens
         this.setupCinemaScreens();
 	}
 

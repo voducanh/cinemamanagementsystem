@@ -1,6 +1,7 @@
 package cinemacontroller.main;
 
 import cinemacontroller.*;
+import cinemacontroller.gui.Login;
 import cinemacontroller.gui.MainWindow;
 import javax.swing.UIManager;
 
@@ -25,9 +26,13 @@ public class Main {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		// Create a new GUI for the system and set controller
 		MainWindow main_window = new MainWindow(new CinemaSystemController());
-		// Show the GUI
-		main_window.setVisible(true);
 
+        main_window.setEnabled(false);
+        main_window.setVisible(true);
+        
+        // Show the login window
+        new Login(main_window).setVisible(true);
+        
 	}
 
 }

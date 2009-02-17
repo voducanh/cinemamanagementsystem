@@ -15,10 +15,10 @@ package cinemacontroller.gui;
  *
  * @author Scott
  */
-public class CreateScreening2 extends javax.swing.JFrame {
+public class CreateNewScreening extends javax.swing.JFrame {
 
     /** Creates new form CreateScreening2 */
-    public CreateScreening2() {
+    public CreateNewScreening() {
         initComponents();
     }
 
@@ -92,6 +92,11 @@ public class CreateScreening2 extends javax.swing.JFrame {
         );
 
         jButton1.setText("Create Screening");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancel");
 
@@ -207,6 +212,11 @@ public class CreateScreening2 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // this.window.addTimetableItem(this.jComboBox_film.getSelectedItem().toString(), new Point(3,this.window.calculateStartingColumn(hours, mins)), 4, Color.green, Color.black);
+       // this.window.refreshTimetable();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

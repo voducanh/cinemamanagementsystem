@@ -84,9 +84,9 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="status_bar" alignment="0" pref="1088" max="32767" attributes="0"/>
-          <Component id="toolbar" alignment="0" pref="1088" max="32767" attributes="0"/>
-          <Component id="jSplitPane_main" alignment="1" pref="1088" max="32767" attributes="0"/>
+          <Component id="status_bar" alignment="0" pref="1160" max="32767" attributes="0"/>
+          <Component id="toolbar" alignment="0" pref="1160" max="32767" attributes="0"/>
+          <Component id="jSplitPane_main" alignment="1" pref="1160" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -94,7 +94,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="toolbar" min="-2" pref="28" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jSplitPane_main" pref="647" max="32767" attributes="0"/>
+              <Component id="jSplitPane_main" pref="597" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="status_bar" min="-2" pref="23" max="-2" attributes="0"/>
           </Group>
@@ -132,7 +132,7 @@
                               <Component id="timetable_date_picker_combo" min="-2" pref="224" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="timetable_scroll_pane" alignment="0" pref="823" max="32767" attributes="0"/>
+                          <Component id="timetable_scroll_pane" alignment="0" pref="895" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -143,7 +143,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="timetable_date_picker_combo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="timetable_scroll_pane" pref="608" max="32767" attributes="0"/>
+                      <Component id="timetable_scroll_pane" pref="558" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -216,7 +216,7 @@
                           <Component id="most_popular_film_jlabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="least_popular_jlabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="532" max="32767" attributes="0"/>
+                          <EmptySpace pref="482" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -264,7 +264,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="617" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="567" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>

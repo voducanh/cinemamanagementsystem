@@ -31,13 +31,13 @@ public class HistoricalController {
      * @throws java.sql.SQLException
      * @throws java.lang.ClassNotFoundException
      */
-    public Film getFilmByTitle(String film_title) {
+    public Film getFilmByTitle(String film_title) throws SQLException, ClassNotFoundException {
         MySQLController sql_connection = new MySQLController();
         ResultSet result = sql_connection.getData("SELECT * FROM `film_main_database` WHERE `film_title` = '" + film_title + "';");
         return new Film(result.getString("film_title"), result.getString("film_director"), result.getString("film_bbfc_rating"), new Date(result.getInt("film_availability_date_day"), result.getInt("film_availability_date_month"), result.getInt("film_availability_date_year")));
     }
 
-    public ArrayList<Film> getAllFilms(){
+    public ArrayList<Film> getAllFilms() throws SQLException, ClassNotFoundException{
 
         ArrayList<Film> list_of_films = new ArrayList<Film>();
 

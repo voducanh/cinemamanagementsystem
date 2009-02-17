@@ -4,23 +4,13 @@ import cinemacontroller.gui.timetablecontrol.*;
 import cinemacontroller.main.CinemaSystemController;
 import cinemacontroller.screensystem.Screen;
 import cinemacontroller.screensystem.Screening;
-import databasecontroller.MySQLController;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.Point;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JTable;
 import javax.swing.ScrollPaneLayout;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-import timeanddate.Date;
-import timeanddate.Time;
+
 
 /**
  * This class is the class which creates the main window and all its components. The MainWindow
@@ -44,62 +34,15 @@ public class MainWindow extends javax.swing.JFrame {
         // Set the main controller
         this.core_controller = core_controller;
 
-      /**  try {
-            core_controller.film_manager.addFilmToCinema("007 Tommorrow Never Dies", "Steven Spielberg", "PG", new Date(12, 10, 2009), new Time(4, 29), 100, 10.50);
-            core_controller.film_manager.addFilmToCinema("Batman Returns", "Steven Spielberg", "12", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
-            core_controller.film_manager.addFilmToCinema("Independance Day", "Steven Spielberg", "12", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
-            core_controller.film_manager.addFilmToCinema("X-Men Reloaded", "Steven Spielberg", "12", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
-            core_controller.film_manager.addFilmToCinema("Deep Impact", "Steven Spielberg", "15", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
-            core_controller.film_manager.addFilmToCinema("Armageddon", "Steven Spielberg", "15", new Date(12, 10, 2009), new Time(2, 30), 100, 10.50);
-        } catch (Exception ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
-            Screening screening1 = new Screening(core_controller.film_manager.getFilmByTitle("007 Tommorrow Never Dies"), new Date(10, 10, 2009), new Time(15, 00));
-            core_controller.screen_manager.getScreen(1).addScreening(screening1);
-
-             Screening screening2 = new Screening(core_controller.film_manager.getFilmByTitle("Batman Returns"), new Date(10, 10, 2009), new Time(10, 30));
-            core_controller.screen_manager.getScreen(7).addScreening(screening2);
-
-             Screening screening3 = new Screening(core_controller.film_manager.getFilmByTitle("Independance Day"), new Date(10, 10, 2009), new Time(13, 30));
-            core_controller.screen_manager.getScreen(3).addScreening(screening3);
-
-            Screening screening4 = new Screening(core_controller.film_manager.getFilmByTitle("X-Men Reloaded"), new Date(10, 10, 2009), new Time(10, 30));
-            core_controller.screen_manager.getScreen(3).addScreening(screening4);
-
-             Screening screening9 = new Screening(core_controller.film_manager.getFilmByTitle("X-Men Reloaded"), new Date(10, 10, 2009), new Time(14, 30));
-            core_controller.screen_manager.getScreen(7).addScreening(screening9);
-
-
-             Screening screening10 = new Screening(core_controller.film_manager.getFilmByTitle("X-Men Reloaded"), new Date(10, 10, 2009), new Time(17, 30));
-            core_controller.screen_manager.getScreen(7).addScreening(screening10);
-
-
-            Screening screening8 = new Screening(core_controller.film_manager.getFilmByTitle("Armageddon"), new Date(10, 10, 2009), new Time(18, 30));
-            core_controller.screen_manager.getScreen(3).addScreening(screening8);
-
-            Screening screening5 = new Screening(core_controller.film_manager.getFilmByTitle("Deep Impact"), new Date(10, 10, 2009), new Time(16, 30));
-            core_controller.screen_manager.getScreen(4).addScreening(screening5);
-
-            Screening screening6 = new Screening(core_controller.film_manager.getFilmByTitle("Armageddon"), new Date(10, 10, 2009), new Time(18, 30));
-            core_controller.screen_manager.getScreen(5).addScreening(screening6);
-
-        } catch (Exception ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        
-        **/
-
-
-
         // Initialise the ArrayList that contains all the "TimeTableItems" on the timetable control.
         this.list_of_box_controls = new ArrayList<TimetableScreeningBox>();
 
         // Creates all the default controls.
         this.initComponents();
 
+        // Center align the login window
+        this.setLocationRelativeTo(null);
+        
         // Creates a new timetable control
         this.timetable_control = createTimetableControl();
 
@@ -107,22 +50,11 @@ public class MainWindow extends javax.swing.JFrame {
         ScrollPaneLayout layout = new ScrollPaneLayout();
         this.timetable_scroll_pane.setLayout(layout);
         this.timetable_scroll_pane.getViewport().add( timetable_control );
-
-      //  this.updateSummaryPane();
         
         // Add all internal items to timetable control
         this.automatedGetScreeningsAddToTimetable();
 
-
-
     }
-
-
-    public void updateSummaryPane(){
-       
-                    
-    }
-
 
     /**
      * This function cycles through all the screens stored within the internal screen database, gets
@@ -223,7 +155,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Refreshes the timetable control if modifications of the controls data have occured.
      */
     public void refreshTimetable(){
-        // Refreshes the timetable control
+        // Refreshes the timetable's renderer which draws all the films
         this.timetable_control.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_box_controls));
 
         // Refresh the control components and redraw them
@@ -315,7 +247,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timetable_panelLayout.createSequentialGroup()
                         .addComponent(timetable_date_picker_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(4, 4, 4))
-                    .addComponent(timetable_scroll_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)))
+                    .addComponent(timetable_scroll_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 895, Short.MAX_VALUE)))
         );
         timetable_panelLayout.setVerticalGroup(
             timetable_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -323,7 +255,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(timetable_date_picker_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timetable_scroll_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE))
+                .addComponent(timetable_scroll_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE))
         );
 
         jSplitPane_main.setRightComponent(timetable_panel);
@@ -361,7 +293,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(most_popular_film_jlabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(least_popular_jlabel)
-                .addContainerGap(532, Short.MAX_VALUE))
+                .addContainerGap(482, Short.MAX_VALUE))
         );
 
         overview_tabbed_pane.addTab("Summary", summary_panel);
@@ -374,7 +306,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
         actions_panelLayout.setVerticalGroup(
             actions_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 617, Short.MAX_VALUE)
+            .addGap(0, 567, Short.MAX_VALUE)
         );
 
         overview_tabbed_pane.addTab("Actions", actions_panel);
@@ -549,16 +481,16 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(status_bar, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
-            .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
-            .addComponent(jSplitPane_main, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
+            .addComponent(status_bar, javax.swing.GroupLayout.DEFAULT_SIZE, 1160, Short.MAX_VALUE)
+            .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, 1160, Short.MAX_VALUE)
+            .addComponent(jSplitPane_main, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1160, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
+                .addComponent(jSplitPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(status_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -567,7 +499,7 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void create_new_screening_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_buttonActionPerformed
-        CreateScreening create_screening_window = new CreateScreening(this);
+        CreateNewScreening create_screening_window = new CreateNewScreening(this);
         create_screening_window.setVisible(true);
         this.setEnabled(false);
 }//GEN-LAST:event_create_new_screening_buttonActionPerformed
