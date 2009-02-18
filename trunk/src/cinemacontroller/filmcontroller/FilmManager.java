@@ -1,6 +1,12 @@
 package cinemacontroller.filmcontroller;
+
+import databasecontroller.MySQLController;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import timeanddate.Date;
 import timeanddate.Time;
 
@@ -16,9 +22,22 @@ public class FilmManager {
 	private ArrayList<Film> cinema_film_list;
 	
 	public FilmManager(){
-		// Create a new ArrayList which will store ALL the films the cinema can show
-		cinema_film_list = new ArrayList<Film>();
+
+        // Create a new ArrayList which will store ALL the films the cinema can show
+        cinema_film_list = new ArrayList<Film>();
+            
+        try {
+            
+            // Get all the films stored in the database
+            this.getFilmsFromDatabase();
+
+        } catch(Exception e){}
 	}
+
+    public int generateID(){
+         java.sql.Timestamp  sqlDate = new java.sql.Timestamp(new java.util.Date().getTime());
+         return Integer.parseInt(sqlDate.toString());
+    }
 	
 	/**
 	 * This function's job is to add any desired film to the list of films that the
@@ -34,7 +53,7 @@ public class FilmManager {
 	 * @throws Exception
 	 */
 	public void addFilmToCinema(String film_title, String film_director, String film_bbfc_rating, Date film_available_date, Time film_length, int film_expected_views_per_day, double film_ticket_price) throws Exception{
-		Film new_film = new Film(film_title, film_director, film_bbfc_rating, film_available_date);
+		Film new_film = new Film(this.generateID(), film_title, film_director, film_bbfc_rating, film_available_date);
 		
 		// Set some information related to the film
 		new_film.setLength(film_length);
@@ -80,7 +99,7 @@ public class FilmManager {
 		// Cycle through all the films stored in the cinemas film database.
 		for(Film film : this.cinema_film_list){
 			// If the current film has the same title as expected, return the film.
-			if(film.getTitle() == title){
+			if(film.getTitle().equals(title)){
 				return film;
 			}
 		}
@@ -100,7 +119,7 @@ public class FilmManager {
 		
 		// Cycle all the films in the cinema's database.
 		for(Film film : this.cinema_film_list){
-			if(film.getDirector() == director){
+			if(film.getDirector().equals(director)){
 				// If a film by a specific director has been found, add it to found films.
 				found_films.add(film);
 			}
@@ -113,6 +132,53 @@ public class FilmManager {
 		
 		return found_films;		
 	}
+
+    /**
+     * Function populates the list of films stored internally with the films stored in a database.
+     * 
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
+     */
+    public void getFilmsFromDatabase() throws ClassNotFoundException, SQLException {
+        String table_name = "film_main_database";
+
+        // Create a new mysql connection and query database
+        MySQLController connection = new MySQLController();
+        ResultSet result = connection.getData("SELECT * FROM `" + table_name + "`");
+
+        // Populate the internal list of films by cycle through each film in database
+        while(result.next()){
+            Date current_date = new Date(result.getInt("film_availability_date_day"), result.getInt("film_availability_date_month"), result.getInt("film_availability_date_year"));
+            Film current_film = new Film(result.getInt("film_id"), result.getString("film_title"), result.getString("film_director"), result.getString("film_bbfc_rating"), current_date);
+            current_film.setLength(new Time(2,30));
+            cinema_film_list.add(current_film);
+        }
+    }
+
+
+    public Film getFilmByID(int unique_id){
+      Film return_film = null;
+      
+		// Cycle all the films in the cinema's database.
+		for(Film film : this.cinema_film_list){
+			if(film.getID() == unique_id){
+				// If a film by a specific director has been found, add it to found films.
+				return_film = film;
+			}
+		}
+        return return_film;
+    }
+
+    public void addFilmToDatabase(){
+        try {
+            MySQLController connection = new MySQLController();
+            connection.putData("INSERT INTO `film_main_database` VALUES ('','','','','','','','','')");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FilmManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
        
 }

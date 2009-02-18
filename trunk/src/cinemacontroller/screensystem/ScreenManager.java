@@ -1,6 +1,15 @@
 package cinemacontroller.screensystem;
 
+import cinemacontroller.filmcontroller.Film;
+import cinemacontroller.filmcontroller.FilmManager;
+import databasecontroller.MySQLController;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import timeanddate.Date;
+import timeanddate.Time;
 
 /**
  * Provides functionality for managing the screen of the cinema.
@@ -86,4 +95,38 @@ public class ScreenManager {
 		}
 		return screens;
 	}
+
+    
+
+     public void getScreeningsFromDatabase(FilmManager films) {
+        try {
+
+
+            for(Screen current_screen : this.cinema_screens){
+                int unique_id = current_screen.getIDNumber();
+
+
+                String table_name = "screenings";
+                // Create a new mysql connection and query database
+                MySQLController connection = new MySQLController();
+                ResultSet result = connection.getData("SELECT * FROM `" + table_name + "` WHERE `screen` = '" + unique_id + "';");
+                // Populate the internal list of films by cycle through each film in database
+                while (result.next()) {
+
+                    Film current_film = films.getFilmByID(result.getInt("film"));
+                    System.out.println(current_film.getTitle());
+                    current_screen.addScreening(new Screening(current_film, new Date(12,12,2009), new Time(16,30)));
+                }
+
+
+
+            }
+            
+           
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }

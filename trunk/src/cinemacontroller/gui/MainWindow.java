@@ -55,6 +55,12 @@ public class MainWindow extends javax.swing.JFrame {
         // Add all internal items to timetable control
         this.automatedGetScreeningsAddToTimetable();
 
+       // Update all the controls
+        this.updateSummaryPanel();
+
+        this.generateBoxControls();
+
+        this.refreshTimetable();
     }
 
     /**
@@ -96,6 +102,10 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
 
+
+    public void updateSummaryPanel(){
+        this.films_in_database_jlabel.setText("Total Films in Database: " + this.core_controller.film_manager.getAllFilms().size());
+    }
 
     /**
      * Creates a new timetable item by taking a number of values and adding them to the timetable control
@@ -156,6 +166,8 @@ public class MainWindow extends javax.swing.JFrame {
      * Refreshes the timetable control if modifications of the controls data have occured.
      */
     public void refreshTimetable(){
+        this.generateBoxControls();
+        
         // Refreshes the timetable's renderer which draws all the films
         this.timetable_control.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_box_controls));
 
@@ -174,7 +186,17 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
 
+    public void generateBoxControls(){
+  
+            for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
+                 for(Screening current_screening : current_screen.getScreenings()){
+                     System.out.println("Tester: " + current_screening.getStartTime().getHourOfDay());
+                     this.list_of_box_controls.add(new TimetableScreeningBox(current_screening, new Color(125,10,200), new Color(0,0,255), this.timetable_control, current_screen.getIDNumber()));
+                 }
+            }
 
+        
+    }
 
 
 
@@ -531,7 +553,7 @@ public class MainWindow extends javax.swing.JFrame {
 }//GEN-LAST:event_view_actions_jbuttonActionPerformed
 
     private void view_statistical_data_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_statistical_data_jbuttonActionPerformed
-        // TODO add your handling code here:
+        this.refreshTimetable();
 }//GEN-LAST:event_view_statistical_data_jbuttonActionPerformed
 
     private void view_films_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_films_jbuttonActionPerformed

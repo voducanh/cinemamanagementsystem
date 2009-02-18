@@ -14,6 +14,8 @@ import timeanddate.Time;
  */
 public class Film {
 
+    private int film_id;
+    
     private String film_title;
     private String film_director;
     private String film_bbfc_rating;
@@ -34,9 +36,10 @@ public class Film {
     * @param  film_expected_popularity  expected popularity of the film.
     * @param  film_avaliability_date    the availability date of the film.
     */
-    public Film(String film_title, String film_director, String film_bbfc_rating, Date film_avaliability_date) throws IllegalArgumentException
+    public Film(int film_id, String film_title, String film_director, String film_bbfc_rating, Date film_avaliability_date) throws IllegalArgumentException
     {
         // Set all the required information
+        this.film_id = film_id;
         this.setTitle(film_title);
         this.setDirector(film_director);
         this.setBBFCRating(film_bbfc_rating);
@@ -109,7 +112,7 @@ public class Film {
     *
     * @param      film length.
     */
-    public void setLength(Time length) throws Exception
+    public void setLength(Time length)
     {
         this.film_length = length;
     }
@@ -138,6 +141,15 @@ public class Film {
     {
         // Set the films availability date
         this.film_avaliability_date = film_avaliability_date;
+    }
+
+    /**
+     * Returns the ID of the film
+     *
+     * @return
+     */
+    public int getID(){
+        return this.film_id;
     }
 
     /**

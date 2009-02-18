@@ -11,16 +11,43 @@
 
 package cinemacontroller.gui;
 
+import cinemacontroller.filmcontroller.Film;
+import cinemacontroller.screensystem.Screen;
+import cinemacontroller.screensystem.Screening;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import timeanddate.Date;
+import timeanddate.Time;
+
 /**
  *
  * @author Scott
  */
 public class CreateNewScreening extends javax.swing.JFrame {
 
+    private MainWindow main_window;
+
     /** Creates new form CreateScreening2 */
-    public CreateNewScreening() {
+    public CreateNewScreening(MainWindow main_window) {
+        this.main_window = main_window;
         initComponents();
+        
+        // Center align the login window
+        this.setLocationRelativeTo(null);
+        
+        for(Film current_film : main_window.core_controller.film_manager.getAllFilms()){
+            this.film_combo.addItem(current_film.getTitle());
+        }
+
+
+        for(Screen current_screen : main_window.core_controller.screen_manager.getScreens()){
+            this.screen_combo.addItem(current_screen.getIDNumber() + " (" + current_screen.getSeats() + " seater)");
+        }
+ 
     }
+
+  
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -38,22 +65,24 @@ public class CreateNewScreening extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        film_combo = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        screen_combo = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
+        time_hour = new javax.swing.JSpinner();
+        time_min = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        jSpinner3 = new javax.swing.JSpinner();
-        jComboBox3 = new javax.swing.JComboBox();
+        date = new javax.swing.JSpinner();
+        time_amorpm = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox();
         jButton3 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(closeWindow());
+        setTitle("Create New Screening - Multiplex Management System");
+        setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/application_add.png")));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(24, 24, 24));
@@ -99,16 +128,17 @@ public class CreateNewScreening extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cancel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Film");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Silent Hill (PG)" }));
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Screen");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Screen 1 (500 seats) - Recommended" }));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Time");
@@ -116,15 +146,15 @@ public class CreateNewScreening extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Date");
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 23, 1));
+        time_hour.setModel(new javax.swing.SpinnerNumberModel(1, 1, 23, 1));
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(1, 1, 59, 1));
+        time_min.setModel(new javax.swing.SpinnerNumberModel(1, 1, 59, 1));
 
         jLabel6.setText(":");
 
-        jSpinner3.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1234398720000L), new java.util.Date(1234398720000L), new java.util.Date(1237336320000L), java.util.Calendar.DAY_OF_WEEK));
+        date.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1234398720000L), new java.util.Date(1234398720000L), new java.util.Date(1237336320000L), java.util.Calendar.DAY_OF_WEEK));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AM", "PM" }));
+        time_amorpm.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AM", "PM" }));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("Additional Settings");
@@ -145,22 +175,22 @@ public class CreateNewScreening extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 447, Short.MAX_VALUE)
+                    .addComponent(film_combo, javax.swing.GroupLayout.Alignment.LEADING, 0, 447, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 447, Short.MAX_VALUE)
+                    .addComponent(screen_combo, javax.swing.GroupLayout.Alignment.LEADING, 0, 447, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(time_hour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(time_min, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(time_amorpm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -169,7 +199,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-                    .addComponent(jSpinner3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(date, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -179,23 +209,23 @@ public class CreateNewScreening extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(film_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(screen_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(time_hour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(time_min, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(time_amorpm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -214,18 +244,42 @@ public class CreateNewScreening extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // this.window.addTimetableItem(this.jComboBox_film.getSelectedItem().toString(), new Point(3,this.window.calculateStartingColumn(hours, mins)), 4, Color.green, Color.black);
-       // this.window.refreshTimetable();
+        try {
+            
+            
+            
+            Screening new_screening = new Screening(main_window.core_controller.film_manager.getFilmByTitle(this.film_combo.getSelectedItem().toString()),
+                                                    new Date(12, 12, 2009),
+                                                    new Time(Integer.parseInt(this.time_hour.getValue().toString()), Integer.parseInt(this.time_min.getValue().toString())));
+            
+            main_window.core_controller.screen_manager.getScreen(1).addScreening(new_screening);
+            
+            this.main_window.refreshTimetable();
+
+            
+
+            System.out.println(main_window.core_controller.screen_manager.getScreen(1).getScreenings().size());
+        } catch (Exception ex) {
+            Logger.getLogger(CreateNewScreening.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        main_window.setEnabled(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public int closeWindow(){
+        main_window.setEnabled(true);
+        return 0;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSpinner date;
+    private javax.swing.JComboBox film_combo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -237,10 +291,11 @@ public class CreateNewScreening extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
     private javax.swing.JTextPane jTextPane_date_description;
+    private javax.swing.JComboBox screen_combo;
+    private javax.swing.JComboBox time_amorpm;
+    private javax.swing.JSpinner time_hour;
+    private javax.swing.JSpinner time_min;
     // End of variables declaration//GEN-END:variables
 
 }

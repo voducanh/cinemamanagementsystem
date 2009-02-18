@@ -54,6 +54,7 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Please Login - Multiplex Management System");
+        setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/lock.png")));
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
@@ -96,6 +97,10 @@ public class Login extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Password");
+
+        jTextField1.setText("scott");
+
+        jTextField2.setText("testtest");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
