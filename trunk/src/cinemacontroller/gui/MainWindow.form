@@ -163,10 +163,8 @@
             </Container>
             <Component class="javax.swing.JComboBox" name="timetable_date_picker_combo">
               <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="1">
-                    <StringItem index="0" value="Monday 12th of Decement 2008"/>
-                  </StringArray>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="new javax.swing.DefaultComboBoxModel(new String[] {(getDates(0)),(getDates(1)),(getDates(2)),(getDates(3)),(getDates(4)),(getDates(5)),(getDates(6))})" type="code"/>
                 </Property>
               </Properties>
             </Component>

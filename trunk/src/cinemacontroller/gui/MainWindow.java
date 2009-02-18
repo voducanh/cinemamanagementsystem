@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import java.util.Calendar;
 
 
 /**
@@ -163,7 +164,14 @@ public class MainWindow extends javax.swing.JFrame {
         this.timetable_control.repaint();
     }
 
-
+    private String getDates(int offsetter) {
+        String DATE_FORMAT = "EEEE dd MMMM yyyy";
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(DATE_FORMAT);
+        Calendar c1 = Calendar.getInstance();
+        c1.add(Calendar.DATE, offsetter);
+        String adDate = (sdf.format(c1.getTime()));
+        return (adDate);
+    }
 
 
 
@@ -235,7 +243,7 @@ public class MainWindow extends javax.swing.JFrame {
         timetable_scroll_pane.setBorder(null);
         timetable_scroll_pane.setForeground(new java.awt.Color(255, 153, 0));
 
-        timetable_date_picker_combo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Monday 12th of Decement 2008" }));
+        timetable_date_picker_combo.setModel(new javax.swing.DefaultComboBoxModel(new String[] {(getDates(0)),(getDates(1)),(getDates(2)),(getDates(3)),(getDates(4)),(getDates(5)),(getDates(6))}));
 
         javax.swing.GroupLayout timetable_panelLayout = new javax.swing.GroupLayout(timetable_panel);
         timetable_panel.setLayout(timetable_panelLayout);
@@ -499,9 +507,9 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void create_new_screening_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_buttonActionPerformed
-        CreateNewScreening create_screening_window = new CreateNewScreening(this);
-        create_screening_window.setVisible(true);
-        this.setEnabled(false);
+        //CreateNewScreening create_screening_window = new CreateNewScreening(this);
+        //create_screening_window.setVisible(true);
+        //this.setEnabled(false);
 }//GEN-LAST:event_create_new_screening_buttonActionPerformed
 
     private void about_menuitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_about_menuitemActionPerformed
