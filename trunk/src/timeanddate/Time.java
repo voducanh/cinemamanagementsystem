@@ -61,7 +61,7 @@ public class Time {
 	 * @return
 	 */
 	public int getMinute(){
-		return time.get(Calendar.MINUTE);
+   		return time.get(Calendar.MINUTE);
 	}
 	
 	/** 
@@ -82,6 +82,10 @@ public class Time {
 		this.time.set(Calendar.HOUR_OF_DAY, hours);
 		
 	}
+
+    public Calendar getCalendar(){
+        return this.time;
+    }
 	
 	/** 
 	 * Sets the current minutes.

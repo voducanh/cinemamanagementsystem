@@ -162,11 +162,6 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
             </Container>
             <Component class="javax.swing.JComboBox" name="timetable_date_picker_combo">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.DefaultComboBoxModel(new String[] {(getDates(0)),(getDates(1)),(getDates(2)),(getDates(3)),(getDates(4)),(getDates(5)),(getDates(6))})" type="code"/>
-                </Property>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -198,6 +193,7 @@
                               <Component id="film_summary_title_jlabel" alignment="0" pref="220" max="32767" attributes="0"/>
                               <Component id="most_popular_film_jlabel" alignment="0" pref="220" max="32767" attributes="0"/>
                               <Component id="least_popular_jlabel" alignment="0" pref="220" max="32767" attributes="0"/>
+                              <Component id="screenings_in_database_jlabel1" alignment="0" pref="220" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -214,7 +210,9 @@
                           <Component id="most_popular_film_jlabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="least_popular_jlabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="482" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="screenings_in_database_jlabel1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="462" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -241,6 +239,11 @@
                 <Component class="javax.swing.JLabel" name="least_popular_jlabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Least Popular Film: "/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="screenings_in_database_jlabel1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Screenings in Database:"/>
                   </Properties>
                 </Component>
               </SubComponents>

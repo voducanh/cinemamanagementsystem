@@ -231,5 +231,20 @@ public class Film {
     {
         return film_avaliability_date;
     }
+
+
+    /**
+     * Overrides toString to provide the title of the film.
+     * 
+     * @return
+     */
+    public String toString(){
+        return this.film_title;
+    }
+    
+    public static int generateID(){
+         java.sql.Timestamp  sqlDate = new java.sql.Timestamp(new java.util.Date().getTime());
+         return Integer.parseInt(sqlDate.toString());
+    }
  
 }

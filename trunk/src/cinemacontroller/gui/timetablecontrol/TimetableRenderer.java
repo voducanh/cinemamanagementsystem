@@ -5,6 +5,7 @@
 
 package cinemacontroller.gui.timetablecontrol;
 
+import cinemacontroller.screensystem.Screen;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -40,8 +41,8 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
     
         for(TimetableScreeningBox current_box : list_of_box_controls){
 
-        	
         	if(column == 0){
+                
                 JPanel box = new JPanel();
                 box.setLayout(new GridBagLayout());
                 GridBagConstraints c = new GridBagConstraints();
@@ -49,15 +50,20 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
                 
                 box.setBackground(new Color(228,227,227));
 
-                JLabel title_label = new JLabel((String)value);
+                // Cast the current object to Screen
+                Screen current_screen = (Screen)value;
+             
+                JLabel title_label = new JLabel("" + current_screen.getIDNumber());
                 title_label.setForeground(Color.black);
 
 
-                JLabel title_label2 = new JLabel((String)value);
+                JLabel title_label2 = new JLabel(" ");
                 title_label2.setForeground(Color.black);
 
-                
+
+                box.add(title_label2, c);
                 box.add(title_label, c);
+                
                 return box;
             }
 
@@ -99,7 +105,7 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
          JPanel cell = new JPanel();
          cell.setBackground(Color.white);
          cell.setForeground(Color.black);
-         cell.add(new JLabel((String)value));
+         cell.add(new JLabel(""));
 
                 
                 return cell;

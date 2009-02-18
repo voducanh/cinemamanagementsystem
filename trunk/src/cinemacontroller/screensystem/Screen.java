@@ -3,6 +3,7 @@ package cinemacontroller.screensystem;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import java.util.Random;
 import timeanddate.Time;
 
 
@@ -110,5 +111,17 @@ public class Screen {
 		// Return true if the screen is otherwise free
 		return true;
 	}
+
+    public String toString(){
+        return this.screen_seat_count + " seater. (ID = " + this.getIDNumber() +")";
+    }
+
+    public static int generateID(){
+
+        Random random = new Random();
+        int pick = random.nextInt(100000000);
+        
+        return pick;
+   }
 }
 

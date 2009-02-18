@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-import java.util.Calendar;
 
 
 /**
@@ -47,80 +46,24 @@ public class MainWindow extends javax.swing.JFrame {
         // Creates a new timetable control
         this.timetable_control = createTimetableControl();
 
+       // Update all the controls
+        this.updateSummaryPanel();
+
+        // Refresh timetable control
+        this.refreshTimetable();
+
         // Creates a scroll pane layout control and adds the timetable to it.
         ScrollPaneLayout layout = new ScrollPaneLayout();
         this.timetable_scroll_pane.setLayout(layout);
         this.timetable_scroll_pane.getViewport().add( timetable_control );
-        
-        // Add all internal items to timetable control
-        this.automatedGetScreeningsAddToTimetable();
 
-       // Update all the controls
-        this.updateSummaryPanel();
-
-        this.generateBoxControls();
-
-        this.refreshTimetable();
+      
     }
-
-    /**
-     * This function cycles through all the screens stored within the internal screen database, gets
-     * the relevant screenings and adds them to the timetable controller.
-     * TODO: There is an error with the "get end time" calculation. Also provide a function to get length from film
-     *       class directly.
-     */
-    public void automatedGetScreeningsAddToTimetable(){
-        int counter = 0;
-        Color color = new Color(76,166,207);
-    	// Cycles through all the screens stored on database
-        for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
-        	// Make sure the current screen actually have some screenings
-        	if(current_screen.getScreenings().size() > 0){
-        	// Cycle through all the screenings for each screen
-	          for(Screening current_screening : current_screen.getScreenings()){
-	        	  // Add each screening by creating a control and adding it to the list of controls
-	        	  
-                if(counter % 2 == 0){
-                    color = new Color(102,204,0);
-                }
-                if(counter % 3 == 0){
-                    color = new Color(204,0,255);
-                }
-                if(counter % 4 == 0){
-                    color = new Color(255,153,0);
-                }
-                if(counter % 5 == 0){
-                    color = new Color(76,166,207);
-                }
-
-
-                  list_of_box_controls.add(new TimetableScreeningBox(current_screening, color, Color.white, this.timetable_control, current_screen.getIDNumber()));
-                  counter++;
-	          }
-          }
-        }
-    }
-
-
-
-    public void updateSummaryPanel(){
-        this.films_in_database_jlabel.setText("Total Films in Database: " + this.core_controller.film_manager.getAllFilms().size());
-    }
-
-    /**
-     * Creates a new timetable item by taking a number of values and adding them to the timetable control
-     * as well as the internal film database.
-     * 
-     * @param title
-     * @param point
-     * @param length
-     * @param panelcolor
-     * @param textcolor
-     */
-    @SuppressWarnings("empty-statement")
-    public void addTimetableItem(String title, Point point, int length, Color panelcolor, Color textcolor){
 
  
+    public void updateSummaryPanel(){
+        this.films_in_database_jlabel.setText("Total Films in Database: " + this.core_controller.film_manager.getAllFilms().size());
+        this.screenings_in_database_jlabel1.setText("Screenings in Database: " + this.core_controller.screen_manager.getScreeningCount());
     }
 
 
@@ -129,12 +72,17 @@ public class MainWindow extends javax.swing.JFrame {
 
         Object[][] obj = new Object [this.core_controller.screen_manager.getScreens().size()][31];
 
-        for(int counter = 0; counter < this.core_controller.screen_manager.getScreens().size(); counter++){
-            obj[counter][0] = "" + (counter+1);
-            for(int counter2 = 1; counter2 < 31; counter2++){
-                obj[counter][counter2] = "";
+        int row_counter = 0;
+        for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
+            obj[row_counter][0] = current_screen;
+
+            for(int column_counter = 1; column_counter < 31; column_counter++){
+                obj[row_counter][column_counter] = null;
             }
+            
+            row_counter++;
         }
+
 
         TableModel timetable_model = new javax.swing.table.DefaultTableModel(
             obj,
@@ -166,8 +114,8 @@ public class MainWindow extends javax.swing.JFrame {
      * Refreshes the timetable control if modifications of the controls data have occured.
      */
     public void refreshTimetable(){
+
         this.generateBoxControls();
-        
         // Refreshes the timetable's renderer which draws all the films
         this.timetable_control.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_box_controls));
 
@@ -176,21 +124,11 @@ public class MainWindow extends javax.swing.JFrame {
         this.timetable_control.repaint();
     }
 
-    private String getDates(int offsetter) {
-        String DATE_FORMAT = "EEEE dd MMMM yyyy";
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(DATE_FORMAT);
-        Calendar c1 = Calendar.getInstance();
-        c1.add(Calendar.DATE, offsetter);
-        String adDate = (sdf.format(c1.getTime()));
-        return (adDate);
-    }
-
 
     public void generateBoxControls(){
   
             for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
                  for(Screening current_screening : current_screen.getScreenings()){
-                     System.out.println("Tester: " + current_screening.getStartTime().getHourOfDay());
                      this.list_of_box_controls.add(new TimetableScreeningBox(current_screening, new Color(125,10,200), new Color(0,0,255), this.timetable_control, current_screen.getIDNumber()));
                  }
             }
@@ -230,6 +168,7 @@ public class MainWindow extends javax.swing.JFrame {
         films_in_database_jlabel = new javax.swing.JLabel();
         most_popular_film_jlabel = new javax.swing.JLabel();
         least_popular_jlabel = new javax.swing.JLabel();
+        screenings_in_database_jlabel1 = new javax.swing.JLabel();
         actions_panel = new javax.swing.JPanel();
         toolbar = new javax.swing.JToolBar();
         create_new_screening_button = new javax.swing.JButton();
@@ -265,8 +204,6 @@ public class MainWindow extends javax.swing.JFrame {
         timetable_scroll_pane.setBorder(null);
         timetable_scroll_pane.setForeground(new java.awt.Color(255, 153, 0));
 
-        timetable_date_picker_combo.setModel(new javax.swing.DefaultComboBoxModel(new String[] {(getDates(0)),(getDates(1)),(getDates(2)),(getDates(3)),(getDates(4)),(getDates(5)),(getDates(6))}));
-
         javax.swing.GroupLayout timetable_panelLayout = new javax.swing.GroupLayout(timetable_panel);
         timetable_panel.setLayout(timetable_panelLayout);
         timetable_panelLayout.setHorizontalGroup(
@@ -290,7 +227,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jSplitPane_main.setRightComponent(timetable_panel);
 
-        film_summary_title_jlabel.setFont(new java.awt.Font("Tahoma", 1, 11));
+        film_summary_title_jlabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         film_summary_title_jlabel.setText("Film Summary");
 
         films_in_database_jlabel.setText("Films in Database: ");
@@ -298,6 +235,8 @@ public class MainWindow extends javax.swing.JFrame {
         most_popular_film_jlabel.setText("Most Popular Film: ");
 
         least_popular_jlabel.setText("Least Popular Film: ");
+
+        screenings_in_database_jlabel1.setText("Screenings in Database:");
 
         javax.swing.GroupLayout summary_panelLayout = new javax.swing.GroupLayout(summary_panel);
         summary_panel.setLayout(summary_panelLayout);
@@ -309,7 +248,8 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(films_in_database_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                     .addComponent(film_summary_title_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                     .addComponent(most_popular_film_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                    .addComponent(least_popular_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
+                    .addComponent(least_popular_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                    .addComponent(screenings_in_database_jlabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
                 .addContainerGap())
         );
         summary_panelLayout.setVerticalGroup(
@@ -323,7 +263,9 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(most_popular_film_jlabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(least_popular_jlabel)
-                .addContainerGap(482, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(screenings_in_database_jlabel1)
+                .addContainerGap(462, Short.MAX_VALUE))
         );
 
         overview_tabbed_pane.addTab("Summary", summary_panel);
@@ -529,9 +471,9 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void create_new_screening_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_buttonActionPerformed
-        //CreateNewScreening create_screening_window = new CreateNewScreening(this);
-        //create_screening_window.setVisible(true);
-        //this.setEnabled(false);
+        CreateNewScreening create_screening_window = new CreateNewScreening(this);
+        create_screening_window.setVisible(true);
+        
 }//GEN-LAST:event_create_new_screening_buttonActionPerformed
 
     private void about_menuitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_about_menuitemActionPerformed
@@ -592,6 +534,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuBar main_menu;
     private javax.swing.JLabel most_popular_film_jlabel;
     private javax.swing.JTabbedPane overview_tabbed_pane;
+    private javax.swing.JLabel screenings_in_database_jlabel1;
     private javax.swing.JLabel status_bar;
     private javax.swing.JPanel summary_panel;
     private javax.swing.JComboBox timetable_date_picker_combo;

@@ -2,6 +2,7 @@ package cinemacontroller.main;
 
 import cinemacontroller.filmcontroller.FilmManager;
 import cinemacontroller.rotationalsystem.RotationEngine;
+import cinemacontroller.screensystem.Screen;
 import cinemacontroller.screensystem.ScreenManager;
 
 /**

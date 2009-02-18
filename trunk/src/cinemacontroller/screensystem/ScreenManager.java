@@ -4,10 +4,7 @@ import cinemacontroller.filmcontroller.Film;
 import cinemacontroller.filmcontroller.FilmManager;
 import databasecontroller.MySQLController;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import timeanddate.Date;
 import timeanddate.Time;
 
@@ -96,7 +93,27 @@ public class ScreenManager {
 		return screens;
 	}
 
-    
+
+    public boolean checkScreenFree(Screen screen, Date date, Time start_time, Time end_time){
+
+          Screen current_screen = screen;
+
+              for(Screening current_screening : current_screen.getScreenings()){
+
+                  System.out.println(start_time.getCalendar().after(current_screening.getStartTime().getCalendar()));
+                  System.out.println(start_time.getCalendar().before(current_screening.getEndTime().getCalendar()));
+
+                  if(start_time.getCalendar().after(current_screening.getStartTime().getCalendar()) && start_time.getCalendar().before(current_screening.getEndTime().getCalendar())) {
+
+                      return false;
+                  }
+
+              }
+
+
+          return true;
+    }
+
 
      public void getScreeningsFromDatabase(FilmManager films) {
         try {
@@ -114,7 +131,7 @@ public class ScreenManager {
                 while (result.next()) {
 
                     Film current_film = films.getFilmByID(result.getInt("film"));
-                    System.out.println(current_film.getTitle());
+                    //System.out.println(current_film.getTitle());
                     current_screen.addScreening(new Screening(current_film, new Date(12,12,2009), new Time(16,30)));
                 }
 
@@ -129,4 +146,13 @@ public class ScreenManager {
             System.out.println(e);
         }
     }
+
+
+     public int getScreeningCount(){
+         int counter = 0;
+         for(Screen current_screen : this.cinema_screens){
+             counter += current_screen.getScreenings().size();
+         }
+         return counter;
+     }
 }
