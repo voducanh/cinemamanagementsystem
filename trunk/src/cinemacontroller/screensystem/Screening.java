@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import timeanddate.Date;
 import timeanddate.Time;
 import cinemacontroller.filmcontroller.Film;
+import java.awt.Color;
 
 /**
  * Screening Class
@@ -21,6 +22,7 @@ public class Screening {
 
 	private Film screening_film;
 	private GregorianCalendar screening_date;
+    private Color background_color;
 	
 	/**
 	 * Constructor for the Screening class. Sets up the state of the screening.
@@ -66,7 +68,15 @@ public class Screening {
 		this.screening_date.set(Calendar.HOUR_OF_DAY, start_time.getHourOfDay());
 		this.screening_date.set(Calendar.MINUTE, start_time.getMinute());
 	}
-	
+
+
+    public void setColor(Color color){
+        this.background_color = color;
+    }
+
+    public Color getColor(){
+        return this.background_color;
+    }
 	
 	/**
 	 * Returns the date at which the screening will be shown.
@@ -95,8 +105,8 @@ public class Screening {
 
 		Time film_end_time = screening_film.getLength();
 
-		film_end_time.setHourOfDay(screening_film.getLength().getHourOfDay() + this.screening_date.get(Calendar.HOUR_OF_DAY));
-		film_end_time.setMinute(screening_film.getLength().getMinute() + this.screening_date.get(Calendar.MINUTE));
+        film_end_time.getCalendar().add(Calendar.HOUR_OF_DAY, this.screening_date.get(Calendar.HOUR_OF_DAY));
+        film_end_time.getCalendar().add(Calendar.MINUTE, this.screening_date.get(Calendar.MINUTE));
 		
 		return film_end_time;
 		

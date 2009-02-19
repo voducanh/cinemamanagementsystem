@@ -5,6 +5,7 @@ import cinemacontroller.filmcontroller.FilmManager;
 import databasecontroller.MySQLController;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import timeanddate.Date;
 import timeanddate.Time;
 
@@ -96,20 +97,23 @@ public class ScreenManager {
 
     public boolean checkScreenFree(Screen screen, Date date, Time start_time, Time end_time){
 
-          Screen current_screen = screen;
+        Screen current_screen = screen;
 
-              for(Screening current_screening : current_screen.getScreenings()){
+        for(Screening current_screening : current_screen.getScreenings()){
 
-                  System.out.println(start_time.getCalendar().after(current_screening.getStartTime().getCalendar()));
-                  System.out.println(start_time.getCalendar().before(current_screening.getEndTime().getCalendar()));
+            if((start_time.getCalendar().after(current_screening.getStartTime().getCalendar())) && (start_time.getCalendar().before(current_screening.getEndTime().getCalendar()))) {
+                return false;
+            }
 
-                  if(start_time.getCalendar().after(current_screening.getStartTime().getCalendar()) && start_time.getCalendar().before(current_screening.getEndTime().getCalendar())) {
+            if((end_time.getCalendar().after(current_screening.getStartTime().getCalendar())) && (end_time.getCalendar().before(current_screening.getEndTime().getCalendar()))) {
+                return false;
+            }
 
-                      return false;
-                  }
+            if(end_time.getCalendar().equals(current_screening.getStartTime().getCalendar()) || end_time.getCalendar().equals(current_screening.getEndTime().getCalendar())){
+                return false;
+            }
 
-              }
-
+        }
 
           return true;
     }

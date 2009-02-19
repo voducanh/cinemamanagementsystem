@@ -20,7 +20,6 @@ public class Film {
     private String film_director;
     private String film_bbfc_rating;
 
-    private double film_ticket_price;
     private int film_expected_viewings_per_day;
 
     private Time film_length;
@@ -118,21 +117,6 @@ public class Film {
     }
 
     /**
-    * Simply sets the ticket price of the film.
-    *
-    * @param      film ticket price.
-    */
-    public void setTicketPrice(double film_ticket_price) throws Exception
-    {
-        if (film_ticket_price < 1)
-        {
-            throw new Exception();
-        }
-
-        this.film_ticket_price = film_ticket_price;
-    }
-
-    /**
     * Sets the current film's availability date.
     * 
     * @param  film_avaliability_date  the new availability date of the film.
@@ -199,27 +183,9 @@ public class Film {
     */
     public Time getLength()
     {
-        return this.film_length;
-    }
+        Time return_time = new Time(2,30);
 
-    /**
-    * Returns the ticket price of the current film.
-    *
-    * @return      the ticket price.
-    */
-    public double getTickePrice()
-    {
-        return this.film_ticket_price;
-    }
-    
-    /**
-    * Returns the total amount of money made from the showing of the film.
-    *
-    * @return      total money made from film.
-    */
-    public double getTotalProfits()
-    {
-        return this.film_ticket_price;
+        return return_time;
     }
 
     /**

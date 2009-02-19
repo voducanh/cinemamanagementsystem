@@ -2,6 +2,7 @@ package cinemacontroller.gui.timetablecontrol;
 
 import java.awt.Color;
 import cinemacontroller.screensystem.Screening;
+import java.util.Calendar;
 
 /**
  * Provides functionality of easy management of the box control. 
@@ -99,7 +100,7 @@ public class TimetableScreeningBox {
 		// Calculate the number of blocks per hour
 		int block_per_hour = Math.round((table.getTableColumns()) / table.getTableTotalHours());
 		// Calculate the block to start at
-        int block_length = (this.screening.getFilm().getLength().getHourOfDay() * block_per_hour);
+        int block_length = (this.screening.getFilm().getLength().getCalendar().get(Calendar.HOUR_OF_DAY) * block_per_hour);
         // Round to the nearest 'block'
         if(this.screening.getFilm().getLength().getMinute() >= 30){ block_length++; }
                 

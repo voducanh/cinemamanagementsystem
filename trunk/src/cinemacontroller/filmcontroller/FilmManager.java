@@ -56,11 +56,8 @@ public class FilmManager {
 		Film new_film = new Film(this.generateID(), film_title, film_director, film_bbfc_rating, film_available_date);
 		
 		// Set some information related to the film
-		new_film.setLength(film_length);
+		new_film.setLength(new Time(2,30));
 		new_film.setExpectedAudienceFigures(film_expected_views_per_day);
-		
-		// Set the film ticket price
-		new_film.setTicketPrice(film_ticket_price);
 		
 		// Add the film to the film manager's internal database
 		this.cinema_film_list.add(new_film);

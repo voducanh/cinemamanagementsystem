@@ -6,7 +6,10 @@ import cinemacontroller.screensystem.Screen;
 import cinemacontroller.screensystem.Screening;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -57,7 +60,18 @@ public class MainWindow extends javax.swing.JFrame {
         this.timetable_scroll_pane.setLayout(layout);
         this.timetable_scroll_pane.getViewport().add( timetable_control );
 
-      
+
+        this.timetable_control.addMouseListener(new MouseAdapter(){
+ 
+                public void mouseClicked(MouseEvent mouseEvent) {
+                    int row = timetable_control.rowAtPoint(new Point(mouseEvent.getX(), mouseEvent.getY()));
+                    int col = timetable_control.columnAtPoint(new Point(mouseEvent.getX(), mouseEvent.getY()));
+
+                    JOptionPane.showMessageDialog(null, "Selected row: " + row + ". And Column: " + col, "Screen Unavailable", JOptionPane.WARNING_MESSAGE);
+
+                }
+        });
+
     }
 
  
@@ -129,7 +143,7 @@ public class MainWindow extends javax.swing.JFrame {
   
             for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
                  for(Screening current_screening : current_screen.getScreenings()){
-                     this.list_of_box_controls.add(new TimetableScreeningBox(current_screening, new Color(125,10,200), new Color(0,0,255), this.timetable_control, current_screen.getIDNumber()));
+                     this.list_of_box_controls.add(new TimetableScreeningBox(current_screening, current_screening.getColor(), new Color(255,255,255), this.timetable_control, current_screen.getIDNumber()));
                  }
             }
 
@@ -140,6 +154,7 @@ public class MainWindow extends javax.swing.JFrame {
 
 
 
+    
 
 
 
@@ -202,7 +217,7 @@ public class MainWindow extends javax.swing.JFrame {
         jSplitPane_main.setDividerSize(0);
 
         timetable_scroll_pane.setBorder(null);
-        timetable_scroll_pane.setForeground(new java.awt.Color(255, 153, 0));
+        timetable_scroll_pane.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout timetable_panelLayout = new javax.swing.GroupLayout(timetable_panel);
         timetable_panel.setLayout(timetable_panelLayout);
@@ -227,7 +242,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jSplitPane_main.setRightComponent(timetable_panel);
 
-        film_summary_title_jlabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        film_summary_title_jlabel.setFont(new java.awt.Font("Tahoma", 1, 11));
         film_summary_title_jlabel.setText("Film Summary");
 
         films_in_database_jlabel.setText("Films in Database: ");
@@ -495,6 +510,7 @@ public class MainWindow extends javax.swing.JFrame {
 }//GEN-LAST:event_view_actions_jbuttonActionPerformed
 
     private void view_statistical_data_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_statistical_data_jbuttonActionPerformed
+        this.generateBoxControls();
         this.refreshTimetable();
 }//GEN-LAST:event_view_statistical_data_jbuttonActionPerformed
 

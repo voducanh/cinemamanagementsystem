@@ -38,7 +38,8 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
         // Create a default cell component
         Component cell_component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         cell_component.setBackground(Color.white);
-    
+        cell_component.setForeground(Color.black);
+
         for(TimetableScreeningBox current_box : list_of_box_controls){
 
         	if(column == 0){
@@ -82,7 +83,7 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
                 JLabel title_null = new JLabel(" ");
                 title_null.setForeground(current_box.getBoxForegroundColor());
 
-                JLabel time_label = new JLabel(current_box.getScreening().getStartTime().toString());
+                JLabel time_label = new JLabel(current_box.getScreening().getStartTime().toString() + " - " + current_box.getScreening().getEndTime().toString());
                 time_label.setForeground(current_box.getBoxForegroundColor());
                 
                 title_label.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -105,7 +106,7 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
          JPanel cell = new JPanel();
          cell.setBackground(Color.white);
          cell.setForeground(Color.black);
-         cell.add(new JLabel(""));
+         cell.add(new JLabel());
 
                 
                 return cell;

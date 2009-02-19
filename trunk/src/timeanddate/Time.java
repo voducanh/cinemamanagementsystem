@@ -97,6 +97,18 @@ public class Time {
 	}
 	
 	public String toString(){
-		return this.getHourOfDay() + "" + this.getMinute();
+
+        String hourZero = "";
+        String minZero = "";
+        
+        if(this.getHourOfDay() < 10){
+            hourZero = "0";
+        }
+
+        if(this.getMinute() < 10){
+            minZero = "0";
+        }
+
+		return hourZero + this.getHourOfDay() + "" + minZero + this.getMinute();
 	}
 }

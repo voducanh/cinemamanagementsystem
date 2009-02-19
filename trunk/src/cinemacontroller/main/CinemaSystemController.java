@@ -27,7 +27,7 @@ public class CinemaSystemController {
         // Setup all the cinema screens
         this.setupCinemaScreens();
 
-        screen_manager.getScreeningsFromDatabase(film_manager);
+        // screen_manager.getScreeningsFromDatabase(film_manager);
 	}
 
 	
@@ -62,6 +62,10 @@ public class CinemaSystemController {
 			id_counter++;
 		}
 	}
+
+    public void loadFilmsFromDatabase(){
+
+    }
 
 	
 }

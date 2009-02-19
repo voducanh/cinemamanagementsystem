@@ -14,6 +14,9 @@ package cinemacontroller.gui;
 import cinemacontroller.filmcontroller.Film;
 import cinemacontroller.screensystem.Screen;
 import cinemacontroller.screensystem.Screening;
+import java.awt.Color;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
 import timeanddate.Date;
 import timeanddate.Time;
 
@@ -73,7 +76,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
         time_amorpm = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox();
+        color_picker = new javax.swing.JComboBox();
         jButton3 = new javax.swing.JButton();
         date_day = new javax.swing.JComboBox();
         date_month = new javax.swing.JComboBox();
@@ -158,7 +161,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Timetable Color:");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blue", "Red", "Green", "Orange", "Yellow", "Black" }));
+        color_picker.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blue", "Red", "Green", "Orange", "Yellow", "Black" }));
 
         jButton3.setText("Color Chooser");
 
@@ -197,7 +200,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox4, 0, 190, Short.MAX_VALUE)
+                        .addComponent(color_picker, 0, 190, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
@@ -241,7 +244,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(color_picker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -255,40 +258,31 @@ public class CreateNewScreening extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       
+        // Get the selected film and screen
+        Film selected_film = (Film)this.film_combo.getSelectedItem();
+        Screen selected_screen = (Screen)this.screen_combo.getSelectedItem();
 
-            Film selected_film = (Film)this.film_combo.getSelectedItem();
-            Screen selected_screen = (Screen)this.screen_combo.getSelectedItem();
+        // Check to see if the screen is free for the selected new screening
+        if(this.main_window.core_controller.screen_manager.checkScreenFree(selected_screen, this.getSelectedDate(), this.getSelectedTime(), this.getEndTimeFromSelectedTime(selected_film)) == true){
 
-            int day = Integer.parseInt(this.date_day.getSelectedItem().toString());
-            int month = Integer.parseInt(this.date_month.getSelectedItem().toString());
-            int year = Integer.parseInt(this.date_year.getSelectedItem().toString());
+            // Create a new screening
+            Screening new_screening = new Screening(selected_film, this.getSelectedDate(), this.getSelectedTime());
+            new_screening.setColor(this.getSelectedColor());
 
-            int start_hour = Integer.parseInt(this.time_hour.getValue().toString());
-            int start_min = Integer.parseInt(this.time_min.getValue().toString());
+            // Add the new screening to the screen manager
+            main_window.core_controller.screen_manager.getScreen(selected_screen.getIDNumber()).addScreening(new_screening);
 
-            int end_hour = selected_film.getLength().getHourOfDay();
-            int end_min = selected_film.getLength().getMinute();
+            // Updates the main window with the new screening information
+            this.main_window.refreshTimetable();
+            this.main_window.updateSummaryPanel();
 
-            end_hour = end_hour + start_hour;
-            end_min = end_min + start_min;
+            // Close the current window
+            this.dispose();
 
-
-
-            Date check_date = new Date(day, month, year);
-            Time start_time = new Time(start_hour, start_min);
-            Time end_time = new Time(end_hour, end_min);
-
-            if(this.main_window.core_controller.screen_manager.checkScreenFree(selected_screen, check_date, start_time, end_time) == true){
-                System.out.println("Screen Available");
-
-                Screening new_screening = new Screening(selected_film, check_date, start_time);
-
-                main_window.core_controller.screen_manager.getScreen(selected_screen.getIDNumber()).addScreening(new_screening);
-             //   this.main_window.refreshTimetable();
-                this.main_window.updateSummaryPanel();
-              
-      
-            }
+        }else{
+            // Show a warning dialog because the screen is booked at requested times
+            JOptionPane.showMessageDialog(null, "Sorry but the screen is already running a screening at the selected times.\nPlease select an alternative screen or time.", "Screen Unavailable", JOptionPane.WARNING_MESSAGE);
+        }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -297,8 +291,81 @@ public class CreateNewScreening extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * Returns the selected data from the date picker.
+     *
+     * @return
+     */
+    public Date getSelectedDate(){
+        int day = Integer.parseInt(this.date_day.getSelectedItem().toString());
+        int month = Integer.parseInt(this.date_month.getSelectedItem().toString());
+        int year = Integer.parseInt(this.date_year.getSelectedItem().toString());
+        
+        return new Date(day, month, year);
+    }
+
+    /**
+     * Returns the selected time from the time picker
+     *
+     * @return
+     */
+    public Time getSelectedTime(){
+         int start_hour = Integer.parseInt(this.time_hour.getValue().toString());
+         int start_min = Integer.parseInt(this.time_min.getValue().toString());
+         
+         return new Time(start_hour, start_min);
+    }
+
+    /**
+     * Returns the selected color from the color picker.
+     * 
+     * @return
+     */
+    public Color getSelectedColor(){
+        Color selected_color = Color.darkGray;
+
+            if(this.color_picker.getSelectedItem().toString() == "Blue"){
+               selected_color = new Color(78, 128, 170);
+            }
+
+            if(this.color_picker.getSelectedItem().toString() == "Red"){
+               selected_color = new Color(208, 90, 90);
+            }
+
+            if(this.color_picker.getSelectedItem().toString() == "Green"){
+               selected_color = new Color(78, 173, 65);
+            }
+
+            if(this.color_picker.getSelectedItem().toString() == "Orange"){
+               selected_color = new Color(216, 145, 87);
+            }
+
+            if(this.color_picker.getSelectedItem().toString() == "Yellow"){
+               selected_color = new Color(217, 215, 26);
+            }
+
+            if(this.color_picker.getSelectedItem().toString() == "Black"){
+               selected_color = new Color(41, 41, 41);
+            }
+
+        return selected_color;
+    }
+
+    /**
+     * Calculates the end time for a film based on selected start time and film length.
+     * 
+     * @param selected_film
+     * @return
+     */
+    public Time getEndTimeFromSelectedTime(Film selected_film){
+        Time end_time = this.getSelectedTime();
+        end_time.getCalendar().add(Calendar.HOUR_OF_DAY, selected_film.getLength().getHourOfDay());
+        end_time.getCalendar().add(Calendar.MINUTE, selected_film.getLength().getMinute());
+        return end_time;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox color_picker;
     private javax.swing.JComboBox date_day;
     private javax.swing.JComboBox date_month;
     private javax.swing.JComboBox date_year;
@@ -306,7 +373,6 @@ public class CreateNewScreening extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
