@@ -33,7 +33,9 @@ public class TimetableScreeningBox {
 		this.table_row = table_row;
 		this.table = table;
 	}
-	
+
+
+
 	/**
 	 * Returns the screening associated with the box control.
 	 * 

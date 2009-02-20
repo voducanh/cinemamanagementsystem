@@ -113,7 +113,7 @@ public class Film {
     */
     public void setLength(Time length)
     {
-        this.film_length = length;
+        this.film_length = new Time(length);
     }
 
     /**

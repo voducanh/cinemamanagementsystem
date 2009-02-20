@@ -263,7 +263,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
         Screen selected_screen = (Screen)this.screen_combo.getSelectedItem();
 
         // Check to see if the screen is free for the selected new screening
-        if(this.main_window.core_controller.screen_manager.checkScreenFree(selected_screen, this.getSelectedDate(), this.getSelectedTime(), this.getEndTimeFromSelectedTime(selected_film)) == true){
+        if(this.main_window.core_controller.screen_manager.checkScreenFree(selected_screen, this.getSelectedDate(), this.getSelectedTime(), this.getEndTimeFromSelectedTime(selected_film))){
 
             // Create a new screening
             Screening new_screening = new Screening(selected_film, this.getSelectedDate(), this.getSelectedTime());

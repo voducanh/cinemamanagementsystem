@@ -82,6 +82,10 @@ public class MainWindow extends javax.swing.JFrame {
 
 
 
+    /**
+     * Returns a timetable component
+     * @return
+     */
     public TimetableTable createTimetableControl(){
 
         Object[][] obj = new Object [this.core_controller.screen_manager.getScreens().size()][31];
@@ -101,25 +105,27 @@ public class MainWindow extends javax.swing.JFrame {
         TableModel timetable_model = new javax.swing.table.DefaultTableModel(
             obj,
             new String [] {
-                "Screen #", "0900", "", "1000", "", "1100", "", "1200", "", "1300", "", "1400", "", "1500", "", "1600", "", "1700", "", "1800", "", "1900", "", "2000", "", "2100", "", "2200", "", "2300", ""
+                "Screen ID", "0900", "", "1000", "", "1100", "", "1200", "", "1300", "", "1400", "", "1500", "", "1600", "", "1700", "", "1800", "", "1900", "", "2000", "", "2100", "", "2200", "", "2300", ""
             }
         );
 
 
 
 
-
-        TimetableTable timetable = new TimetableTable( new TimetableItemCellSizer(this.list_of_box_controls), timetable_model, 12, 9);
+        // Create the timetable control
+        TimetableTable timetable = new TimetableTable(new TimetableItemCellSizer(this.list_of_box_controls), timetable_model, 12, 9);
+        // Set the default renderer for the timetable
         timetable.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_box_controls));
+        // Sets the row height
         timetable.setRowHeight(60);
+
+        // Disables resizing and reordering
         timetable.getTableHeader().setResizingAllowed(false);
         timetable.getTableHeader().setReorderingAllowed(false);
 
-        
+        // Sets the column model for the list of screens and sets the min width to 50px
         TableColumn col = timetable.getColumnModel().getColumn(0);
-        col.setMinWidth(50);
-
-        
+        col.setMinWidth(55);
 
         return timetable;
     }
@@ -128,7 +134,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Refreshes the timetable control if modifications of the controls data have occured.
      */
     public void refreshTimetable(){
-
+        // Create and add any new screenings to box controls
         this.generateBoxControls();
         // Refreshes the timetable's renderer which draws all the films
         this.timetable_control.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_box_controls));
@@ -139,18 +145,43 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
 
+    /**
+     * Generates all the box controls that represent a screening and adds it to the list of
+     * controls for the renderer to draw them.
+     */
     public void generateBoxControls(){
-  
-            for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
-                 for(Screening current_screening : current_screen.getScreenings()){
-                     this.list_of_box_controls.add(new TimetableScreeningBox(current_screening, current_screening.getColor(), new Color(255,255,255), this.timetable_control, current_screen.getIDNumber()));
-                 }
-            }
-
-        
+        // Cycles through each screen
+        for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
+            // Cycles through each screening of the current screen
+             for(Screening current_screening : current_screen.getScreenings()){
+                 // Creates a box control and adds it to the box control list
+                 this.list_of_box_controls.add(new TimetableScreeningBox(current_screening, current_screening.getColor(), new Color(255,255,255), this.timetable_control, this.getScreenRowNumber(current_screen.getIDNumber())));
+             }
+        }
     }
 
 
+    /**
+     * Returns the row number of the selected screen.
+     *
+     * @param screen_id
+     * @return
+     */
+    public int getScreenRowNumber(int screen_id){
+        // Cycle through all the rows of the table
+        for(int counter = 0; counter < this.timetable_control.getRowCount(); counter++){
+            // Get the value of the current cell
+            Object o = this.timetable_control.getValueAt(counter, 0);
+            // Cast the cell to a screen object
+            Screen row_value = (Screen)o;
+
+            // If the current row value is equal to what we are looking for return the row number
+            if(row_value.getIDNumber() == screen_id){
+                return counter;
+            }
+        }
+        return 0;
+    }
 
 
 

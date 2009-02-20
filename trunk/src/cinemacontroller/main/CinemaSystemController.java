@@ -40,25 +40,25 @@ public class CinemaSystemController {
 		
 		// Setup all the thousand seater screens
 		for(int counter = 0; counter < 2; counter++){
-			this.screen_manager.addNewScreen(id_counter, 1000);
+			this.screen_manager.addNewScreen(Screen.generateID(), 1000);
 			id_counter++;
 		}
 		
 		// Setup all the thousand seater screens
 		for(int counter = 0; counter < 4; counter++){
-			this.screen_manager.addNewScreen(id_counter, 500);
+			this.screen_manager.addNewScreen(Screen.generateID(), 500);
 			id_counter++;
 		}
 		
 		// Setup all the thousand seater screens
 		for(int counter = 0; counter < 4; counter++){
-			this.screen_manager.addNewScreen(id_counter, 200);
+			this.screen_manager.addNewScreen(Screen.generateID(), 200);
 			id_counter++;
 		}
 		
 		// Setup all the thousand seater screens
 		for(int counter = 0; counter < 2; counter++){
-			this.screen_manager.addNewScreen(id_counter, 100);
+			this.screen_manager.addNewScreen(Screen.generateID(), 100);
 			id_counter++;
 		}
 	}

@@ -40,20 +40,19 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
         cell_component.setBackground(Color.white);
         cell_component.setForeground(Color.black);
 
-        for(TimetableScreeningBox current_box : list_of_box_controls){
 
-        	if(column == 0){
-                
+        if(column == 0){
+
                 JPanel box = new JPanel();
                 box.setLayout(new GridBagLayout());
                 GridBagConstraints c = new GridBagConstraints();
                 c.anchor = GridBagConstraints.CENTER;
-                
+
                 box.setBackground(new Color(228,227,227));
 
                 // Cast the current object to Screen
                 Screen current_screen = (Screen)value;
-             
+
                 JLabel title_label = new JLabel("" + current_screen.getIDNumber());
                 title_label.setForeground(Color.black);
 
@@ -64,10 +63,11 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
 
                 box.add(title_label2, c);
                 box.add(title_label, c);
-                
+
                 return box;
             }
 
+        for(TimetableScreeningBox current_box : list_of_box_controls){
 
         	
             if(current_box.getTableRow() == row  && current_box.getStartColumn() == column){
