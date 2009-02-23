@@ -3,10 +3,6 @@ package databasecontroller;
 import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-
 /**
  * 
  * This class contains all the fetch, get and update commands to interface with the oracle
@@ -17,10 +13,10 @@ import javax.swing.JOptionPane;
  */
 
 public class MySQLController {
-	private String server_host;
-	private String server_username;
-	private String server_password;
-	private int server_port;
+    private String server_host;
+    private String server_username;
+    private String server_password;
+    private int server_port;
 
     private Connection connection_stream = null;
 	
@@ -33,18 +29,18 @@ public class MySQLController {
 	 * @param server_port
 	 */
 	public MySQLController() throws ClassNotFoundException, SQLException{
-		// Setup all the required settings for the controller to connect to
-		this.server_host = "localhost";
-		this.server_username = "root";
-		this.server_password = "";
-		this.server_port = 3306;
+            // Setup all the required settings for the controller to connect to
+            this.server_host = "localhost";
+            this.server_username = "root";
+            this.server_password = "";
+            this.server_port = 3306;
 
-        this.connect();
+            this.connect();
 	} 
 	
 	public void connect() throws ClassNotFoundException, SQLException{
-        Class.forName("com.mysql.jdbc.Driver");
-        this.connection_stream = DriverManager.getConnection("jdbc:mysql://localhost/cinemamanagementsystem", "root", "");
+            Class.forName("com.mysql.jdbc.Driver");
+            this.connection_stream = DriverManager.getConnection("jdbc:derby://localhost:1527/cinemamanagementsystem", "root", "");
 	}
 	
 	public void disconnect(){
@@ -52,13 +48,13 @@ public class MySQLController {
 	}
 	
 	public void putData(String query_string) throws SQLException{
-        Statement st = this.connection_stream.createStatement();
-        st.executeQuery(query_string);
+            Statement st = this.connection_stream.createStatement();
+            st.executeQuery(query_string);
 	}
 	
 	public ResultSet getData(String query_string) throws SQLException{
-        Statement st = this.connection_stream.createStatement();
-        return st.executeQuery(query_string);
+            Statement st = this.connection_stream.createStatement();
+            return st.executeQuery(query_string);
 	}
 	
 	public int countRows(String table_name){

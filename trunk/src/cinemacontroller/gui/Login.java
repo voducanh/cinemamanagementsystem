@@ -181,13 +181,7 @@ public class Login extends javax.swing.JFrame {
             MySQLController mysql_stream = new MySQLController();
             ResultSet result = mysql_stream.getData("SELECT * FROM `film_accounts` WHERE `username` = '" + this.jTextField1.getText() + "' AND `password` = '" + this.jTextField2.getText() + "';");
 
-            if (result.next() == false) {
-                JOptionPane.showMessageDialog(null, "Invalid username or password, please try again.", "Invalid Details", JOptionPane.WARNING_MESSAGE);
-            }else{
-                this.main_window.setEnabled(true);
-                this.dispose();
-            }
-
+        
 
         } catch (Exception e) {
             System.out.println(e.toString());
