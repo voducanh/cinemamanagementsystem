@@ -9,8 +9,10 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.CellEditor;
 import javax.swing.JOptionPane;
 import javax.swing.ScrollPaneLayout;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
@@ -60,18 +62,6 @@ public class MainWindow extends javax.swing.JFrame {
         this.timetable_scroll_pane.setLayout(layout);
         this.timetable_scroll_pane.getViewport().add( timetable_control );
 
-
-        this.timetable_control.addMouseListener(new MouseAdapter(){
- 
-                public void mouseClicked(MouseEvent mouseEvent) {
-                    int row = timetable_control.rowAtPoint(new Point(mouseEvent.getX(), mouseEvent.getY()));
-                    int col = timetable_control.columnAtPoint(new Point(mouseEvent.getX(), mouseEvent.getY()));
-
-                    JOptionPane.showMessageDialog(null, "Selected row: " + row + ". And Column: " + col, "Screen Unavailable", JOptionPane.WARNING_MESSAGE);
-
-                }
-        });
-
     }
 
  
@@ -95,7 +85,7 @@ public class MainWindow extends javax.swing.JFrame {
             obj[row_counter][0] = current_screen;
 
             for(int column_counter = 1; column_counter < 31; column_counter++){
-                obj[row_counter][column_counter] = null;
+                obj[row_counter][column_counter] = new String();
             }
             
             row_counter++;
@@ -123,10 +113,29 @@ public class MainWindow extends javax.swing.JFrame {
         timetable.getTableHeader().setResizingAllowed(false);
         timetable.getTableHeader().setReorderingAllowed(false);
 
+          
+                                    
+
         // Sets the column model for the list of screens and sets the min width to 50px
         TableColumn col = timetable.getColumnModel().getColumn(0);
         col.setMinWidth(55);
 
+        timetable.addMouseListener(new MouseAdapter(){
+
+            @Override
+                public void mouseClicked(MouseEvent mouseEvent) {
+                    int row = timetable_control.rowAtPoint(new Point(mouseEvent.getX(), mouseEvent.getY()));
+                    int col = timetable_control.columnAtPoint(new Point(mouseEvent.getX(), mouseEvent.getY()));
+
+                    Object obj = timetable_control.getValueAt(row, col);
+
+                    System.out.println(obj.toString());
+
+                    jPopupMenu1.show(timetable_control, mouseEvent.getX(), mouseEvent.getY());
+       
+                }
+        });
+        
         return timetable;
     }
 
@@ -140,8 +149,11 @@ public class MainWindow extends javax.swing.JFrame {
         this.timetable_control.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_box_controls));
 
         // Refresh the control components and redraw them
-        this.timetable_control.validate();
         this.timetable_control.repaint();
+        this.timetable_control.validate();
+
+        // Re-pack
+        this.pack();
     }
 
 
@@ -204,6 +216,11 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JSeparator();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jSplitPane_main = new javax.swing.JSplitPane();
         timetable_panel = new javax.swing.JPanel();
         timetable_scroll_pane = new javax.swing.JScrollPane();
@@ -238,6 +255,16 @@ public class MainWindow extends javax.swing.JFrame {
         edit_menu = new javax.swing.JMenu();
         help_menu = new javax.swing.JMenu();
         about_menuitem = new javax.swing.JMenuItem();
+
+        jMenuItem2.setText("Edit this Screening");
+        jPopupMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Delete this Screening");
+        jPopupMenu1.add(jMenuItem3);
+        jPopupMenu1.add(jSeparator4);
+
+        jMenuItem4.setText("View Screening Details");
+        jPopupMenu1.add(jMenuItem4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Multiplex Manager");
@@ -573,9 +600,14 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu help_menu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSplitPane jSplitPane_main;
     private javax.swing.JLabel least_popular_jlabel;
     private javax.swing.JMenuBar main_menu;

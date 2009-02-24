@@ -65,5 +65,10 @@ public class TimetableTable extends JTable {
     int y=super.rowAtPoint(p);
     return map.visibleCell(y,x);
   }
+
+  public boolean isCellEditable(int rowIndex, int mColIndex) {
+            return false;
+  }
+
   
 }

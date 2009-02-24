@@ -179,7 +179,7 @@ public class Login extends javax.swing.JFrame {
         try {
 
             MySQLController mysql_stream = new MySQLController();
-            ResultSet result = mysql_stream.getData("SELECT * FROM `film_accounts` WHERE `username` = '" + this.jTextField1.getText() + "' AND `password` = '" + this.jTextField2.getText() + "';");
+            ResultSet result = mysql_stream.getData("SELECT * FROM accounts WHERE username = '" + this.jTextField1.getText() + "' AND password = '" + this.jTextField2.getText() + "'");
 
         
 

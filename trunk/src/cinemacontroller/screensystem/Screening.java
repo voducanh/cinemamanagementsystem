@@ -120,4 +120,6 @@ public class Screening {
 	public Film getFilm(){
 		return this.screening_film;
 	}
+
+ 
 }

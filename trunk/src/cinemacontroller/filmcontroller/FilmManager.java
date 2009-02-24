@@ -31,7 +31,9 @@ public class FilmManager {
             // Get all the films stored in the database
             this.getFilmsFromDatabase();
 
-        } catch(Exception e){}
+        } catch(Exception e){
+            System.out.println("Unabled to load film information from database");
+        }
 	}
 
     public int generateID(){
@@ -137,7 +139,7 @@ public class FilmManager {
      * @throws java.sql.SQLException
      */
     public void getFilmsFromDatabase() throws ClassNotFoundException, SQLException {
-        String table_name = "film_main_database";
+        String table_name = "main_film_list";
 
         // Create a new mysql connection and query database
         MySQLController connection = new MySQLController();
@@ -145,8 +147,10 @@ public class FilmManager {
 
         // Populate the internal list of films by cycle through each film in database
         while(result.next()){
-            Date current_date = new Date(result.getInt("film_availability_date_day"), result.getInt("film_availability_date_month"), result.getInt("film_availability_date_year"));
-            Film current_film = new Film(result.getInt("film_id"), result.getString("film_title"), result.getString("film_director"), result.getString("film_bbfc_rating"), current_date);
+
+            java.sql.Date current_date = result.getDate("availability_date");
+            
+            Film current_film = new Film(result.getInt("uniqueid"), result.getString("title"), result.getString("director"), result.getString("bbfc"), new Date(current_date.getDay(), current_date.getMonth(), current_date.getYear()));
             current_film.setLength(new Time(2,30));
             cinema_film_list.add(current_film);
         }

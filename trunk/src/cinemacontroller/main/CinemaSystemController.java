@@ -4,6 +4,11 @@ import cinemacontroller.filmcontroller.FilmManager;
 import cinemacontroller.rotationalsystem.RotationEngine;
 import cinemacontroller.screensystem.Screen;
 import cinemacontroller.screensystem.ScreenManager;
+import cinemacontroller.screensystem.Screening;
+import databasecontroller.MySQLController;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 /**
  * Main controller class that deals with all the management of the cinema
@@ -19,53 +24,59 @@ public class CinemaSystemController {
 	public RotationEngine rotation_manager;
 	
 	public CinemaSystemController(){
-        // Initialize all the controllers that this controller allows access too
-		film_manager = new FilmManager();
-		rotation_manager = new RotationEngine();
-        screen_manager = new ScreenManager();
         
-        // Setup all the cinema screens
-        this.setupCinemaScreens();
+        // Initialize all the controllers that this controller allows access too
+        film_manager = new FilmManager();
+        rotation_manager = new RotationEngine();
+        screen_manager = new ScreenManager();
 
-        // screen_manager.getScreeningsFromDatabase(film_manager);
+
+        try {
+            // Setup all the cinema screens
+            this.loadScreensFromDatabase();
+        } catch(Exception e){ }
+
 	}
 
-	
-	/** 
-	 * This function's job is to setup all the screens that the cinema will have and add
-	 * them to the list of screens ArrayList.
-	 */
-	public void setupCinemaScreens(){
-		int id_counter = 1;
-		
-		// Setup all the thousand seater screens
-		for(int counter = 0; counter < 2; counter++){
-			this.screen_manager.addNewScreen(Screen.generateID(), 1000);
-			id_counter++;
-		}
-		
-		// Setup all the thousand seater screens
-		for(int counter = 0; counter < 4; counter++){
-			this.screen_manager.addNewScreen(Screen.generateID(), 500);
-			id_counter++;
-		}
-		
-		// Setup all the thousand seater screens
-		for(int counter = 0; counter < 4; counter++){
-			this.screen_manager.addNewScreen(Screen.generateID(), 200);
-			id_counter++;
-		}
-		
-		// Setup all the thousand seater screens
-		for(int counter = 0; counter < 2; counter++){
-			this.screen_manager.addNewScreen(Screen.generateID(), 100);
-			id_counter++;
-		}
-	}
 
     public void loadFilmsFromDatabase(){
 
     }
 
+    public void loadScreeningsFromDatabase() throws SQLException, ClassNotFoundException{
+        for(Screen current_screen : this.screen_manager.getScreens()){
+
+            // Create a new mysql connection and query database
+            MySQLController connection = new MySQLController();
+            ResultSet screenings = connection.getData("SELECT * FROM main_screening_list WHERE screen_id = '" + current_screen.getIDNumber() + "'");
+
+            // Populate the internal list of films by cycle through each film in database
+            while(screenings.next()){
+
+              //  Screening current_screeing = new Screening(this.film_manager.getFilmByID(screenings.getInt("film_id"), screenings.getDate("start_date"), screenings.getInt("film_id")));
+
+            }
+            
+        }
+    }
+
+    /**
+     * Connects to database containing all the screens and then loads them into the program.
+     * 
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
+     */
+    public void loadScreensFromDatabase() throws SQLException, ClassNotFoundException{
+        String table_name = "main_screen_list";
+
+        // Create a new mysql connection and query database
+        MySQLController connection = new MySQLController();
+        ResultSet result = connection.getData("SELECT * FROM `" + table_name + "`");
+
+        // Populate the internal list of films by cycle through each film in database
+        while(result.next()){
+            this.screen_manager.addNewScreen(result.getInt("uniqueid"), result.getInt("seat_count"));
+        }
+    }
 	
 }

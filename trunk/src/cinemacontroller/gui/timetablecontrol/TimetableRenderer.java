@@ -6,7 +6,6 @@
 package cinemacontroller.gui.timetablecontrol;
 
 import cinemacontroller.screensystem.Screen;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -106,7 +105,7 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
          JPanel cell = new JPanel();
          cell.setBackground(Color.white);
          cell.setForeground(Color.black);
-         cell.add(new JLabel());
+         cell.add(new JLabel(new String(" ")));
 
                 
                 return cell;

@@ -126,10 +126,10 @@ public class ScreenManager {
                 int unique_id = current_screen.getIDNumber();
 
 
-                String table_name = "screenings";
+                String table_name = "main_screenings_list";
                 // Create a new mysql connection and query database
                 MySQLController connection = new MySQLController();
-                ResultSet result = connection.getData("SELECT * FROM `" + table_name + "` WHERE `screen` = '" + unique_id + "';");
+                ResultSet result = connection.getData("SELECT * FROM " + table_name + " WHERE screen = '" + unique_id + "';");
                 // Populate the internal list of films by cycle through each film in database
                 while (result.next()) {
 
