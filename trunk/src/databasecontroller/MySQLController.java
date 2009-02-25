@@ -28,7 +28,7 @@ public class MySQLController {
 	 * @param server_password
 	 * @param server_port
 	 */
-	public MySQLController() throws ClassNotFoundException, SQLException{
+	/*public MySQLController() throws ClassNotFoundException, SQLException{
             // Setup all the required settings for the controller to connect to
             this.server_host = "localhost";
             this.server_username = "root";
@@ -36,7 +36,18 @@ public class MySQLController {
             this.server_port = 3306;
 
             this.connect();
+	} */
+	
+	public MySQLController() throws ClassNotFoundException, SQLException{
+		// Setup all the required settings for the controller to connect to Kyle's remote database
+		this.server_host = "217.174.249.239";
+		this.server_username = "kammakjuj1";
+		this.server_password = "testtest";
+		this.server_port = 3306;
+
+        this.connect();
 	} 
+
 	
 	public void connect() throws ClassNotFoundException, SQLException{
             Class.forName("com.mysql.jdbc.Driver");
