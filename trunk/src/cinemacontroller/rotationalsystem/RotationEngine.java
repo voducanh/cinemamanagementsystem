@@ -2,7 +2,6 @@ package cinemacontroller.rotationalsystem;
 
 import java.util.ArrayList;
 
-import timeanddate.Date;
 
 import cinemacontroller.filmcontroller.Film;
 

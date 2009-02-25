@@ -1,7 +1,7 @@
 package cinemacontroller.statisticalsystem;
 
 import cinemacontroller.filmcontroller.Film;
-import timeanddate.Date;
+import java.util.GregorianCalendar;
 
 /**
  * This class handles all the interactions that would come under statistical data.
@@ -56,7 +56,7 @@ public class StatisticController {
      * @param date
      * @return
      */
-    public Film getMostPopularFilmByDate(Date date){
+    public Film getMostPopularFilmByDate(GregorianCalendar date){
         return null;
     }
 
@@ -66,7 +66,7 @@ public class StatisticController {
      * @param date
      * @return
      */
-    public Film getLeastPopularFilmByDate(Date date){
+    public Film getLeastPopularFilmByDate(GregorianCalendar date){
         return null;
     }
 

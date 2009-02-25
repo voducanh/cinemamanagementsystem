@@ -5,10 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import timeanddate.Date;
-import timeanddate.Time;
 
 /**
  * Provides all the functionality required to maintain and manage a list of films
@@ -17,11 +16,11 @@ import timeanddate.Time;
  * @author Scott
  *
  */
-public class FilmManager {
+public class FilmController {
 	
 	private ArrayList<Film> cinema_film_list;
 	
-	public FilmManager(){
+	public FilmController(){
 
         // Create a new ArrayList which will store ALL the films the cinema can show
         cinema_film_list = new ArrayList<Film>();
@@ -54,11 +53,9 @@ public class FilmManager {
 	 * @param film_ticket_price
 	 * @throws Exception
 	 */
-	public void addFilmToCinema(String film_title, String film_director, String film_bbfc_rating, Date film_available_date, Time film_length, int film_expected_views_per_day, double film_ticket_price) throws Exception{
-		Film new_film = new Film(this.generateID(), film_title, film_director, film_bbfc_rating, film_available_date);
-		
-		// Set some information related to the film
-		new_film.setLength(new Time(2,30));
+	public void addFilmToCinema(String film_title, String film_director, String film_bbfc_rating, GregorianCalendar film_available_date, GregorianCalendar film_length, int film_expected_views_per_day, double film_ticket_price) throws Exception{
+ 
+        Film new_film = new Film(this.generateID(), film_title, film_director, film_bbfc_rating, film_length, film_available_date);
 		new_film.setExpectedAudienceFigures(film_expected_views_per_day);
 		
 		// Add the film to the film manager's internal database
@@ -149,9 +146,18 @@ public class FilmManager {
         while(result.next()){
 
             java.sql.Date current_date = result.getDate("availability_date");
+            java.sql.Time film_length_in_time = result.getTime("length");
+
+            // Get the availability date for the film
+            GregorianCalendar start_date = new GregorianCalendar();
+            start_date.setTimeInMillis(current_date.getTime());
+
+            // Get the film length
+            GregorianCalendar film_length = new GregorianCalendar();
+            film_length.setTimeInMillis(film_length_in_time.getTime());
+
             
-            Film current_film = new Film(result.getInt("uniqueid"), result.getString("title"), result.getString("director"), result.getString("bbfc"), new Date(current_date.getDay(), current_date.getMonth(), current_date.getYear()));
-            current_film.setLength(new Time(2,30));
+            Film current_film = new Film(result.getInt("uniqueid"), result.getString("title"), result.getString("director"), result.getString("bbfc"), film_length, start_date);
             cinema_film_list.add(current_film);
         }
     }
@@ -175,9 +181,9 @@ public class FilmManager {
             MySQLController connection = new MySQLController();
             connection.putData("INSERT INTO `film_main_database` VALUES ('','','','','','','','','')");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FilmManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FilmManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

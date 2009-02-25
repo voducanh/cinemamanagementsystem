@@ -181,10 +181,16 @@ public class Login extends javax.swing.JFrame {
             MySQLController mysql_stream = new MySQLController();
             ResultSet result = mysql_stream.getData("SELECT * FROM accounts WHERE username = '" + this.jTextField1.getText() + "' AND password = '" + this.jTextField2.getText() + "'");
 
-        
+            if(result.next()){
+                main_window.setEnabled(true);
+                this.dispose();
+            }else{
+               JOptionPane.showMessageDialog(null, "Sorry the username or password you entered are incorrect.", "Invalid Username or Password", JOptionPane.WARNING_MESSAGE);
+            }
+
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+           JOptionPane.showMessageDialog(null, "Sorry the username or password you entered are incorrect.", "Invalid Username or Password", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

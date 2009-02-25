@@ -10,8 +10,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -82,7 +87,7 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
                 JLabel title_null = new JLabel(" ");
                 title_null.setForeground(current_box.getBoxForegroundColor());
 
-                JLabel time_label = new JLabel(current_box.getScreening().getStartTime().toString() + " - " + current_box.getScreening().getEndTime().toString());
+                JLabel time_label = new JLabel(getFriendlyTime(current_box.getScreening().getStartTime()) + " - " + getFriendlyTime(current_box.getScreening().getEndTime()));
                 time_label.setForeground(current_box.getBoxForegroundColor());
                 
                 title_label.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -109,6 +114,12 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
 
                 
                 return cell;
+    }
+
+    public String getFriendlyTime(GregorianCalendar time){
+        Date daterr = time.getTime();
+        Format formatter = new SimpleDateFormat("hh:mm");
+        return formatter.format(daterr);
     }
 
 }

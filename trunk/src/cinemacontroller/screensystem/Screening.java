@@ -3,10 +3,9 @@ package cinemacontroller.screensystem;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import timeanddate.Date;
-import timeanddate.Time;
 import cinemacontroller.filmcontroller.Film;
 import java.awt.Color;
+import java.sql.Time;
 
 /**
  * Screening Class
@@ -22,14 +21,16 @@ public class Screening {
 
 	private Film screening_film;
 	private GregorianCalendar screening_date;
+    private GregorianCalendar screening_time;
     private Color background_color;
 	
 	/**
 	 * Constructor for the Screening class. Sets up the state of the screening.
 	 */
-	public Screening(Film film, Date screening_date, Time start_time){
+	public Screening(Film film, GregorianCalendar screening_date, GregorianCalendar start_time){
 		
         this.screening_date = new GregorianCalendar();
+        this.screening_time = new GregorianCalendar();
         this.screening_film = film;
 
 		// Sets the information about the screening.
@@ -51,11 +52,11 @@ public class Screening {
 	 * 
 	 * @param screening_date
 	 */
-	public void setDate(Date date){
+	public void setDate(GregorianCalendar date){
 		// Set the date for the screening
-		this.screening_date.set(Calendar.DAY_OF_MONTH, date.getDay());
-		this.screening_date.set(Calendar.MONTH, date.getMonth());
-		this.screening_date.set(Calendar.YEAR, date.getYear());
+		this.screening_date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+		this.screening_date.set(Calendar.MONTH, date.get(Calendar.MONTH));
+		this.screening_date.set(Calendar.YEAR, date.get(Calendar.YEAR));
 	}
 	
 	/**
@@ -64,9 +65,9 @@ public class Screening {
 	 * @param hours
 	 * @param mins
 	 */
-	public void setStartTime(Time start_time){		
-		this.screening_date.set(Calendar.HOUR_OF_DAY, start_time.getHourOfDay());
-		this.screening_date.set(Calendar.MINUTE, start_time.getMinute());
+	public void setStartTime(GregorianCalendar start_time){
+		this.screening_time.set(Calendar.HOUR_OF_DAY, start_time.get(Calendar.HOUR_OF_DAY));
+		this.screening_time.set(Calendar.MINUTE, start_time.get(Calendar.MINUTE));
 	}
 
 
@@ -83,8 +84,8 @@ public class Screening {
 	 * 
 	 * @return
 	 */
-	public Date getDate(){		
-		return new Date(this.screening_date.get(Calendar.DAY_OF_MONTH), this.screening_date.get(Calendar.MONTH), this.screening_date.get(Calendar.YEAR));
+	public GregorianCalendar getDate(){
+		return this.screening_date;
 	}
 	
 	/**
@@ -92,8 +93,9 @@ public class Screening {
 	 * 
 	 * @return
 	 */
-	public Time getStartTime(){
-		return new Time(this.screening_date.get(Calendar.HOUR_OF_DAY), this.screening_date.get(Calendar.MINUTE));
+	public GregorianCalendar getStartTime(){
+        
+		return this.screening_time;
 	}
 	
 	/**
@@ -101,12 +103,12 @@ public class Screening {
 	 * 
 	 * @return
 	 */
-	public Time getEndTime(){
+	public GregorianCalendar getEndTime(){
 
-		Time film_end_time = screening_film.getLength();
+		GregorianCalendar film_end_time = screening_film.getLength();
 
-        film_end_time.getCalendar().add(Calendar.HOUR_OF_DAY, this.screening_date.get(Calendar.HOUR_OF_DAY));
-        film_end_time.getCalendar().add(Calendar.MINUTE, this.screening_date.get(Calendar.MINUTE));
+        film_end_time.add(Calendar.HOUR_OF_DAY, this.screening_date.get(Calendar.HOUR_OF_DAY));
+        film_end_time.add(Calendar.MINUTE, this.screening_date.get(Calendar.MINUTE));
 		
 		return film_end_time;
 		

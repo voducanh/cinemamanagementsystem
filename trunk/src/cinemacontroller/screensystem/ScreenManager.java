@@ -1,12 +1,11 @@
 package cinemacontroller.screensystem;
 
 import cinemacontroller.filmcontroller.Film;
-import cinemacontroller.filmcontroller.FilmManager;
+import cinemacontroller.filmcontroller.FilmController;
 import databasecontroller.MySQLController;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import timeanddate.Date;
-import timeanddate.Time;
+import java.util.GregorianCalendar;
 
 /**
  * Provides functionality for managing the screen of the cinema.
@@ -94,21 +93,21 @@ public class ScreenManager {
 	}
 
 
-    public boolean checkScreenFree(Screen screen, Date date, Time start_time, Time end_time){
+    public boolean checkScreenFree(Screen screen, GregorianCalendar date, GregorianCalendar start_time, GregorianCalendar end_time){
 
         Screen current_screen = screen;
 
         for(Screening current_screening : current_screen.getScreenings()){
 
-            if((start_time.getCalendar().after(current_screening.getStartTime().getCalendar())) && (start_time.getCalendar().before(current_screening.getEndTime().getCalendar()))) {
+            if((start_time.after(current_screening.getStartTime())) && (start_time.before(current_screening.getEndTime()))) {
                 return false;
             }
 
-            if((end_time.getCalendar().after(current_screening.getStartTime().getCalendar())) && (end_time.getCalendar().before(current_screening.getEndTime().getCalendar()))) {
+            if((end_time.after(current_screening.getStartTime())) && (end_time.before(current_screening.getEndTime()))) {
                 return false;
             }
 
-            if(end_time.getCalendar().equals(current_screening.getStartTime().getCalendar()) || end_time.getCalendar().equals(current_screening.getEndTime().getCalendar())){
+            if(end_time.equals(current_screening.getStartTime()) || end_time.equals(current_screening.getEndTime())){
                 return false;
             }
 
@@ -118,7 +117,7 @@ public class ScreenManager {
     }
 
 
-     public void getScreeningsFromDatabase(FilmManager films) {
+     public void getScreeningsFromDatabase(FilmController films) {
         try {
 
 
@@ -134,8 +133,23 @@ public class ScreenManager {
                 while (result.next()) {
 
                     Film current_film = films.getFilmByID(result.getInt("film"));
+
+
+                    java.sql.Date current_date = result.getDate("date");
+                    java.sql.Time film_length_in_time = result.getTime("time");
+
+                    // Get the availability date for the film
+                    GregorianCalendar date = new GregorianCalendar();
+                    date.setTimeInMillis(current_date.getTime());
+
+                    // Get the film length
+                    GregorianCalendar time = new GregorianCalendar();
+                    time.setTimeInMillis(film_length_in_time.getTime());
+
+
+
                     //System.out.println(current_film.getTitle());
-                    current_screen.addScreening(new Screening(current_film, new Date(12,12,2009), new Time(16,30)));
+                    current_screen.addScreening(new Screening(current_film, date, time));
                 }
 
 

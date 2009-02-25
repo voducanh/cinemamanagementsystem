@@ -1,7 +1,8 @@
 package cinemacontroller.filmcontroller;
 
-import timeanddate.Date;
-import timeanddate.Time;
+import java.sql.Time;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Film Class
@@ -20,10 +21,10 @@ public class Film {
     private String film_director;
     private String film_bbfc_rating;
 
-    private int film_expected_viewings_per_day;
+    private int popularity;
 
-    private Time film_length;
-    private Date film_avaliability_date;
+    private GregorianCalendar film_length;
+    private GregorianCalendar film_avaliability_date;
 
     /**
     * Constructor for the film class, also provides functionality to set some
@@ -35,15 +36,17 @@ public class Film {
     * @param  film_expected_popularity  expected popularity of the film.
     * @param  film_avaliability_date    the availability date of the film.
     */
-    public Film(int film_id, String film_title, String film_director, String film_bbfc_rating, Date film_avaliability_date) throws IllegalArgumentException
+    public Film(int film_id, String film_title, String film_director, String film_bbfc_rating, GregorianCalendar length, GregorianCalendar film_avaliability_date) throws IllegalArgumentException
     {
         // Set all the required information
         this.film_id = film_id;
-        this.setTitle(film_title);
-        this.setDirector(film_director);
-        this.setBBFCRating(film_bbfc_rating);
-        this.setFilmavaliabilityDate(film_avaliability_date);
+        this.film_title = film_title;
+        this.film_director = film_director;
+        this.film_bbfc_rating = film_bbfc_rating;
+        this.film_avaliability_date = film_avaliability_date;
+        this.film_length = length;
     }
+
 
     /**
     * Sets the current films's title.
@@ -103,7 +106,7 @@ public class Film {
     public void setExpectedAudienceFigures(int film_expected_popularity) throws IllegalArgumentException
     {
         // Sets the films expected popularity
-        this.film_expected_viewings_per_day = film_expected_popularity;
+        this.popularity = film_expected_popularity;
     }
 
     /**
@@ -111,9 +114,15 @@ public class Film {
     *
     * @param      film length.
     */
-    public void setLength(Time length)
+    public void setLength(GregorianCalendar length)
     {
         this.film_length = length;
+    }
+
+    public void setLength(int hour, int min, int second){
+        this.film_length.set(Calendar.HOUR_OF_DAY, hour);
+        this.film_length.set(Calendar.MINUTE, min);
+        this.film_length.set(Calendar.SECOND, second);
     }
 
     /**
@@ -121,7 +130,7 @@ public class Film {
     * 
     * @param  film_avaliability_date  the new availability date of the film.
     */
-    public void setFilmavaliabilityDate(Date film_avaliability_date)
+    public void setFilmavaliabilityDate(GregorianCalendar film_avaliability_date)
     {
         // Set the films availability date
         this.film_avaliability_date = film_avaliability_date;
@@ -173,7 +182,7 @@ public class Film {
     */
     public int getExpectedAudienceFigures()
     {
-        return this.film_expected_viewings_per_day;
+        return this.popularity;
     }
 
     /**
@@ -181,11 +190,10 @@ public class Film {
     *
     * @return      expected length of the film.
     */
-    public Time getLength()
+    public GregorianCalendar getLength()
     {
-        Time return_time = new Time(2,30);
-
-        return return_time;
+        GregorianCalendar returnme = (GregorianCalendar) this.film_length.clone();
+        return returnme;
     }
 
     /**
@@ -193,7 +201,7 @@ public class Film {
     *
     * @return      the availability date of the film.
     */
-    public Date getAvaliabilityDate()
+    public GregorianCalendar getAvaliabilityDate()
     {
         return film_avaliability_date;
     }

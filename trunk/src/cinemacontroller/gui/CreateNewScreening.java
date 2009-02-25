@@ -16,9 +16,8 @@ import cinemacontroller.screensystem.Screen;
 import cinemacontroller.screensystem.Screening;
 import java.awt.Color;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
-import timeanddate.Date;
-import timeanddate.Time;
 
 /**
  *
@@ -296,12 +295,17 @@ public class CreateNewScreening extends javax.swing.JFrame {
      *
      * @return
      */
-    public Date getSelectedDate(){
+    public GregorianCalendar getSelectedDate(){
         int day = Integer.parseInt(this.date_day.getSelectedItem().toString());
         int month = Integer.parseInt(this.date_month.getSelectedItem().toString());
         int year = Integer.parseInt(this.date_year.getSelectedItem().toString());
-        
-        return new Date(day, month, year);
+
+        GregorianCalendar date = new GregorianCalendar();
+        date.set(Calendar.DATE, day);
+        date.set(Calendar.MONTH, month);
+        date.set(Calendar.YEAR, year);
+
+        return date;
     }
 
     /**
@@ -309,11 +313,15 @@ public class CreateNewScreening extends javax.swing.JFrame {
      *
      * @return
      */
-    public Time getSelectedTime(){
+    public GregorianCalendar getSelectedTime(){
          int start_hour = Integer.parseInt(this.time_hour.getValue().toString());
          int start_min = Integer.parseInt(this.time_min.getValue().toString());
-         
-         return new Time(start_hour, start_min);
+
+        GregorianCalendar time = new GregorianCalendar();
+        time.set(Calendar.HOUR_OF_DAY, start_hour);
+        time.set(Calendar.MINUTE, start_min);
+        
+         return time;
     }
 
     /**
@@ -357,10 +365,16 @@ public class CreateNewScreening extends javax.swing.JFrame {
      * @param selected_film
      * @return
      */
-    public Time getEndTimeFromSelectedTime(Film selected_film){
-        Time end_time = this.getSelectedTime();
-        end_time.getCalendar().add(Calendar.HOUR_OF_DAY, selected_film.getLength().getHourOfDay());
-        end_time.getCalendar().add(Calendar.MINUTE, selected_film.getLength().getMinute());
+    public GregorianCalendar getEndTimeFromSelectedTime(Film selected_film){
+        GregorianCalendar end_time = this.getSelectedTime();
+
+        GregorianCalendar end = new GregorianCalendar();
+        end.set(Calendar.HOUR, end_time.get(Calendar.HOUR_OF_DAY));
+        end.set(Calendar.MINUTE, end_time.get(Calendar.MINUTE));
+
+        end_time.add(Calendar.HOUR_OF_DAY, selected_film.getLength().get(Calendar.HOUR_OF_DAY));
+        end_time.add(Calendar.MINUTE, selected_film.getLength().get(Calendar.MINUTE));
+
         return end_time;
     }
 

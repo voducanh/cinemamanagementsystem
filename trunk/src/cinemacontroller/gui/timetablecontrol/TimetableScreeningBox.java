@@ -82,10 +82,10 @@ public class TimetableScreeningBox {
 	public int getStartColumn(){
 		// Calculate the number of blocks per hour
 		int block_per_hour = Math.round(table.getTableColumns() / table.getTableTotalHours());
-		// Calculate the block to start at
-        int starting_block = block_per_hour * (this.screening.getStartTime().getHourOfDay() - table.getTableStartHour());
+		// Calculate the block to sta at
+        int starting_block = block_per_hour * (this.screening.getStartTime().get(Calendar.HOUR_OF_DAY) - table.getTableStartHour());
         // Round to the nearest 'block'
-        if(this.screening.getStartTime().getMinute() >= 30){ starting_block++; }
+        if(this.screening.getStartTime().get(Calendar.MINUTE) >= 30){ starting_block++; }
         
         return starting_block + 1;
 	}
@@ -102,9 +102,9 @@ public class TimetableScreeningBox {
 		// Calculate the number of blocks per hour
 		int block_per_hour = Math.round((table.getTableColumns()) / table.getTableTotalHours());
 		// Calculate the block to start at
-        int block_length = (this.screening.getFilm().getLength().getCalendar().get(Calendar.HOUR_OF_DAY) * block_per_hour);
+        int block_length = (this.screening.getFilm().getLength().get(Calendar.HOUR_OF_DAY) * block_per_hour);
         // Round to the nearest 'block'
-        if(this.screening.getFilm().getLength().getMinute() >= 30){ block_length++; }
+        if(this.screening.getFilm().getLength().get(Calendar.MINUTE) >= 30){ block_length++; }
                 
         return block_length;
 	}

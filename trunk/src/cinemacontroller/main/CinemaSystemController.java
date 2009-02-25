@@ -1,10 +1,9 @@
 package cinemacontroller.main;
 
-import cinemacontroller.filmcontroller.FilmManager;
+import cinemacontroller.filmcontroller.FilmController;
 import cinemacontroller.rotationalsystem.RotationEngine;
 import cinemacontroller.screensystem.Screen;
 import cinemacontroller.screensystem.ScreenManager;
-import cinemacontroller.screensystem.Screening;
 import databasecontroller.MySQLController;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,13 +19,13 @@ import java.sql.SQLException;
  */
 public class CinemaSystemController {
 	public ScreenManager screen_manager;
-	public FilmManager film_manager;
+	public FilmController film_manager;
 	public RotationEngine rotation_manager;
 	
 	public CinemaSystemController(){
         
         // Initialize all the controllers that this controller allows access too
-        film_manager = new FilmManager();
+        film_manager = new FilmController();
         rotation_manager = new RotationEngine();
         screen_manager = new ScreenManager();
 

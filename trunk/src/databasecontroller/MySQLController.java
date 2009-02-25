@@ -40,7 +40,7 @@ public class MySQLController {
 	
 	public void connect() throws ClassNotFoundException, SQLException{
             Class.forName("com.mysql.jdbc.Driver");
-            this.connection_stream = DriverManager.getConnection("jdbc:derby://localhost:1527/cinemamanagementsystem", "root", "");
+            this.connection_stream = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinemamanagementsystem", "root", "");
 	}
 	
 	public void disconnect(){
