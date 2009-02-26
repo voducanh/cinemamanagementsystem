@@ -14,9 +14,11 @@ import java.sql.SQLException;
 
 public class MySQLController {
     private String server_host;
+    private String database_name;
     private String server_username;
     private String server_password;
-    private int server_port;
+    private String server_url;
+    //private int server_port;
 
     private Connection connection_stream = null;
 	
@@ -41,17 +43,31 @@ public class MySQLController {
 	public MySQLController() throws ClassNotFoundException, SQLException{
 		// Setup all the required settings for the controller to connect to Kyle's remote database
 		this.server_host = "217.174.249.239";
+		this.database_name = "kammakjuj1";
 		this.server_username = "kammakjuj1";
 		this.server_password = "testtest";
-		this.server_port = 3306;
+		this.server_url = "jdbc:mysql://"+server_host+"/"+database_name;
+		//this.server_port = 3306;
 
         this.connect();
 	} 
 
 	
-	public void connect() throws ClassNotFoundException, SQLException{
+	/*public void connect() throws ClassNotFoundException, SQLException{
             Class.forName("com.mysql.jdbc.Driver");
             this.connection_stream = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinemamanagementsystem", "root", "");
+	}*/
+	
+	public void connect() throws ClassNotFoundException, SQLException{
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			this.connection_stream = DriverManager.getConnection(server_url, server_username,server_password);
+		
+		}catch (ClassNotFoundException e){
+			//Could not find the database driver
+		}catch (SQLException e){
+			//Could not connect to the database
+		}
 	}
 	
 	public void disconnect(){
