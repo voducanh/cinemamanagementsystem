@@ -12,11 +12,19 @@
 package cinemacontroller.gui;
 
 import cinemacontroller.filmcontroller.Film;
+import cinemacontroller.gui.timetablecontrol.TimetableColor;
 import cinemacontroller.screensystem.Screen;
 import cinemacontroller.screensystem.Screening;
+import databasecontroller.MySQLController;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -35,7 +43,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
         // Center align the login window
         this.setLocationRelativeTo(null);
         
-        for(Film current_film : main_window.core_controller.film_manager.getAllFilms()){
+        for(Film current_film : main_window.core_controller.film_manager.getFilms()){
             this.film_combo.addItem(current_film);
         }
 
@@ -72,11 +80,9 @@ public class CreateNewScreening extends javax.swing.JFrame {
         time_hour = new javax.swing.JSpinner();
         time_min = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        time_amorpm = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         color_picker = new javax.swing.JComboBox();
-        jButton3 = new javax.swing.JButton();
         date_day = new javax.swing.JComboBox();
         date_month = new javax.swing.JComboBox();
         date_year = new javax.swing.JComboBox();
@@ -117,7 +123,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap(243, Short.MAX_VALUE))
         );
 
         jButton1.setText("Create Screening");
@@ -134,13 +140,13 @@ public class CreateNewScreening extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Film");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Screen");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Time");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -152,17 +158,13 @@ public class CreateNewScreening extends javax.swing.JFrame {
 
         jLabel6.setText(":");
 
-        time_amorpm.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AM", "PM" }));
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("Additional Settings");
 
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel8.setText("Timetable Color:");
 
         color_picker.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blue", "Red", "Green", "Orange", "Yellow", "Black" }));
-
-        jButton3.setText("Color Chooser");
 
         date_day.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
@@ -177,38 +179,41 @@ public class CreateNewScreening extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-                    .addComponent(film_combo, 0, 447, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-                    .addComponent(screen_combo, 0, 447, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(time_hour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(time_min, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(time_amorpm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(color_picker, 0, 190, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(date_day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(date_month, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(date_year, 0, 167, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                                    .addComponent(film_combo, javax.swing.GroupLayout.Alignment.TRAILING, 0, 198, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(screen_combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(time_hour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(time_min, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(date_day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(date_month, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(date_year, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(color_picker, 0, 309, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -216,36 +221,34 @@ public class CreateNewScreening extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(film_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(screen_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(film_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(screen_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(time_hour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(time_min, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(time_amorpm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(time_min, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(date_day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(date_month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(date_year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(color_picker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                    .addComponent(color_picker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -262,7 +265,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
         Screen selected_screen = (Screen)this.screen_combo.getSelectedItem();
 
         // Check to see if the screen is free for the selected new screening
-        if(this.main_window.core_controller.screen_manager.checkScreenFree(selected_screen, this.getSelectedDate(), this.getSelectedTime(), this.getEndTimeFromSelectedTime(selected_film))){
+        if(this.main_window.core_controller.screen_manager.checkScreenFree(selected_screen, this.getSelectedDate(), this.getSelectedTime(), this.getEndTimeFromSelectedTime(selected_film)) && this.getEndTimeFromSelectedTime(selected_film).before(this.main_window.core_controller.cinema_closing_time)){
 
             // Create a new screening
             Screening new_screening = new Screening(selected_film, this.getSelectedDate(), this.getSelectedTime());
@@ -277,6 +280,26 @@ public class CreateNewScreening extends javax.swing.JFrame {
 
             // Close the current window
             this.dispose();
+
+
+            MySQLController connection;
+            try {
+
+                int uniqueid = Screen.generateID();
+
+                Date daterr = this.getSelectedTime().getTime();
+                Date daterr2 = this.getSelectedDate().getTime();
+                
+                Format mysqltime = new SimpleDateFormat("kk:mm:ss");
+                Format mysqldate = new SimpleDateFormat("yyyy-M-dd");
+
+                connection = new MySQLController();
+                connection.putData("INSERT INTO `main_screening_list` ( film_id, screen_id, start_time, start_date, color) VALUES('"+selected_film.getID()+"','"+selected_screen.getIDNumber()+"','"+ mysqltime.format(daterr)+"', '"+mysqldate.format(daterr2)+"','"+this.color_picker.getSelectedItem().toString().toUpperCase()+"')");
+                                
+            } catch (SQLException ex) {
+               System.out.println(ex);
+            }
+            
 
         }else{
             // Show a warning dialog because the screen is booked at requested times
@@ -301,7 +324,9 @@ public class CreateNewScreening extends javax.swing.JFrame {
         int year = Integer.parseInt(this.date_year.getSelectedItem().toString());
 
         GregorianCalendar date = new GregorianCalendar();
-        date.set(Calendar.DATE, day);
+        date.setTimeInMillis(0);
+        
+        date.set(Calendar.DAY_OF_MONTH, day);
         date.set(Calendar.MONTH, month);
         date.set(Calendar.YEAR, year);
 
@@ -318,6 +343,8 @@ public class CreateNewScreening extends javax.swing.JFrame {
          int start_min = Integer.parseInt(this.time_min.getValue().toString());
 
         GregorianCalendar time = new GregorianCalendar();
+        time.setTimeInMillis(0);
+
         time.set(Calendar.HOUR_OF_DAY, start_hour);
         time.set(Calendar.MINUTE, start_min);
         
@@ -330,33 +357,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
      * @return
      */
     public Color getSelectedColor(){
-        Color selected_color = Color.darkGray;
-
-            if(this.color_picker.getSelectedItem().toString() == "Blue"){
-               selected_color = new Color(78, 128, 170);
-            }
-
-            if(this.color_picker.getSelectedItem().toString() == "Red"){
-               selected_color = new Color(208, 90, 90);
-            }
-
-            if(this.color_picker.getSelectedItem().toString() == "Green"){
-               selected_color = new Color(78, 173, 65);
-            }
-
-            if(this.color_picker.getSelectedItem().toString() == "Orange"){
-               selected_color = new Color(216, 145, 87);
-            }
-
-            if(this.color_picker.getSelectedItem().toString() == "Yellow"){
-               selected_color = new Color(217, 215, 26);
-            }
-
-            if(this.color_picker.getSelectedItem().toString() == "Black"){
-               selected_color = new Color(41, 41, 41);
-            }
-
-        return selected_color;
+        return TimetableColor.getColor(this.color_picker.getSelectedItem().toString());
     }
 
     /**
@@ -366,16 +367,17 @@ public class CreateNewScreening extends javax.swing.JFrame {
      * @return
      */
     public GregorianCalendar getEndTimeFromSelectedTime(Film selected_film){
-        GregorianCalendar end_time = this.getSelectedTime();
 
-        GregorianCalendar end = new GregorianCalendar();
-        end.set(Calendar.HOUR, end_time.get(Calendar.HOUR_OF_DAY));
-        end.set(Calendar.MINUTE, end_time.get(Calendar.MINUTE));
+        GregorianCalendar returncalendar = new GregorianCalendar();
+        returncalendar.setTimeInMillis(0);
 
-        end_time.add(Calendar.HOUR_OF_DAY, selected_film.getLength().get(Calendar.HOUR_OF_DAY));
-        end_time.add(Calendar.MINUTE, selected_film.getLength().get(Calendar.MINUTE));
+        returncalendar.set(Calendar.HOUR_OF_DAY, this.getSelectedTime().get(Calendar.HOUR_OF_DAY));
+        returncalendar.set(Calendar.MINUTE, this.getSelectedTime().get(Calendar.MINUTE));
 
-        return end_time;
+        returncalendar.add(Calendar.HOUR_OF_DAY, selected_film.getLength().get(Calendar.HOUR_OF_DAY));
+        returncalendar.add(Calendar.MINUTE, selected_film.getLength().get(Calendar.MINUTE));
+
+        return returncalendar;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -386,7 +388,6 @@ public class CreateNewScreening extends javax.swing.JFrame {
     private javax.swing.JComboBox film_combo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -399,7 +400,6 @@ public class CreateNewScreening extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextPane jTextPane_date_description;
     private javax.swing.JComboBox screen_combo;
-    private javax.swing.JComboBox time_amorpm;
     private javax.swing.JSpinner time_hour;
     private javax.swing.JSpinner time_min;
     // End of variables declaration//GEN-END:variables

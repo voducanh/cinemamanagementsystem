@@ -77,7 +77,10 @@ public class Screen {
 	 * @return
 	 */
 	public ArrayList<Screening> getScreenings(){
-		return this.screenings;
+		
+        ArrayList<Screening> returnme = (ArrayList<Screening>) this.screenings.clone();
+        
+        return returnme;
 	}
 	
 	/**

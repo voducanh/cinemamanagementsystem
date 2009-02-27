@@ -34,7 +34,7 @@ public class FilmList extends javax.swing.JFrame {
         DefaultListModel model = new DefaultListModel();
 
         int counter = 0;
-        for(Film current_film : window.core_controller.film_manager.getAllFilms()){
+        for(Film current_film : window.core_controller.film_manager.getFilms()){
             model.add(counter, current_film.getTitle() + "   -   " + current_film.getDirector());
             counter++;
         }

@@ -187,6 +187,9 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
             </Container>
             <Component class="javax.swing.JComboBox" name="timetable_date_picker_combo">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timetable_date_picker_comboActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -200,6 +203,11 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="summary_panel">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Summary">
@@ -218,7 +226,9 @@
                               <Component id="film_summary_title_jlabel" alignment="0" pref="220" max="32767" attributes="0"/>
                               <Component id="most_popular_film_jlabel" alignment="0" pref="220" max="32767" attributes="0"/>
                               <Component id="least_popular_jlabel" alignment="0" pref="220" max="32767" attributes="0"/>
-                              <Component id="screenings_in_database_jlabel1" alignment="0" pref="220" max="32767" attributes="0"/>
+                              <Component id="film_summary_title_jlabel1" alignment="1" pref="220" max="32767" attributes="0"/>
+                              <Component id="total_screens_in_database_jlabel" alignment="0" pref="220" max="32767" attributes="0"/>
+                              <Component id="total_screenings_in_database_jlabel" alignment="0" pref="220" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -235,9 +245,13 @@
                           <Component id="most_popular_film_jlabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="least_popular_jlabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="film_summary_title_jlabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="screenings_in_database_jlabel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="462" max="32767" attributes="0"/>
+                          <Component id="total_screens_in_database_jlabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="total_screenings_in_database_jlabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="410" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -266,14 +280,32 @@
                     <Property name="text" type="java.lang.String" value="Least Popular Film: "/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="screenings_in_database_jlabel1">
+                <Component class="javax.swing.JLabel" name="total_screens_in_database_jlabel">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Screenings in Database:"/>
+                    <Property name="text" type="java.lang.String" value="Total Screen Count:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="film_summary_title_jlabel1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="11" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Screen Summary"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="total_screenings_in_database_jlabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Total Screening Count:"/>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="actions_panel">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Actions">
@@ -285,15 +317,30 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="240" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace pref="101" max="32767" attributes="0"/>
+                          <Component id="run_action_manager_jbutton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="567" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace pref="533" max="32767" attributes="0"/>
+                          <Component id="run_action_manager_jbutton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JButton" name="run_action_manager_jbutton">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Run Action Manager"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
             </Container>
           </SubComponents>
         </Container>

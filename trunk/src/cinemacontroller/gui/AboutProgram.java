@@ -23,13 +23,12 @@ public class AboutProgram extends javax.swing.JFrame {
     public AboutProgram(MainWindow window) {
         this.window = window;
         initComponents();
+
+        // Center align the login window
+        this.setLocationRelativeTo(null);
     }
 
-    public int closeWindow(){
-        this.window.setEnabled(true);
-        this.dispose();
-        return 0;
-    }
+   
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -50,9 +49,8 @@ public class AboutProgram extends javax.swing.JFrame {
         jTextPane_date_description1 = new javax.swing.JTextPane();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(closeWindow());
-        setTitle("About - Multiplex Manager");
-        setAlwaysOnTop(true);
+        setTitle("About - Multiplex Management System");
+        setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/information.png")));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);

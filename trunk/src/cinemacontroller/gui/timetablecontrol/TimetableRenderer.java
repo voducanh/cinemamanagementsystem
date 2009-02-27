@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -65,6 +66,7 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
                 title_label2.setForeground(Color.black);
 
 
+
                 box.add(title_label2, c);
                 box.add(title_label, c);
 
@@ -99,7 +101,7 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
                 
                 box.setBackground(current_box.getBoxBackgroundColor());
                 box.setForeground(current_box.getBoxForegroundColor());
-                
+
                 return box;
             }
             
@@ -118,7 +120,7 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
 
     public String getFriendlyTime(GregorianCalendar time){
         Date daterr = time.getTime();
-        Format formatter = new SimpleDateFormat("hh:mm");
+        Format formatter = new SimpleDateFormat("kk:mm");
         return formatter.format(daterr);
     }
 

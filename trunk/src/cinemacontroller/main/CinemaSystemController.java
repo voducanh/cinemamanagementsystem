@@ -1,12 +1,18 @@
 package cinemacontroller.main;
 
 import cinemacontroller.filmcontroller.FilmController;
+import cinemacontroller.gui.timetablecontrol.TimetableColor;
 import cinemacontroller.rotationalsystem.RotationEngine;
 import cinemacontroller.screensystem.Screen;
 import cinemacontroller.screensystem.ScreenManager;
+import cinemacontroller.screensystem.Screening;
 import databasecontroller.MySQLController;
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -21,6 +27,9 @@ public class CinemaSystemController {
 	public ScreenManager screen_manager;
 	public FilmController film_manager;
 	public RotationEngine rotation_manager;
+
+    public final GregorianCalendar cinema_opening_time;
+    public final GregorianCalendar cinema_closing_time;
 	
 	public CinemaSystemController(){
         
@@ -29,20 +38,33 @@ public class CinemaSystemController {
         rotation_manager = new RotationEngine();
         screen_manager = new ScreenManager();
 
+        // Set the opening and closing times of the cinema
+        this.cinema_opening_time = new GregorianCalendar();
+        this.cinema_opening_time.setTimeInMillis(0);
+        this.cinema_opening_time.set(Calendar.HOUR_OF_DAY, 9);
+
+        this.cinema_closing_time = new GregorianCalendar();
+        this.cinema_closing_time.setTimeInMillis(0);
+        this.cinema_closing_time.set(Calendar.HOUR_OF_DAY, 23);
+        this.cinema_closing_time.set(Calendar.MINUTE, 59);
 
         try {
             // Setup all the cinema screens
             this.loadScreensFromDatabase();
-        } catch(Exception e){ }
+            // Load all films from database
+            this.film_manager.getFilmsFromDatabase();
+            // Load all the screenings from database
+            this.loadScreeningsFromDatabase();
+
+        } catch(Exception e){
+            // Show an error message
+            JOptionPane.showMessageDialog(null, "Generic Database Error.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
+        }
 
 	}
 
-
-    public void loadFilmsFromDatabase(){
-
-    }
-
-    public void loadScreeningsFromDatabase() throws SQLException, ClassNotFoundException{
+    public void loadScreeningsFromDatabase() throws SQLException {
+        // Cycle through all the screens in the database
         for(Screen current_screen : this.screen_manager.getScreens()){
 
             // Create a new mysql connection and query database
@@ -52,11 +74,30 @@ public class CinemaSystemController {
             // Populate the internal list of films by cycle through each film in database
             while(screenings.next()){
 
-              //  Screening current_screeing = new Screening(this.film_manager.getFilmByID(screenings.getInt("film_id"), screenings.getDate("start_date"), screenings.getInt("film_id")));
+                // Create a new GregorianCalendar for the time of 
+                GregorianCalendar time = new GregorianCalendar();
+                time.setTimeInMillis(screenings.getTime("start_time").getTime());
 
+                GregorianCalendar date = new GregorianCalendar();
+                date.setTimeInMillis(screenings.getDate("start_date").getTime());
+
+                Screening current_screeing = new Screening(this.film_manager.getFilm(screenings.getInt("film_id")), date, time);
+
+                Color color = TimetableColor.getColor(screenings.getString("color"));
+  
+                
+                current_screeing.setColor(color);
+
+                // Add the new screening to the selected screen
+                this.screen_manager.addScreening(current_screen, current_screeing);
             }
             
         }
+    }
+
+    public void getTimetableControlSettings() throws SQLException {
+        // Default Background Color
+        Color color = new Color(0,0,0);
     }
 
     /**
@@ -65,14 +106,14 @@ public class CinemaSystemController {
      * @throws java.sql.SQLException
      * @throws java.lang.ClassNotFoundException
      */
-    public void loadScreensFromDatabase() throws SQLException, ClassNotFoundException{
+    public void loadScreensFromDatabase() throws SQLException {
         String table_name = "main_screen_list";
 
         // Create a new mysql connection and query database
         MySQLController connection = new MySQLController();
         ResultSet result = connection.getData("SELECT * FROM `" + table_name + "`");
 
-        // Populate the internal list of films by cycle through each film in database
+        // Populate the internal list of screens by cycle through each screen stored in database
         while(result.next()){
             this.screen_manager.addNewScreen(result.getInt("uniqueid"), result.getInt("seat_count"));
         }

@@ -8,11 +8,12 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javax.swing.CellEditor;
-import javax.swing.JOptionPane;
+import java.util.GregorianCalendar;
 import javax.swing.ScrollPaneLayout;
-import javax.swing.table.TableCellEditor;
+
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
@@ -61,13 +62,15 @@ public class MainWindow extends javax.swing.JFrame {
         ScrollPaneLayout layout = new ScrollPaneLayout();
         this.timetable_scroll_pane.setLayout(layout);
         this.timetable_scroll_pane.getViewport().add( timetable_control );
+        this.populateDatePickerBox();
 
     }
 
  
     public void updateSummaryPanel(){
-        this.films_in_database_jlabel.setText("Total Films in Database: " + this.core_controller.film_manager.getAllFilms().size());
-        this.screenings_in_database_jlabel1.setText("Screenings in Database: " + this.core_controller.screen_manager.getScreeningCount());
+        this.films_in_database_jlabel.setText("Total Films in Database: " + this.core_controller.film_manager.getFilms().size());
+        this.total_screens_in_database_jlabel.setText("Total Screen Count: " + this.core_controller.screen_manager.getScreens().size());
+        this.total_screenings_in_database_jlabel.setText("Total Screening Count: " + this.core_controller.screen_manager.getScreeningCount());
     }
 
 
@@ -153,9 +156,23 @@ public class MainWindow extends javax.swing.JFrame {
         this.timetable_control.validate();
 
         // Re-pack
-        this.pack();
+        //this.pack();
     }
 
+
+    public void populateDatePickerBox(){
+        ArrayList<GregorianCalendar> dates = new ArrayList<GregorianCalendar>();
+
+        for(Screening current_screeing : this.core_controller.screen_manager.getScreenings()){
+            if(!dates.contains(current_screeing.getDate())){
+
+                dates.add(current_screeing.getDate());
+
+                Format formatter = new SimpleDateFormat("dd/mm/yyyy");
+                this.timetable_date_picker_combo.addItem(formatter.format(current_screeing.getDate().getTime()));
+            }
+        }
+    }
 
     /**
      * Generates all the box controls that represent a screening and adds it to the list of
@@ -167,7 +184,7 @@ public class MainWindow extends javax.swing.JFrame {
             // Cycles through each screening of the current screen
              for(Screening current_screening : current_screen.getScreenings()){
                  // Creates a box control and adds it to the box control list
-                 this.list_of_box_controls.add(new TimetableScreeningBox(current_screening, current_screening.getColor(), new Color(255,255,255), this.timetable_control, this.getScreenRowNumber(current_screen.getIDNumber())));
+                 this.list_of_box_controls.add(new TimetableScreeningBox(current_screening, current_screening.getColor(), Color.WHITE , this.timetable_control, this.getScreenRowNumber(current_screen.getIDNumber())));
              }
         }
     }
@@ -231,8 +248,11 @@ public class MainWindow extends javax.swing.JFrame {
         films_in_database_jlabel = new javax.swing.JLabel();
         most_popular_film_jlabel = new javax.swing.JLabel();
         least_popular_jlabel = new javax.swing.JLabel();
-        screenings_in_database_jlabel1 = new javax.swing.JLabel();
+        total_screens_in_database_jlabel = new javax.swing.JLabel();
+        film_summary_title_jlabel1 = new javax.swing.JLabel();
+        total_screenings_in_database_jlabel = new javax.swing.JLabel();
         actions_panel = new javax.swing.JPanel();
+        run_action_manager_jbutton = new javax.swing.JButton();
         toolbar = new javax.swing.JToolBar();
         create_new_screening_button = new javax.swing.JButton();
         edit_screening_jbutton = new javax.swing.JButton();
@@ -277,6 +297,12 @@ public class MainWindow extends javax.swing.JFrame {
         timetable_scroll_pane.setBorder(null);
         timetable_scroll_pane.setForeground(new java.awt.Color(255, 255, 255));
 
+        timetable_date_picker_combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timetable_date_picker_comboActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout timetable_panelLayout = new javax.swing.GroupLayout(timetable_panel);
         timetable_panel.setLayout(timetable_panelLayout);
         timetable_panelLayout.setHorizontalGroup(
@@ -300,7 +326,9 @@ public class MainWindow extends javax.swing.JFrame {
 
         jSplitPane_main.setRightComponent(timetable_panel);
 
-        film_summary_title_jlabel.setFont(new java.awt.Font("Tahoma", 1, 11));
+        summary_panel.setBackground(new java.awt.Color(255, 255, 255));
+
+        film_summary_title_jlabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         film_summary_title_jlabel.setText("Film Summary");
 
         films_in_database_jlabel.setText("Films in Database: ");
@@ -309,7 +337,12 @@ public class MainWindow extends javax.swing.JFrame {
 
         least_popular_jlabel.setText("Least Popular Film: ");
 
-        screenings_in_database_jlabel1.setText("Screenings in Database:");
+        total_screens_in_database_jlabel.setText("Total Screen Count:");
+
+        film_summary_title_jlabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        film_summary_title_jlabel1.setText("Screen Summary");
+
+        total_screenings_in_database_jlabel.setText("Total Screening Count:");
 
         javax.swing.GroupLayout summary_panelLayout = new javax.swing.GroupLayout(summary_panel);
         summary_panel.setLayout(summary_panelLayout);
@@ -322,7 +355,9 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(film_summary_title_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                     .addComponent(most_popular_film_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                     .addComponent(least_popular_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                    .addComponent(screenings_in_database_jlabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
+                    .addComponent(film_summary_title_jlabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                    .addComponent(total_screens_in_database_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                    .addComponent(total_screenings_in_database_jlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
                 .addContainerGap())
         );
         summary_panelLayout.setVerticalGroup(
@@ -336,22 +371,36 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(most_popular_film_jlabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(least_popular_jlabel)
+                .addGap(18, 18, 18)
+                .addComponent(film_summary_title_jlabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(screenings_in_database_jlabel1)
-                .addContainerGap(462, Short.MAX_VALUE))
+                .addComponent(total_screens_in_database_jlabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(total_screenings_in_database_jlabel)
+                .addContainerGap(410, Short.MAX_VALUE))
         );
 
         overview_tabbed_pane.addTab("Summary", summary_panel);
+
+        actions_panel.setBackground(new java.awt.Color(255, 255, 255));
+
+        run_action_manager_jbutton.setText("Run Action Manager");
 
         javax.swing.GroupLayout actions_panelLayout = new javax.swing.GroupLayout(actions_panel);
         actions_panel.setLayout(actions_panelLayout);
         actions_panelLayout.setHorizontalGroup(
             actions_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 240, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actions_panelLayout.createSequentialGroup()
+                .addContainerGap(101, Short.MAX_VALUE)
+                .addComponent(run_action_manager_jbutton)
+                .addContainerGap())
         );
         actions_panelLayout.setVerticalGroup(
             actions_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 567, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actions_panelLayout.createSequentialGroup()
+                .addContainerGap(533, Short.MAX_VALUE)
+                .addComponent(run_action_manager_jbutton)
+                .addContainerGap())
         );
 
         overview_tabbed_pane.addTab("Actions", actions_panel);
@@ -550,7 +599,7 @@ public class MainWindow extends javax.swing.JFrame {
 }//GEN-LAST:event_create_new_screening_buttonActionPerformed
 
     private void about_menuitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_about_menuitemActionPerformed
-       
+
         this.setEnabled(false);
         new AboutProgram(this).setVisible(true);
     }//GEN-LAST:event_about_menuitemActionPerformed
@@ -585,6 +634,10 @@ public class MainWindow extends javax.swing.JFrame {
         new HistoricalDatabase().setVisible(true);
 }//GEN-LAST:event_view_historical_data_jbuttonActionPerformed
 
+    private void timetable_date_picker_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timetable_date_picker_comboActionPerformed
+        
+    }//GEN-LAST:event_timetable_date_picker_comboActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about_menuitem;
     private javax.swing.JPanel actions_panel;
@@ -596,6 +649,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton edit_screening_jbutton;
     private javax.swing.JMenu file_menu;
     private javax.swing.JLabel film_summary_title_jlabel;
+    private javax.swing.JLabel film_summary_title_jlabel1;
     private javax.swing.JLabel films_in_database_jlabel;
     private javax.swing.JMenu help_menu;
     private javax.swing.JMenu jMenu1;
@@ -613,13 +667,15 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuBar main_menu;
     private javax.swing.JLabel most_popular_film_jlabel;
     private javax.swing.JTabbedPane overview_tabbed_pane;
-    private javax.swing.JLabel screenings_in_database_jlabel1;
+    private javax.swing.JButton run_action_manager_jbutton;
     private javax.swing.JLabel status_bar;
     private javax.swing.JPanel summary_panel;
     private javax.swing.JComboBox timetable_date_picker_combo;
     private javax.swing.JPanel timetable_panel;
     private javax.swing.JScrollPane timetable_scroll_pane;
     private javax.swing.JToolBar toolbar;
+    private javax.swing.JLabel total_screenings_in_database_jlabel;
+    private javax.swing.JLabel total_screens_in_database_jlabel;
     private javax.swing.JButton view_actions_jbutton;
     private javax.swing.JButton view_films_jbutton;
     private javax.swing.JButton view_historical_data_jbutton;

@@ -29,13 +29,10 @@ public class Screening {
 	 */
 	public Screening(Film film, GregorianCalendar screening_date, GregorianCalendar start_time){
 		
-        this.screening_date = new GregorianCalendar();
-        this.screening_time = new GregorianCalendar();
+        this.screening_date = screening_date;
+        this.screening_time = start_time;
         this.screening_film = film;
 
-		// Sets the information about the screening.
-		this.setDate(screening_date);
-		this.setStartTime(start_time);
 	}
 	
 	/**
@@ -66,8 +63,7 @@ public class Screening {
 	 * @param mins
 	 */
 	public void setStartTime(GregorianCalendar start_time){
-		this.screening_time.set(Calendar.HOUR_OF_DAY, start_time.get(Calendar.HOUR_OF_DAY));
-		this.screening_time.set(Calendar.MINUTE, start_time.get(Calendar.MINUTE));
+		this.screening_time = start_time;
 	}
 
 
@@ -94,7 +90,6 @@ public class Screening {
 	 * @return
 	 */
 	public GregorianCalendar getStartTime(){
-        
 		return this.screening_time;
 	}
 	
@@ -107,8 +102,8 @@ public class Screening {
 
 		GregorianCalendar film_end_time = screening_film.getLength();
 
-        film_end_time.add(Calendar.HOUR_OF_DAY, this.screening_date.get(Calendar.HOUR_OF_DAY));
-        film_end_time.add(Calendar.MINUTE, this.screening_date.get(Calendar.MINUTE));
+        film_end_time.add(Calendar.HOUR_OF_DAY, this.screening_time.get(Calendar.HOUR_OF_DAY));
+        film_end_time.add(Calendar.MINUTE, this.screening_time.get(Calendar.MINUTE));
 		
 		return film_end_time;
 		

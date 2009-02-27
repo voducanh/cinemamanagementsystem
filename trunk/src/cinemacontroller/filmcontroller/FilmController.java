@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Provides all the functionality required to maintain and manage a list of films
@@ -21,23 +19,33 @@ public class FilmController {
 	private ArrayList<Film> cinema_film_list;
 	
 	public FilmController(){
-
         // Create a new ArrayList which will store ALL the films the cinema can show
-        cinema_film_list = new ArrayList<Film>();
-            
+        this.cinema_film_list = new ArrayList<Film>();
+    }
+
+    /**
+     * Generates a uniqueid by getting 'what would be' the next id in database or generates a
+     * fall back id.
+     * 
+     * @return
+     */
+    public static int generateUniqueId(){
+
         try {
+             // Create a new mysql connection and query database
+            MySQLController connection = new MySQLController();
+            ResultSet result = connection.getData("SHOW TABLE STATUS LIKE 'main_film_list'");
+
+            if(result.next()){
+                return result.getInt("Auto_increment");
+            }
             
-            // Get all the films stored in the database
-            this.getFilmsFromDatabase();
+        }catch(Exception e){ }
 
-        } catch(Exception e){
-            System.out.println("Unabled to load film information from database");
-        }
-	}
+        // Fall back id number
+        java.sql.Timestamp  sqlDate = new java.sql.Timestamp(new java.util.Date().getTime());
+        return Integer.parseInt(sqlDate.toString());
 
-    public int generateID(){
-         java.sql.Timestamp  sqlDate = new java.sql.Timestamp(new java.util.Date().getTime());
-         return Integer.parseInt(sqlDate.toString());
     }
 	
 	/**
@@ -55,12 +63,21 @@ public class FilmController {
 	 */
 	public void addFilmToCinema(String film_title, String film_director, String film_bbfc_rating, GregorianCalendar film_available_date, GregorianCalendar film_length, int film_expected_views_per_day, double film_ticket_price) throws Exception{
  
-        Film new_film = new Film(this.generateID(), film_title, film_director, film_bbfc_rating, film_length, film_available_date);
+        Film new_film = new Film(generateUniqueId(), film_title, film_director, film_bbfc_rating, film_length, film_available_date);
 		new_film.setExpectedAudienceFigures(film_expected_views_per_day);
 		
 		// Add the film to the film manager's internal database
 		this.cinema_film_list.add(new_film);
 	}
+
+    /**
+     * Adds a film to the database.
+     * 
+     * @param film
+     */
+    public void addFilmToDatabase(Film film){
+        this.cinema_film_list.add(film);
+    }
 	
 	/**
 	 * Removes the selected film from the internal database.
@@ -74,118 +91,78 @@ public class FilmController {
 			this.cinema_film_list.remove(film);
 		}
 	}
-	
+
+    /**
+     * Removes a film from the database by uniqueid
+     * @param title
+     * @param director
+     */
+    public void removeFilm(int uniqueid){
+        // Cycle through all the films stored and compare the uniqueid
+        for(Film current_film : this.cinema_film_list){
+
+            if(current_film.getID() == uniqueid){
+                // Remove film if found
+                this.cinema_film_list.remove(current_film);
+            }
+
+        }
+    }
+
 	/**
-	 * Returns and ArrayList of all the films stored in the cinema management system.
+	 * Returns a clone of the ArrayList of all the films stored in the cinema management system.
 	 * 
 	 * @return
 	 */
-	public ArrayList<Film> getAllFilms(){
-		return this.cinema_film_list;
+	public ArrayList<Film> getFilms(){
+		return (ArrayList<Film>)this.cinema_film_list.clone();
 	}
-	
-	/**
-	 * Returns a film if stored in the cinemas database that contains a specified title.
-	 * 
-	 * @param title
-	 * @return
-	 * @throws Exception
-	 */
-	public Film getFilmByTitle(String title) throws Exception{
-		// Cycle through all the films stored in the cinemas film database.
-		for(Film film : this.cinema_film_list){
-			// If the current film has the same title as expected, return the film.
-			if(film.getTitle().equals(title)){
-				return film;
-			}
-		}
-		// Throw and exception if the film is not stored in the database.
-		throw new Exception();
-	}
-	
-	/**
-	 * Returns a list of films by a specific director.
-	 * 
-	 * @param director
-	 * @return
-	 * @throws Exception
-	 */
-	public ArrayList<Film> getFilmByDirector(String director) throws Exception{
-		ArrayList<Film> found_films = new ArrayList<Film>();
-		
-		// Cycle all the films in the cinema's database.
-		for(Film film : this.cinema_film_list){
-			if(film.getDirector().equals(director)){
-				// If a film by a specific director has been found, add it to found films.
-				found_films.add(film);
-			}
-		}
-		
-		// Throw an exception if no film has been found
-		if(found_films.size() == 0){
-			throw new Exception();
-		}
-		
-		return found_films;		
-	}
+
+    /**
+     * Returns a film by its uniqueid
+     *
+     * @param unique_id
+     * @return
+     */
+    public Film getFilm(int unique_id){
+        Film return_film = null;
+
+        // Cycle all the films in the cinema's database.
+        for(Film film : this.cinema_film_list){
+            if(film.getID() == unique_id){
+                // If a film by a specific director has been found, add it to found films.
+                return_film = film;
+            }
+        }
+        return return_film;
+    }
 
     /**
      * Function populates the list of films stored internally with the films stored in a database.
      * 
-     * @throws java.lang.ClassNotFoundException
      * @throws java.sql.SQLException
      */
-    public void getFilmsFromDatabase() throws ClassNotFoundException, SQLException {
-        String table_name = "main_film_list";
-
-        // Create a new mysql connection and query database
+    public void getFilmsFromDatabase() throws SQLException {
+         // Create a new mysql connection and query database
         MySQLController connection = new MySQLController();
-        ResultSet result = connection.getData("SELECT * FROM `" + table_name + "`");
+        ResultSet result = connection.getData("SELECT * FROM main_film_list");
 
         // Populate the internal list of films by cycle through each film in database
         while(result.next()){
 
-            java.sql.Date current_date = result.getDate("availability_date");
-            java.sql.Time film_length_in_time = result.getTime("length");
-
             // Get the availability date for the film
             GregorianCalendar start_date = new GregorianCalendar();
-            start_date.setTimeInMillis(current_date.getTime());
+            start_date.setTimeInMillis(result.getDate("availability_date").getTime());
 
             // Get the film length
             GregorianCalendar film_length = new GregorianCalendar();
-            film_length.setTimeInMillis(film_length_in_time.getTime());
+            film_length.setTimeInMillis(result.getTime("length").getTime());
 
-            
+            // Create a new film instance
             Film current_film = new Film(result.getInt("uniqueid"), result.getString("title"), result.getString("director"), result.getString("bbfc"), film_length, start_date);
+
+            // Add the new film instance to the list of films in database
             cinema_film_list.add(current_film);
         }
     }
-
-
-    public Film getFilmByID(int unique_id){
-      Film return_film = null;
-      
-		// Cycle all the films in the cinema's database.
-		for(Film film : this.cinema_film_list){
-			if(film.getID() == unique_id){
-				// If a film by a specific director has been found, add it to found films.
-				return_film = film;
-			}
-		}
-        return return_film;
-    }
-
-    public void addFilmToDatabase(){
-        try {
-            MySQLController connection = new MySQLController();
-            connection.putData("INSERT INTO `film_main_database` VALUES ('','','','','','','','','')");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-       
 }
