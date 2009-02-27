@@ -20,12 +20,12 @@ import javax.swing.JOptionPane;
  *
  * @author Scott
  */
-public class NewJDialog extends javax.swing.JDialog {
+public class LoginDialog extends javax.swing.JDialog {
 
     private MainWindow main_window;
     
     /** Creates new form NewJDialog */
-    public NewJDialog(JFrame parent, boolean modal) {
+    public LoginDialog(JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
@@ -67,7 +67,7 @@ public class NewJDialog extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Authenticaion Required");
 
@@ -155,7 +155,6 @@ public class NewJDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -169,7 +168,6 @@ public class NewJDialog extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 280, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
