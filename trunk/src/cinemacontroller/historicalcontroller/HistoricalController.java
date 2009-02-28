@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package cinemacontroller.historicalsystem;
+package cinemacontroller.historicalcontroller;
 
 import cinemacontroller.filmcontroller.Film;
 import databasecontroller.MySQLController;
@@ -41,7 +41,7 @@ public class HistoricalController {
         ArrayList<Film> list_of_films = new ArrayList<Film>();
 
         MySQLController sql_connection = new MySQLController();
-        ResultSet result = sql_connection.getData("SELECT * FROM `film_main_database`");
+        ResultSet result = sql_connection.getData("SELECT * FROM historical_film_list");
 
         while(result.next()){
        //     list_of_films.add(new Film(result.getInt("film_id"), result.getString("film_title"), result.getString("film_director"), result.getString("film_bbfc_rating"), new Date(result.getInt("film_availability_date_day"), result.getInt("film_availability_date_month"), result.getInt("film_availability_date_year"))));
@@ -53,6 +53,6 @@ public class HistoricalController {
 
     public void removeAllRecords() throws SQLException, ClassNotFoundException{
         MySQLController sql_connection = new MySQLController();
-        ResultSet result = sql_connection.getData("TRUNCATE `film_main_database`");
+        ResultSet result = sql_connection.getData("TRUNCATE historical_film_list");
     }
 }

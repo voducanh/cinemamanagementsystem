@@ -2,7 +2,7 @@ package cinemacontroller.main;
 
 import cinemacontroller.filmcontroller.FilmController;
 import cinemacontroller.gui.timetablecontrol.TimetableColor;
-import cinemacontroller.rotationalsystem.RotationEngine;
+import cinemacontroller.rotationalcontroller.RotationEngine;
 import cinemacontroller.screensystem.Screen;
 import cinemacontroller.screensystem.ScreenManager;
 import cinemacontroller.screensystem.Screening;

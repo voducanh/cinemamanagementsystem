@@ -49,7 +49,7 @@ public class AboutProgram extends javax.swing.JFrame {
         jTextPane_date_description1 = new javax.swing.JTextPane();
         jButton1 = new javax.swing.JButton();
 
-        setTitle("About - Multiplex Management System");
+        setTitle("About - Multiplex Manager");
         setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/information.png")));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {

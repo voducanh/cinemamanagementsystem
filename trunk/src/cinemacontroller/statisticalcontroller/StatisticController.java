@@ -1,4 +1,4 @@
-package cinemacontroller.statisticalsystem;
+package cinemacontroller.statisticalcontroller;
 
 import cinemacontroller.filmcontroller.Film;
 import java.util.GregorianCalendar;

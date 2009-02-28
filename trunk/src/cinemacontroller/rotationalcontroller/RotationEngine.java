@@ -1,4 +1,4 @@
-package cinemacontroller.rotationalsystem;
+package cinemacontroller.rotationalcontroller;
 
 import java.util.ArrayList;
 

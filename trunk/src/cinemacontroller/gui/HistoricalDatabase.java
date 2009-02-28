@@ -12,7 +12,7 @@
 package cinemacontroller.gui;
 
 import cinemacontroller.filmcontroller.Film;
-import cinemacontroller.historicalsystem.HistoricalController;
+import cinemacontroller.historicalcontroller.HistoricalController;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -34,8 +34,12 @@ public class HistoricalDatabase extends javax.swing.JFrame {
         this.historical_controller = new HistoricalController();
         // Load the current window's controls
         this.initComponents();
+
+        // Center align the login window
+        this.setLocationRelativeTo(null);
+
         // Load the historical data into the current window
-        this.LoadHistoricalData();
+        this.LoadHistoricalData();        
     }
 
     public void LoadHistoricalData(){
@@ -101,12 +105,12 @@ public class HistoricalDatabase extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Historical Data Archives");
+        setTitle("Historical Data Archives - Multiplex Manager");
         setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/hourglass.png")));
 
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Historical Database");
 

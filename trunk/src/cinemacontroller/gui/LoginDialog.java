@@ -62,7 +62,8 @@ public class LoginDialog extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Authentication Required");
+        setTitle("Authentication Required - Multiplex Manager");
+        setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/lock.png")));
         setModal(true);
 
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
