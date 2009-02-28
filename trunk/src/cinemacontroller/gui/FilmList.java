@@ -27,6 +27,9 @@ public class FilmList extends javax.swing.JFrame {
         initComponents();
         this.window = window;
         this.populateListControl();
+
+        // Center align the login window
+        this.setLocationRelativeTo(null);
     }
 
 
@@ -66,6 +69,7 @@ public class FilmList extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Film List - Multiplex Manager");
         setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/images.png")));
 
@@ -114,6 +118,11 @@ public class FilmList extends javax.swing.JFrame {
         });
 
         jButton2.setText("Add Film");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Remove Film");
 
@@ -155,6 +164,10 @@ public class FilmList extends javax.swing.JFrame {
         this.closeWindow();
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new CreateNewFilm(window.core_controller).setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

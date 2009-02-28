@@ -3,6 +3,7 @@ package cinemacontroller.filmcontroller;
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Random;
 
 /**
  * Film Class
@@ -217,8 +218,8 @@ public class Film {
     }
     
     public static int generateID(){
-         java.sql.Timestamp  sqlDate = new java.sql.Timestamp(new java.util.Date().getTime());
-         return Integer.parseInt(sqlDate.toString());
+         Random random = new Random();
+        return random.nextInt(100000000);
     }
  
 }

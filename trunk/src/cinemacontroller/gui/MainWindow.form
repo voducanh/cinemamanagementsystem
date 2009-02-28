@@ -507,7 +507,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cinemacontroller/gui/icons/images.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="View all the films stored and their attributes."/>
+            <Property name="toolTipText" type="java.lang.String" value="Open the film manager to browse, add and edit films stored in the database."/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">

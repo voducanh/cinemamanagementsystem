@@ -328,7 +328,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         summary_panel.setBackground(new java.awt.Color(255, 255, 255));
 
-        film_summary_title_jlabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        film_summary_title_jlabel.setFont(new java.awt.Font("Tahoma", 1, 11));
         film_summary_title_jlabel.setText("Film Summary");
 
         films_in_database_jlabel.setText("Films in Database: ");
@@ -339,7 +339,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         total_screens_in_database_jlabel.setText("Total Screen Count:");
 
-        film_summary_title_jlabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        film_summary_title_jlabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         film_summary_title_jlabel1.setText("Screen Summary");
 
         total_screenings_in_database_jlabel.setText("Total Screening Count:");
@@ -505,7 +505,7 @@ public class MainWindow extends javax.swing.JFrame {
         toolbar.add(jSeparator3);
 
         view_films_jbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/images.png"))); // NOI18N
-        view_films_jbutton.setToolTipText("View all the films stored and their attributes.");
+        view_films_jbutton.setToolTipText("Open the film manager to browse, add and edit films stored in the database.");
         view_films_jbutton.setFocusable(false);
         view_films_jbutton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         view_films_jbutton.setMaximumSize(new java.awt.Dimension(26, 28));
@@ -622,7 +622,6 @@ public class MainWindow extends javax.swing.JFrame {
 }//GEN-LAST:event_view_statistical_data_jbuttonActionPerformed
 
     private void view_films_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_films_jbuttonActionPerformed
-        this.setEnabled(false);
         new FilmList(this).setVisible(true);
 }//GEN-LAST:event_view_films_jbuttonActionPerformed
 
