@@ -68,7 +68,7 @@ public class AboutProgram extends javax.swing.JFrame {
         jTextPane_date_description.setBackground(new java.awt.Color(24, 24, 24));
         jTextPane_date_description.setEditable(false);
         jTextPane_date_description.setForeground(new java.awt.Color(255, 255, 255));
-        jTextPane_date_description.setText("Lead Developers:\n\n    -  Scott Straughan\n    -  Ross MacFarlane\n\nGroup Memebers\n\n    -  Raman Vinod\n    -  Kyle McNally\n    -  Sean Baxter");
+        jTextPane_date_description.setText("Active Group Members:\n\n    -  Scott Straughan\n    -  Ross MacFarlane\n    -  Kyle McNally\n\nTheoritical Group Memebers\n\n    -  Vindo Raman\n    -  Sean Baxter");
         jScrollPane3.setViewportView(jTextPane_date_description);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -78,8 +78,8 @@ public class AboutProgram extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -88,8 +88,8 @@ public class AboutProgram extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));

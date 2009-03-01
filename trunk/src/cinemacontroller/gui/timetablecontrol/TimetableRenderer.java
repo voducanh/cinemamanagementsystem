@@ -102,6 +102,8 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
                 box.setBackground(current_box.getBoxBackgroundColor());
                 box.setForeground(current_box.getBoxForegroundColor());
 
+                System.out.println(current_box.getScreening().getFilm().getTitle() + ": " + current_box.getBoxBackgroundColor().toString());
+
                 return box;
             }
             

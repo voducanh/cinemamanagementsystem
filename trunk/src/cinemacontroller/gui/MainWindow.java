@@ -541,9 +541,19 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu1.setText("New");
 
         create_new_film_menuitem.setText("Film");
+        create_new_film_menuitem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_new_film_menuitemActionPerformed(evt);
+            }
+        });
         jMenu1.add(create_new_film_menuitem);
 
         create_new_screening_menuitem.setText("Screening");
+        create_new_screening_menuitem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_new_screening_menuitemActionPerformed(evt);
+            }
+        });
         jMenu1.add(create_new_screening_menuitem);
 
         file_menu.add(jMenu1);
@@ -594,12 +604,10 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void create_new_screening_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_buttonActionPerformed
         CreateNewScreening create_screening_window = new CreateNewScreening(this);
-        create_screening_window.setVisible(true);
-        
+        create_screening_window.setVisible(true);        
 }//GEN-LAST:event_create_new_screening_buttonActionPerformed
 
     private void about_menuitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_about_menuitemActionPerformed
-
         this.setEnabled(false);
         new AboutProgram(this).setVisible(true);
     }//GEN-LAST:event_about_menuitemActionPerformed
@@ -636,6 +644,15 @@ public class MainWindow extends javax.swing.JFrame {
     private void timetable_date_picker_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timetable_date_picker_comboActionPerformed
         
     }//GEN-LAST:event_timetable_date_picker_comboActionPerformed
+
+    private void create_new_film_menuitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_film_menuitemActionPerformed
+        new CreateNewFilm(this.core_controller).setVisible(true);
+    }//GEN-LAST:event_create_new_film_menuitemActionPerformed
+
+    private void create_new_screening_menuitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_new_screening_menuitemActionPerformed
+        CreateNewScreening create_screening_window = new CreateNewScreening(this);
+        create_screening_window.setVisible(true);
+    }//GEN-LAST:event_create_new_screening_menuitemActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about_menuitem;
