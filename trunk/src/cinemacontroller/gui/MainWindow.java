@@ -28,7 +28,6 @@ import javax.swing.table.TableModel;
 public class MainWindow extends javax.swing.JFrame {
 
     public CinemaSystemController core_controller;
-    private ArrayList<TimetableScreeningBox> list_of_box_controls;
     private TimetableTable timetable_control;
 
 
@@ -39,9 +38,6 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow(CinemaSystemController core_controller) {
         // Set the main controller
         this.core_controller = core_controller;
-
-        // Initialise the ArrayList that contains all the "TimeTableItems" on the timetable control.
-        this.list_of_box_controls = new ArrayList<TimetableScreeningBox>();
 
         // Creates all the default controls.
         this.initComponents();
@@ -106,9 +102,9 @@ public class MainWindow extends javax.swing.JFrame {
 
 
         // Create the timetable control
-        TimetableTable timetable = new TimetableTable(new TimetableItemCellSizer(this.list_of_box_controls), timetable_model, 12, 9);
+        TimetableTable timetable = new TimetableTable(new TimetableItemCellSizer(timetable_model), timetable_model, 12, 9);
         // Set the default renderer for the timetable
-        timetable.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_box_controls));
+        timetable.setDefaultRenderer(Object.class, new TimetableRenderer());
         // Sets the row height
         timetable.setRowHeight(60);
 
@@ -130,11 +126,23 @@ public class MainWindow extends javax.swing.JFrame {
                     int row = timetable_control.rowAtPoint(new Point(mouseEvent.getX(), mouseEvent.getY()));
                     int col = timetable_control.columnAtPoint(new Point(mouseEvent.getX(), mouseEvent.getY()));
 
-                    Object obj = timetable_control.getValueAt(row, col);
 
-                    System.out.println(obj.toString());
+                    for(int row_counter = 0; row_counter < timetable_control.getModel().getRowCount(); row_counter++){
+                        for(int col_counter = 0; col_counter < timetable_control.getModel().getColumnCount(); col_counter++){
+                           Object obj = timetable_control.getModel().getValueAt(row_counter, col_counter);
 
-                    jPopupMenu1.show(timetable_control, mouseEvent.getX(), mouseEvent.getY());
+                           if(obj instanceof TimetableScreeningBox){
+                               TimetableScreeningBox box = (TimetableScreeningBox)obj;
+
+                               if((col >= box.getStartColumn() && col < (box.getStartColumn() + box.getBoxSize())) && (box.getTableRow() == row)){
+                                   jPopupMenu1.show(timetable_control, mouseEvent.getX(), mouseEvent.getY());
+                               }
+
+                           }
+
+                        }
+                    }
+
        
                 }
         });
@@ -148,8 +156,9 @@ public class MainWindow extends javax.swing.JFrame {
     public void refreshTimetable(){
         // Create and add any new screenings to box controls
         this.generateBoxControls();
+        
         // Refreshes the timetable's renderer which draws all the films
-        this.timetable_control.setDefaultRenderer(Object.class, new TimetableRenderer(this.list_of_box_controls));
+        this.timetable_control.setDefaultRenderer(Object.class, new TimetableRenderer());
 
         // Refresh the control components and redraw them
         this.timetable_control.repaint();
@@ -168,7 +177,7 @@ public class MainWindow extends javax.swing.JFrame {
 
                 dates.add(current_screeing.getDate());
 
-                Format formatter = new SimpleDateFormat("dd/mm/yyyy");
+                Format formatter = new SimpleDateFormat("dd MMMMMMMM yyyy ");
                 this.timetable_date_picker_combo.addItem(formatter.format(current_screeing.getDate().getTime()));
             }
         }
@@ -179,14 +188,22 @@ public class MainWindow extends javax.swing.JFrame {
      * controls for the renderer to draw them.
      */
     public void generateBoxControls(){
+
+       TableModel sd = this.timetable_control.getModel();
+
         // Cycles through each screen
         for(Screen current_screen : this.core_controller.screen_manager.getScreens()){
             // Cycles through each screening of the current screen
              for(Screening current_screening : current_screen.getScreenings()){
                  // Creates a box control and adds it to the box control list
-                 this.list_of_box_controls.add(new TimetableScreeningBox(current_screening, current_screening.getColor(), Color.WHITE , this.timetable_control, this.getScreenRowNumber(current_screen.getIDNumber())));
+                // System.out.println(current_screening.getFilm().getColor());
+                 TimetableScreeningBox box = new TimetableScreeningBox(current_screening, TimetableColor.getColor(current_screening.getFilm().getColor()), Color.WHITE , this.timetable_control, this.getScreenRowNumber(current_screen.getIDNumber()));
+                 sd.setValueAt(box, box.getTableRow(), box.getStartColumn());
              }
         }
+
+         this.timetable_control.setModel(sd);
+         this.timetable_control.repaint();
     }
 
 
@@ -586,8 +603,10 @@ public class MainWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(status_bar, javax.swing.GroupLayout.DEFAULT_SIZE, 1160, Short.MAX_VALUE)
-            .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, 1160, Short.MAX_VALUE)
             .addComponent(jSplitPane_main, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1160, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(255, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

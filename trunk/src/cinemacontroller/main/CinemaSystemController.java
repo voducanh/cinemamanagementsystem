@@ -1,13 +1,11 @@
 package cinemacontroller.main;
 
 import cinemacontroller.filmcontroller.FilmController;
-import cinemacontroller.gui.timetablecontrol.TimetableColor;
 import cinemacontroller.rotationalcontroller.RotationEngine;
 import cinemacontroller.screensystem.Screen;
 import cinemacontroller.screensystem.ScreenManager;
 import cinemacontroller.screensystem.Screening;
 import databasecontroller.MySQLController;
-import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -52,7 +50,7 @@ public class CinemaSystemController {
             // Setup all the cinema screens
             this.loadScreensFromDatabase();
             // Load all films from database
-            this.film_manager.getFilmsFromDatabase();
+            this.film_manager.film_database_controller.getFilmsFromDatabase();
             // Load all the screenings from database
             this.loadScreeningsFromDatabase();
 
@@ -83,21 +81,11 @@ public class CinemaSystemController {
 
                 Screening current_screeing = new Screening(this.film_manager.getFilm(screenings.getInt("film_id")), date, time);
 
-                Color color = TimetableColor.getColor(screenings.getString("color"));
-  
-                
-                current_screeing.setColor(color);
-
                 // Add the new screening to the selected screen
                 this.screen_manager.addScreening(current_screen, current_screeing);
             }
             
         }
-    }
-
-    public void getTimetableControlSettings() throws SQLException {
-        // Default Background Color
-        Color color = new Color(0,0,0);
     }
 
     /**

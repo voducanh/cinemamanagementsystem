@@ -2,9 +2,7 @@ package cinemacontroller.filmcontroller;
 
 import databasecontroller.MySQLController;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
 import java.util.GregorianCalendar;
 
 /**
@@ -17,10 +15,12 @@ import java.util.GregorianCalendar;
 public class FilmController {
 	
 	private ArrayList<Film> cinema_film_list;
+    public FilmDatabaseController film_database_controller;
 	
 	public FilmController(){
         // Create a new ArrayList which will store ALL the films the cinema can show
         this.cinema_film_list = new ArrayList<Film>();
+        this.film_database_controller = new FilmDatabaseController();
     }
 
     /**
@@ -40,7 +40,9 @@ public class FilmController {
                 return result.getInt("Auto_increment");
             }
             
-        }catch(Exception e){ }
+        }catch(Exception e){
+            System.out.println(e);
+        }
 
         // Fall back id number
         java.sql.Timestamp  sqlDate = new java.sql.Timestamp(new java.util.Date().getTime());
@@ -61,9 +63,9 @@ public class FilmController {
 	 * @param film_ticket_price
 	 * @throws Exception
 	 */
-	public void addFilmToCinema(String film_title, String film_director, String film_bbfc_rating, GregorianCalendar film_available_date, GregorianCalendar film_length, int film_expected_views_per_day, double film_ticket_price) throws Exception{
+	public void addFilm(String film_title, String film_director, String film_bbfc_rating, GregorianCalendar film_available_date, GregorianCalendar film_length, int film_expected_views_per_day, String color) throws Exception{
  
-        Film new_film = new Film(generateUniqueId(), film_title, film_director, film_bbfc_rating, film_length, film_available_date);
+        Film new_film = new Film(generateUniqueId(), film_title, film_director, film_bbfc_rating, film_length, film_available_date, color);
 		new_film.setExpectedAudienceFigures(film_expected_views_per_day);
 		
 		// Add the film to the film manager's internal database
@@ -75,7 +77,7 @@ public class FilmController {
      * 
      * @param film
      */
-    public void addFilmToDatabase(Film film){
+    public void addFilm(Film film){
         this.cinema_film_list.add(film);
     }
 	
@@ -137,32 +139,4 @@ public class FilmController {
         return return_film;
     }
 
-    /**
-     * Function populates the list of films stored internally with the films stored in a database.
-     * 
-     * @throws java.sql.SQLException
-     */
-    public void getFilmsFromDatabase() throws SQLException {
-         // Create a new mysql connection and query database
-        MySQLController connection = new MySQLController();
-        ResultSet result = connection.getData("SELECT * FROM main_film_list");
-
-        // Populate the internal list of films by cycle through each film in database
-        while(result.next()){
-
-            // Get the availability date for the film
-            GregorianCalendar start_date = new GregorianCalendar();
-            start_date.setTimeInMillis(result.getDate("availability_date").getTime());
-
-            // Get the film length
-            GregorianCalendar film_length = new GregorianCalendar();
-            film_length.setTimeInMillis(result.getTime("length").getTime());
-
-            // Create a new film instance
-            Film current_film = new Film(result.getInt("uniqueid"), result.getString("title"), result.getString("director"), result.getString("bbfc"), film_length, start_date);
-
-            // Add the new film instance to the list of films in database
-            cinema_film_list.add(current_film);
-        }
-    }
 }

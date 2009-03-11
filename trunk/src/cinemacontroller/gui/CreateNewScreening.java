@@ -32,8 +32,6 @@ import javax.swing.JOptionPane;
 public class CreateNewScreening extends javax.swing.JFrame {
 
     private MainWindow main_window;
-    private Color selected_color = TimetableColor.GREEN;
-    private String selected_color_string = "GREEN";
 
     /** Creates new form CreateScreening2 */
     public CreateNewScreening(MainWindow main_window) {
@@ -52,24 +50,6 @@ public class CreateNewScreening extends javax.swing.JFrame {
             this.screen_combo.addItem(current_screen);
         }
 
-
-        this.green_color.setActionCommand("GREEN");
-        this.green_color.setBackground(TimetableColor.GREEN);
-
-        this.blue_color.setActionCommand("BLUE");
-        this.blue_color.setBackground(TimetableColor.BLUE);
-
-        this.red_color.setActionCommand("RED");
-        this.red_color.setBackground(TimetableColor.RED);
-
-        this.orange_color.setActionCommand("ORANGE");
-        this.orange_color.setBackground(TimetableColor.ORANGE);
-
-        this.black_color.setActionCommand("BLACK");
-        this.black_color.setBackground(TimetableColor.BLACK);
-
-        this.yellow_color.setActionCommand("YELLOW");
-        this.yellow_color.setBackground(TimetableColor.YELLOW);
  
     }
 
@@ -84,7 +64,6 @@ public class CreateNewScreening extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -102,14 +81,6 @@ public class CreateNewScreening extends javax.swing.JFrame {
         date_day = new javax.swing.JComboBox();
         date_month = new javax.swing.JComboBox();
         date_year = new javax.swing.JComboBox();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        green_color = new javax.swing.JRadioButton();
-        orange_color = new javax.swing.JRadioButton();
-        blue_color = new javax.swing.JRadioButton();
-        black_color = new javax.swing.JRadioButton();
-        red_color = new javax.swing.JRadioButton();
-        yellow_color = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -176,61 +147,6 @@ public class CreateNewScreening extends javax.swing.JFrame {
 
         date_year.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2008", "2009", "2010" }));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel7.setText("Additional Settings");
-
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel8.setText("Timetable Color:");
-
-        green_color.setBackground(new java.awt.Color(153, 204, 0));
-        buttonGroup1.add(green_color);
-        green_color.setSelected(true);
-        green_color.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                color_selector(evt);
-            }
-        });
-
-        orange_color.setBackground(new java.awt.Color(236, 176, 45));
-        buttonGroup1.add(orange_color);
-        orange_color.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                color_selector(evt);
-            }
-        });
-
-        blue_color.setBackground(new java.awt.Color(0, 153, 204));
-        buttonGroup1.add(blue_color);
-        blue_color.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                color_selector(evt);
-            }
-        });
-
-        black_color.setBackground(new java.awt.Color(73, 72, 72));
-        buttonGroup1.add(black_color);
-        black_color.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                color_selector(evt);
-            }
-        });
-
-        red_color.setBackground(new java.awt.Color(218, 108, 108));
-        buttonGroup1.add(red_color);
-        red_color.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                color_selector(evt);
-            }
-        });
-
-        yellow_color.setBackground(new java.awt.Color(255, 204, 0));
-        buttonGroup1.add(yellow_color);
-        yellow_color.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                color_selector(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -261,24 +177,6 @@ public class CreateNewScreening extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(date_year, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(green_color, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(orange_color, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(blue_color, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(yellow_color, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(red_color, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(black_color, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,22 +202,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
                     .addComponent(date_day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(date_month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(date_year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(jLabel7)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(red_color, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                            .addComponent(yellow_color, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                            .addComponent(blue_color, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                            .addComponent(orange_color, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                            .addComponent(green_color, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                            .addComponent(black_color, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))))
-                .addGap(34, 34, 34))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
 
         jButton1.setText("Create Screening");
@@ -378,7 +261,6 @@ public class CreateNewScreening extends javax.swing.JFrame {
 
             // Create a new screening
             Screening new_screening = new Screening(selected_film, this.getSelectedDate(), this.getSelectedTime());
-            new_screening.setColor(selected_color);
 
             // Add the new screening to the screen manager
             main_window.core_controller.screen_manager.getScreen(selected_screen.getIDNumber()).addScreening(new_screening);
@@ -398,12 +280,12 @@ public class CreateNewScreening extends javax.swing.JFrame {
 
                 Date daterr = this.getSelectedTime().getTime();
                 Date daterr2 = this.getSelectedDate().getTime();
-                
+
                 Format mysqltime = new SimpleDateFormat("kk:mm:ss");
                 Format mysqldate = new SimpleDateFormat("yyyy-M-dd");
 
                 connection = new MySQLController();
-                connection.putData("INSERT INTO `main_screening_list` ( film_id, screen_id, start_time, start_date, color) VALUES('"+selected_film.getID()+"','"+selected_screen.getIDNumber()+"','"+ mysqltime.format(daterr)+"', '"+mysqldate.format(daterr2)+"','"+selected_color_string+"')");
+                connection.putData("INSERT INTO `main_screening_list` ( film_id, screen_id, start_time, start_date) VALUES('"+selected_film.getID()+"','"+selected_screen.getIDNumber()+"','"+ mysqltime.format(daterr)+"', '"+mysqldate.format(daterr2)+"')");
                                 
             } catch (SQLException ex) {
                System.out.println(ex);
@@ -421,12 +303,6 @@ public class CreateNewScreening extends javax.swing.JFrame {
         main_window.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void color_selector(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_color_selector
-        selected_color = TimetableColor.getColor(this.buttonGroup1.getSelection().getActionCommand());
-        selected_color_string = this.buttonGroup1.getSelection().getActionCommand();
-        System.out.println(selected_color_string);
-    }//GEN-LAST:event_color_selector
 
     /**
      * Returns the selected data from the date picker.
@@ -487,14 +363,10 @@ public class CreateNewScreening extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton black_color;
-    private javax.swing.JRadioButton blue_color;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox date_day;
     private javax.swing.JComboBox date_month;
     private javax.swing.JComboBox date_year;
     private javax.swing.JComboBox film_combo;
-    private javax.swing.JRadioButton green_color;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -503,18 +375,13 @@ public class CreateNewScreening extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextPane jTextPane_date_description;
-    private javax.swing.JRadioButton orange_color;
-    private javax.swing.JRadioButton red_color;
     private javax.swing.JComboBox screen_combo;
     private javax.swing.JSpinner time_hour;
     private javax.swing.JSpinner time_min;
-    private javax.swing.JRadioButton yellow_color;
     // End of variables declaration//GEN-END:variables
 
 }

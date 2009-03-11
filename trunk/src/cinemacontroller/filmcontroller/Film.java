@@ -1,5 +1,6 @@
 package cinemacontroller.filmcontroller;
 
+import java.awt.Color;
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -27,6 +28,7 @@ public class Film {
     private GregorianCalendar film_length;
     private GregorianCalendar film_avaliability_date;
 
+    private String color;
     /**
     * Constructor for the film class, also provides functionality to set some
     * of the films primary attributes.
@@ -37,7 +39,7 @@ public class Film {
     * @param  film_expected_popularity  expected popularity of the film.
     * @param  film_avaliability_date    the availability date of the film.
     */
-    public Film(int film_id, String film_title, String film_director, String film_bbfc_rating, GregorianCalendar length, GregorianCalendar film_avaliability_date) throws IllegalArgumentException
+    public Film(int film_id, String film_title, String film_director, String film_bbfc_rating, GregorianCalendar length, GregorianCalendar film_avaliability_date, String color) throws IllegalArgumentException
     {
         // Set all the required information
         this.film_id = film_id;
@@ -46,6 +48,7 @@ public class Film {
         this.film_bbfc_rating = film_bbfc_rating;
         this.film_avaliability_date = film_avaliability_date;
         this.film_length = length;
+        this.color = color;
     }
 
 
@@ -221,5 +224,10 @@ public class Film {
          Random random = new Random();
         return random.nextInt(100000000);
     }
+
+    public String getColor(){
+        return this.color;
+    }
+    
  
 }
