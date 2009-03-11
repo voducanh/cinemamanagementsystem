@@ -1,4 +1,4 @@
-package cinemacontroller.screensystem;
+package cinemacontroller.screencontroller;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;

@@ -2,8 +2,8 @@ package cinemacontroller.gui;
 
 import cinemacontroller.gui.timetablecontrol.*;
 import cinemacontroller.main.CinemaSystemController;
-import cinemacontroller.screensystem.Screen;
-import cinemacontroller.screensystem.Screening;
+import cinemacontroller.screencontroller.Screen;
+import cinemacontroller.screencontroller.Screening;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;

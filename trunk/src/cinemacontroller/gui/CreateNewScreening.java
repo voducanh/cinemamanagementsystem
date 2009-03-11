@@ -13,8 +13,8 @@ package cinemacontroller.gui;
 
 import cinemacontroller.filmcontroller.Film;
 import cinemacontroller.gui.timetablecontrol.TimetableColor;
-import cinemacontroller.screensystem.Screen;
-import cinemacontroller.screensystem.Screening;
+import cinemacontroller.screencontroller.Screen;
+import cinemacontroller.screencontroller.Screening;
 import databasecontroller.MySQLController;
 import java.awt.Color;
 import java.sql.SQLException;

@@ -1,7 +1,7 @@
 package cinemacontroller.gui.timetablecontrol;
 
 import java.awt.Color;
-import cinemacontroller.screensystem.Screening;
+import cinemacontroller.screencontroller.Screening;
 import java.util.Calendar;
 
 /**

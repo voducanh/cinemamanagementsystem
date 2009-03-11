@@ -1,6 +1,6 @@
 package cinemacontroller.gui.timetablecontrol;
 
-import cinemacontroller.screensystem.Screen;
+import cinemacontroller.screencontroller.Screen;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;

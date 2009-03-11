@@ -2,9 +2,9 @@ package cinemacontroller.main;
 
 import cinemacontroller.filmcontroller.FilmController;
 import cinemacontroller.rotationalcontroller.RotationEngine;
-import cinemacontroller.screensystem.Screen;
-import cinemacontroller.screensystem.ScreenManager;
-import cinemacontroller.screensystem.Screening;
+import cinemacontroller.screencontroller.Screen;
+import cinemacontroller.screencontroller.ScreenManager;
+import cinemacontroller.screencontroller.Screening;
 import databasecontroller.MySQLController;
 import java.sql.ResultSet;
 import java.sql.SQLException;
