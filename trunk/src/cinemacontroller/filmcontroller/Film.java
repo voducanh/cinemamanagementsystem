@@ -1,7 +1,5 @@
 package cinemacontroller.filmcontroller;
 
-import java.awt.Color;
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;

@@ -5,7 +5,7 @@ import cinemacontroller.rotationalcontroller.RotationEngine;
 import cinemacontroller.screencontroller.Screen;
 import cinemacontroller.screencontroller.ScreenManager;
 import cinemacontroller.screencontroller.Screening;
-import databasecontroller.MySQLController;
+import databasecontroller.MySqlController;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -66,7 +66,7 @@ public class CinemaSystemController {
         for(Screen current_screen : this.screen_manager.getScreens()){
 
             // Create a new mysql connection and query database
-            MySQLController connection = new MySQLController();
+        	MySqlController connection = MySqlController.getInstance();
             ResultSet screenings = connection.getData("SELECT * FROM main_screening_list WHERE screen_id = '" + current_screen.getIDNumber() + "'");
 
             // Populate the internal list of films by cycle through each film in database
@@ -98,7 +98,7 @@ public class CinemaSystemController {
         String table_name = "main_screen_list";
 
         // Create a new mysql connection and query database
-        MySQLController connection = new MySQLController();
+        MySqlController connection = MySqlController.getInstance();
         ResultSet result = connection.getData("SELECT * FROM `" + table_name + "`");
 
         // Populate the internal list of screens by cycle through each screen stored in database

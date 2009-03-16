@@ -26,7 +26,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HistoricalDatabase extends javax.swing.JFrame {
 
-    private HistoricalController historical_controller;
+	private static final long serialVersionUID = -1916890730756863894L;
+	private HistoricalController historical_controller;
 
     /** Creates new form HistoricalDatabase */
     public HistoricalDatabase() {

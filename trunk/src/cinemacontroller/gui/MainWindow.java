@@ -27,7 +27,8 @@ import javax.swing.table.TableModel;
  */
 public class MainWindow extends javax.swing.JFrame {
 
-    public CinemaSystemController core_controller;
+	private static final long serialVersionUID = -3688656990364226359L;
+	public CinemaSystemController core_controller;
     private TimetableTable timetable_control;
 
 
@@ -36,6 +37,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Renders all the components.
      */
     public MainWindow(CinemaSystemController core_controller) {
+    	
         // Set the main controller
         this.core_controller = core_controller;
 
@@ -59,6 +61,8 @@ public class MainWindow extends javax.swing.JFrame {
         this.timetable_scroll_pane.setLayout(layout);
         this.timetable_scroll_pane.getViewport().add( timetable_control );
         this.populateDatePickerBox();
+        
+        
 
     }
 

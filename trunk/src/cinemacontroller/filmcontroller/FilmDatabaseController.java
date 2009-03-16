@@ -5,7 +5,7 @@
 
 package cinemacontroller.filmcontroller;
 
-import databasecontroller.MySQLController;
+import databasecontroller.MySqlController;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.Format;
@@ -26,7 +26,7 @@ public class FilmDatabaseController {
      */
     public void addFilmToDatabase(Film film) throws SQLException {
         // Create a new mysql connection and query database
-        MySQLController connection = new MySQLController();
+    	MySqlController connection = MySqlController.getInstance();
 
         Format time_format = new SimpleDateFormat("kk:mm:ss");
         Format date_format = new SimpleDateFormat("yyyy-M-dd");
@@ -42,7 +42,7 @@ public class FilmDatabaseController {
      */
     public ArrayList<Film> getFilmsFromDatabase() throws SQLException {
         // Create a new mysql connection and query database
-        MySQLController connection = new MySQLController();
+    	MySqlController connection = MySqlController.getInstance();
         ResultSet result = connection.getData("SELECT * FROM main_film_list");
         ArrayList<Film> return_films = new ArrayList<Film>();
         

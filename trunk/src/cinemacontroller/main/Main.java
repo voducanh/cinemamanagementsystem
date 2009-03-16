@@ -1,9 +1,8 @@
 package cinemacontroller.main;
 
-import cinemacontroller.*;
 import cinemacontroller.gui.MainWindow;
 import cinemacontroller.gui.LoginDialog;
-import databasecontroller.MySQLController;
+import databasecontroller.MySqlController;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -30,11 +29,11 @@ public class Main {
 
         // Check there is a database that the program is able to connect to
         try {
-            new MySQLController();
+        	MySqlController connection = MySqlController.getInstance();
 
             // Create a new GUI for the system and set controller
             MainWindow main_window = new MainWindow(new CinemaSystemController());
-            main_window.setVisible(true);
+            main_window.setVisible(false);
 
             // Show the login dialog
             new LoginDialog(main_window, true).setVisible(true);

@@ -17,7 +17,8 @@ package cinemacontroller.gui;
  */
 public class AboutProgram extends javax.swing.JFrame {
 
-    private MainWindow window;
+	private static final long serialVersionUID = -5412993669813774967L;
+	private MainWindow window;
     
     /** Creates new form AboutProgram */
     public AboutProgram(MainWindow window) {

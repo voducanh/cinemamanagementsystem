@@ -1,6 +1,6 @@
 package cinemacontroller.filmcontroller;
 
-import databasecontroller.MySQLController;
+import databasecontroller.MySqlController;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -32,8 +32,9 @@ public class FilmController {
     public static int generateUniqueId(){
 
         try {
-             // Create a new mysql connection and query database
-            MySQLController connection = new MySQLController();
+            
+        	MySqlController connection = MySqlController.getInstance();
+        	
             ResultSet result = connection.getData("SHOW TABLE STATUS LIKE 'main_film_list'");
 
             if(result.next()){

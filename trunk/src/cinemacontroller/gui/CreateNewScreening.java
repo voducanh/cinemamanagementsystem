@@ -15,7 +15,7 @@ import cinemacontroller.filmcontroller.Film;
 import cinemacontroller.gui.timetablecontrol.TimetableColor;
 import cinemacontroller.screencontroller.Screen;
 import cinemacontroller.screencontroller.Screening;
-import databasecontroller.MySQLController;
+import databasecontroller.MySqlController;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.Format;
@@ -273,7 +273,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
             this.dispose();
 
 
-            MySQLController connection;
+            MySqlController connection;
             try {
 
                 int uniqueid = Screen.generateID();
@@ -284,7 +284,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
                 Format mysqltime = new SimpleDateFormat("kk:mm:ss");
                 Format mysqldate = new SimpleDateFormat("yyyy-M-dd");
 
-                connection = new MySQLController();
+                connection = MySqlController.getInstance();
                 connection.putData("INSERT INTO `main_screening_list` ( film_id, screen_id, start_time, start_date) VALUES('"+selected_film.getID()+"','"+selected_screen.getIDNumber()+"','"+ mysqltime.format(daterr)+"', '"+mysqldate.format(daterr2)+"')");
                                 
             } catch (SQLException ex) {

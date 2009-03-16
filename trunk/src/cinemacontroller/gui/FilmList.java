@@ -20,7 +20,8 @@ import javax.swing.DefaultListModel;
  */
 public class FilmList extends javax.swing.JFrame {
 
-    private MainWindow window;
+	private static final long serialVersionUID = 179516414159001654L;
+	private MainWindow window;
     
     /** Creates new form FilmList */
     public FilmList(MainWindow window) {

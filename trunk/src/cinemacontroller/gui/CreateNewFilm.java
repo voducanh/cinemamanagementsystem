@@ -24,7 +24,9 @@ import java.util.GregorianCalendar;
  */
 public class CreateNewFilm extends javax.swing.JFrame {
 
-    private CinemaSystemController controller;
+
+	private static final long serialVersionUID = -1073180861731418885L;
+	private CinemaSystemController controller;
     private Color selected_color = TimetableColor.GREEN;
     private String selected_color_string = "GREEN";
     
@@ -399,7 +401,6 @@ public class CreateNewFilm extends javax.swing.JFrame {
         String title = this.jTextField1.getText();
         String director = this.jTextField2.getText();
         String BBFC_rating = this.jComboBox1.getSelectedItem().toString();
-        String popularity = this.jTextField6.getText();
 
         GregorianCalendar avail_date = new GregorianCalendar();
         avail_date.setTimeInMillis(0);

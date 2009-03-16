@@ -6,7 +6,7 @@
 package cinemacontroller.historicalcontroller;
 
 import cinemacontroller.filmcontroller.Film;
-import databasecontroller.MySQLController;
+import databasecontroller.MySqlController;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class HistoricalController {
 
         ArrayList<Film> list_of_films = new ArrayList<Film>();
 
-        MySQLController sql_connection = new MySQLController();
+        MySqlController sql_connection = MySqlController.getInstance();
         ResultSet result = sql_connection.getData("SELECT * FROM historical_film_list");
 
         while(result.next()){
@@ -52,7 +52,7 @@ public class HistoricalController {
     }
 
     public void removeAllRecords() throws SQLException, ClassNotFoundException{
-        MySQLController sql_connection = new MySQLController();
+    	MySqlController sql_connection = MySqlController.getInstance();
         ResultSet result = sql_connection.getData("TRUNCATE historical_film_list");
     }
 }
