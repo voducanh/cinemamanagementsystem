@@ -234,7 +234,6 @@ public class LoginDialog extends javax.swing.JDialog {
         	MySqlController connection = MySqlController.getInstance();
 
         	ResultSet result = connection.getData("SELECT * FROM accounts WHERE username = '" + this.jTextField1.getText().trim() + "' AND password = '" + this.sha1(new String(this.jTextField2.getPassword()).trim()) + "'");
-
             if(result.next()){
                 this.dispose();
                 main_window.setVisible(true);

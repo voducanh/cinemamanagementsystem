@@ -14,9 +14,23 @@ package cinemacontroller.gui;
 import cinemacontroller.filmcontroller.Film;
 import cinemacontroller.gui.timetablecontrol.TimetableColor;
 import cinemacontroller.main.CinemaSystemController;
+import cinemacontroller.screencontroller.Screen;
+
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.Vector;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+
+import databasecontroller.MySqlController;
 
 /**
  *
@@ -77,7 +91,7 @@ public class CreateNewFilm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        modelComboBox1 = new javax.swing.DefaultComboBoxModel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
@@ -150,7 +164,24 @@ public class CreateNewFilm extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("BBFC Rating");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PG", "U", "12", "15", "18" }));
+        MySqlController connection;
+        ResultSet result;
+        
+
+		modelComboBox1 = new DefaultComboBoxModel();
+		
+        jComboBox1 = new javax.swing.JComboBox(modelComboBox1);
+        
+		try {
+			connection = MySqlController.getInstance();
+			result= connection.getData("SELECT NAME FROM BBFC_RATING");
+			while (result.next()) {
+				jComboBox1.addItem(result.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Availability Date");
@@ -426,6 +457,7 @@ public class CreateNewFilm extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.DefaultComboBoxModel modelComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
