@@ -13,6 +13,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import databasecontroller.MySqlController;
+import databasecontroller.TextLimiter;
 
 /**
  *
@@ -49,6 +50,8 @@ public class CreateNewType extends javax.swing.JFrame {
         setTitle("Create New Type - Multiplex Manager");
         setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/dvd_add.png")));
 
+        jTextField1.setDocument(new TextLimiter(40));
+        
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));

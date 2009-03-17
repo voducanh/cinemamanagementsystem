@@ -30,7 +30,7 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
-import databasecontroller.MySqlController;
+import databasecontroller.*;
 
 /**
  *
@@ -219,6 +219,7 @@ public class CreateNewFilm extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Expected Popularity");
 
+        jTextField1.setDocument(new TextLimiter(100));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -296,6 +297,7 @@ public class CreateNewFilm extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel13.setText("Synopsis");
 
+        jTextArea1.setDocument(new TextLimiter(1500));
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTextArea1.setRows(5);
@@ -304,6 +306,7 @@ public class CreateNewFilm extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel14.setText("Availability Date");
 
+        jTextField2.setDocument(new TextLimiter(2));
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField2.setText("01");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
@@ -312,6 +315,7 @@ public class CreateNewFilm extends javax.swing.JFrame {
             }
         });
 
+        jTextField6.setDocument(new TextLimiter(2));
         jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField6.setText("06");
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
@@ -320,6 +324,7 @@ public class CreateNewFilm extends javax.swing.JFrame {
             }
         });
 
+        jTextField7.setDocument(new TextLimiter(4));
         jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField7.setText("2009");
 
@@ -356,11 +361,13 @@ public class CreateNewFilm extends javax.swing.JFrame {
             }
         });
 
+        jTextField4.setDocument(new TextLimiter(2));
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField4.setText("2");
 
         jLabel3.setText("hours");
 
+        jTextField5.setDocument(new TextLimiter(2));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField5.setText("30");
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
