@@ -291,8 +291,11 @@ public class MainWindow extends javax.swing.JFrame {
         main_menu = new javax.swing.JMenuBar();
         file_menu = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         create_new_film_menuitem = new javax.swing.JMenuItem();
         create_new_screening_menuitem = new javax.swing.JMenuItem();
+        importHistorical = new javax.swing.JMenuItem();
+        exportHistorical = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JSeparator();
         jMenuItem1 = new javax.swing.JMenuItem();
         edit_menu = new javax.swing.JMenu();
@@ -562,6 +565,7 @@ public class MainWindow extends javax.swing.JFrame {
         file_menu.setText("File");
 
         jMenu1.setText("New");
+        jMenu2.setText("Historical");
 
         create_new_film_menuitem.setText("Film");
         create_new_film_menuitem.addActionListener(new java.awt.event.ActionListener() {
@@ -578,8 +582,25 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         jMenu1.add(create_new_screening_menuitem);
+        
+        importHistorical.setText("Import");
+        importHistorical.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	importHistoricalActionPerformed(evt);
+            }
+        });
+        jMenu2.add(importHistorical);
+        
+        exportHistorical.setText("Export");
+        exportHistorical.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	exportHistoricalActionPerformed(evt);
+            }
+        });
+        jMenu2.add(exportHistorical);
 
         file_menu.add(jMenu1);
+        file_menu.add(jMenu2);
         file_menu.add(jSeparator1);
 
         jMenuItem1.setText("Exit");
@@ -687,6 +708,14 @@ public class MainWindow extends javax.swing.JFrame {
         CreateNewScreening create_screening_window = new CreateNewScreening(this);
         create_screening_window.setVisible(true);
     }//GEN-LAST:event_create_new_screening_menuitemActionPerformed
+    
+    private void importHistoricalActionPerformed(java.awt.event.ActionEvent evt) {
+
+    }
+    
+    private void exportHistoricalActionPerformed(java.awt.event.ActionEvent evt) {
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private int nbFilm;
@@ -697,6 +726,8 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem create_new_film_menuitem;
     private javax.swing.JButton create_new_screening_button;
     private javax.swing.JMenuItem create_new_screening_menuitem;
+    private javax.swing.JMenuItem importHistorical;
+    private javax.swing.JMenuItem exportHistorical;
     private javax.swing.JButton delete_screening_jbutton;
     private javax.swing.JMenu edit_menu;
     private javax.swing.JButton edit_screening_jbutton;
@@ -706,6 +737,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel films_in_database_jlabel;
     private javax.swing.JMenu help_menu;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
