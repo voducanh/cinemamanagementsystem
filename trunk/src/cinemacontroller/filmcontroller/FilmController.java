@@ -2,8 +2,11 @@ package cinemacontroller.filmcontroller;
 
 import databasecontroller.MySqlController;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+
+import javax.swing.DefaultComboBoxModel;
 
 /**
  * Provides all the functionality required to maintain and manage a list of films
@@ -117,8 +120,25 @@ public class FilmController {
 	 * 
 	 * @return
 	 */
-	public ArrayList<Film> getFilms(){
-		return (ArrayList<Film>)this.cinema_film_list.clone();
+	public int getFilmsInDatabase(){
+
+        MySqlController connection;
+        ResultSet result;
+        
+		int number = 0;
+
+		try {
+			connection = MySqlController.getInstance();
+			result= connection.getData("SELECT COUNT(*) FROM MOVIES");
+			while (result.next()) {
+				number = result.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return number;
 	}
 
     /**

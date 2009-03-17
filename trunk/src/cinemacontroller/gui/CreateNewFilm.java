@@ -557,7 +557,8 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
 }
 
 private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-// TODO add your handling code here:
+
+	CreateNewType type = new CreateNewType();
 }
 
 private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {

@@ -11,8 +11,17 @@
 
 package cinemacontroller.gui;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import cinemacontroller.filmcontroller.Film;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
+import databasecontroller.MySqlController;
 
 /**
  *
@@ -37,11 +46,20 @@ public class FilmList extends javax.swing.JFrame {
     public void populateListControl(){
         DefaultListModel model = new DefaultListModel();
 
-        int counter = 0;
-        for(Film current_film : window.core_controller.film_manager.getFilms()){
-            model.add(counter, current_film.getTitle() + "   -   " + current_film.getDirector());
-            counter++;
-        }
+        MySqlController connection;
+        ResultSet result;
+
+		try {
+			connection = MySqlController.getInstance();
+			result= connection.getData("SELECT NAME FROM MOVIES ORDER BY NAME");
+
+			while (result.next()) {
+				model.addElement(result.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
         this.jList1.setModel(model);
     }
@@ -126,6 +144,11 @@ public class FilmList extends javax.swing.JFrame {
         });
 
         jButton3.setText("Remove Film");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -169,7 +192,38 @@ public class FilmList extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         new CreateNewFilm(window.core_controller).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+        
+    	Object[] filmSelected = jList1.getSelectedValues();
+    	
+    	if(filmSelected.length != 0){
+    		
+    		String[] choice = {"Yes", "Cancel"};
+    		int answer = JOptionPane.showOptionDialog(this,"Would you really delete film(s) selected?","Delete film(s)",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,choice,choice[1]);
+        	
+    		 if (answer == JOptionPane.YES_OPTION){
+    	    		try {
+    	        		MySqlController connection = MySqlController.getInstance();
 
+    	        		for(int i=0;i<filmSelected.length;i++){
+    	        			connection.putData("DELETE FROM MOVIES WHERE NAME='"+filmSelected[i]+"'");
+    	        		}	
+    	        	}
+    	        	catch (SQLException e) {
+    	        			e.printStackTrace();
+    	        	} 
+    	        	
+    	        	//write again all films
+    	        	this.populateListControl();
+    		 }
+
+    	}
+    	else{
+    		JOptionPane.showMessageDialog(null, "Please choose at least one film.", "Invalid Selection", JOptionPane.WARNING_MESSAGE);
+    	}
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

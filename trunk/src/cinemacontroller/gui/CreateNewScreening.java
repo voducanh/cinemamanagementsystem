@@ -41,14 +41,14 @@ public class CreateNewScreening extends javax.swing.JFrame {
         // Center align the login window
         this.setLocationRelativeTo(null);
         
-        for(Film current_film : main_window.core_controller.film_manager.getFilms()){
+        /*for(Film current_film : main_window.core_controller.film_manager.getFilms()){
             this.film_combo.addItem(current_film);
         }
 
 
         for(Screen current_screen : main_window.core_controller.screen_manager.getScreens()){
             this.screen_combo.addItem(current_screen);
-        }
+        }*/
 
  
     }

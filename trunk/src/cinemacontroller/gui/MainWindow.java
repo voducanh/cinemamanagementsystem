@@ -68,7 +68,7 @@ public class MainWindow extends javax.swing.JFrame {
 
  
     public void updateSummaryPanel(){
-        this.films_in_database_jlabel.setText("Total Films in Database: " + this.core_controller.film_manager.getFilms().size());
+        this.films_in_database_jlabel.setText("Total Films in Database: " + this.core_controller.film_manager.getFilmsInDatabase());
         this.total_screens_in_database_jlabel.setText("Total Screen Count: " + this.core_controller.screen_manager.getScreens().size());
         this.total_screenings_in_database_jlabel.setText("Total Screening Count: " + this.core_controller.screen_manager.getScreeningCount());
     }
