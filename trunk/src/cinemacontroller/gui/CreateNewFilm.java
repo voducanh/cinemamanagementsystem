@@ -14,21 +14,14 @@ package cinemacontroller.gui;
 import cinemacontroller.filmcontroller.Film;
 import cinemacontroller.gui.timetablecontrol.TimetableColor;
 import cinemacontroller.main.CinemaSystemController;
-import cinemacontroller.screencontroller.Screen;
 
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 
 import databasecontroller.*;
 
@@ -210,6 +203,11 @@ public class CreateNewFilm extends javax.swing.JFrame {
         });
 
         jButton1.setText("Add Film");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("The availability date defines the date at which the screen can be assigned to a screening.");
 
@@ -559,6 +557,12 @@ private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {
 // TODO add your handling code here:
 }
 
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+
+
+
+}
+
 private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
 // TODO add your handling code here:
 }
@@ -569,7 +573,8 @@ private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
 }
 
 private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
-// TODO add your handling code here:
+
+	CreateNewDistributor distributor = new CreateNewDistributor();
 }
 
 private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {

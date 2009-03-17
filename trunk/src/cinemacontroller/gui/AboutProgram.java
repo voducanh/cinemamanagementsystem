@@ -69,7 +69,7 @@ public class AboutProgram extends javax.swing.JFrame {
         jTextPane_date_description.setBackground(new java.awt.Color(24, 24, 24));
         jTextPane_date_description.setEditable(false);
         jTextPane_date_description.setForeground(new java.awt.Color(255, 255, 255));
-        jTextPane_date_description.setText("Active Group Members:\n\n    -  Scott Straughan\n    -  Ross MacFarlane\n    -  Kyle McNally\n\nTheoritical Group Memebers\n\n    -  Vindo Raman\n    -  Sean Baxter");
+        jTextPane_date_description.setText("Active Group Members:\n\n    -  Scott Straughan\n    -  Ross MacFarlane\n    -  Kyle McNally\n    -  Frederic Cerclet\n\nTheoritical Group Memebers\n\n    -  Vindo Raman\n    -  Sean Baxter");
         jScrollPane3.setViewportView(jTextPane_date_description);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

@@ -14,8 +14,10 @@ import javax.swing.JPanel;
  *
  * @author Scott
  */
-class JPanelOverlay extends JPanel {
-    protected  Image ci=null;
+ public class JPanelOverlay extends JPanel {
+
+	private static final long serialVersionUID = 9160321093774752482L;
+	protected  Image ci=null;
 
     public JPanelOverlay() {
     }

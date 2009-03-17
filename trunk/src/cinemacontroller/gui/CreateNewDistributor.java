@@ -1,29 +1,21 @@
 /*
- * CreateNewType.java
+ * CreateNewDistributor.java
  *
- * Created on 17 mars 2009, 16:22
+ * Created on 17 mars 2009, 19:06
  */
 
 package cinemacontroller.gui;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.swing.JOptionPane;
-
-import databasecontroller.MySqlController;
-import databasecontroller.TextLimiter;
 
 /**
  *
  * @author  Frédéric
  */
-public class CreateNewType extends javax.swing.JFrame {
+public class CreateNewDistributor extends javax.swing.JFrame {
 
 
-	private static final long serialVersionUID = 4649666481787455221L;
-	/** Creates new form CreateNewType */
-    public CreateNewType() {
+	private static final long serialVersionUID = -6211947914039043913L;
+	/** Creates new form CreateNewDistributor */
+    public CreateNewDistributor() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -44,27 +36,25 @@ public class CreateNewType extends javax.swing.JFrame {
         jTextPane_date_description = new javax.swing.JTextPane();
         jLabel10 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Create New Type - Multiplex Manager");
+        setTitle("Create New Distributor - Multiplex Manager");
         setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/dvd_add.png")));
 
-        jTextField1.setDocument(new TextLimiter(40));
-        
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Create New Type");
+        jLabel1.setText("Create New Distributor");
 
         jScrollPane3.setBorder(null);
 
         jTextPane_date_description.setBackground(new java.awt.Color(24, 24, 24));
         jTextPane_date_description.setEditable(false);
         jTextPane_date_description.setForeground(new java.awt.Color(255, 255, 255));
-        jTextPane_date_description.setText("You can create a new type by filling in the box to the right. ");
+        jTextPane_date_description.setText("You can create a new distributor by filling in the box to the right. ");
         jScrollPane3.setViewportView(jTextPane_date_description);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -85,18 +75,11 @@ public class CreateNewType extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel10.setText("Type");
-
-        jButton1.setText("Add Type");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jLabel10.setText("Distributor");
 
         jButton2.setText("Close");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -105,10 +88,18 @@ public class CreateNewType extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Add Distributor");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 693, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,13 +119,14 @@ public class CreateNewType extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 123, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -145,25 +137,6 @@ public class CreateNewType extends javax.swing.JFrame {
     }// </editor-fold>
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-
-    	
-        if(!this.jTextField1.getText().isEmpty()){
-    		try {
-    			MySqlController connection = MySqlController.getInstance();
-    			//connection.putData("INSERT INTO TYPES");
-    			ResultSet r = connection.getData("SELECT LAST_INSERT_ID()");
-    			
-    			while(r.next()){
-    				System.out.println(r.getInt(1));   				
-    			}
-	
-    		} catch (SQLException e) {
-    			e.printStackTrace();
-    		}
-        }
-        else{
-        	JOptionPane.showMessageDialog(null, "Please fill the box.", "Invalid Type", JOptionPane.WARNING_MESSAGE);
-        }
 
     }
     
@@ -177,7 +150,7 @@ public class CreateNewType extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreateNewType().setVisible(true);
+                new CreateNewDistributor().setVisible(true);
             }
         });
     }

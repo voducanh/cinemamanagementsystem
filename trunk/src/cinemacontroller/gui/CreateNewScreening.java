@@ -12,11 +12,11 @@
 package cinemacontroller.gui;
 
 import cinemacontroller.filmcontroller.Film;
-import cinemacontroller.gui.timetablecontrol.TimetableColor;
+
 import cinemacontroller.screencontroller.Screen;
 import cinemacontroller.screencontroller.Screening;
 import databasecontroller.MySqlController;
-import java.awt.Color;
+
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -31,7 +31,9 @@ import javax.swing.JOptionPane;
  */
 public class CreateNewScreening extends javax.swing.JFrame {
 
-    private MainWindow main_window;
+
+	private static final long serialVersionUID = -8660873077052023577L;
+	private MainWindow main_window;
 
     /** Creates new form CreateScreening2 */
     public CreateNewScreening(MainWindow main_window) {

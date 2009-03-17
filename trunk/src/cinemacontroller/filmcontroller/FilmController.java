@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import javax.swing.DefaultComboBoxModel;
-
 /**
  * Provides all the functionality required to maintain and manage a list of films
  * that the cinema can screen at any time.
@@ -116,7 +114,7 @@ public class FilmController {
     }
 
 	/**
-	 * Returns a clone of the ArrayList of all the films stored in the cinema management system.
+	 * Returns the number of films in the database.
 	 * 
 	 * @return
 	 */

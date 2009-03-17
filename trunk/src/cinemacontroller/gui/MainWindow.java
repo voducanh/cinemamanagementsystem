@@ -51,6 +51,10 @@ public class MainWindow extends javax.swing.JFrame {
         this.timetable_control = createTimetableControl();
 
        // Update all the controls
+        nbFilm = this.core_controller.film_manager.getFilmsInDatabase();
+        nbScreen = this.core_controller.screen_manager.getScreens().size();
+        nbScreening = this.core_controller.screen_manager.getScreeningCount();
+        
         this.updateSummaryPanel();
 
         // Refresh timetable control
@@ -62,15 +66,13 @@ public class MainWindow extends javax.swing.JFrame {
         this.timetable_scroll_pane.getViewport().add( timetable_control );
         this.populateDatePickerBox();
         
-        
-
     }
 
  
     public void updateSummaryPanel(){
-        this.films_in_database_jlabel.setText("Total Films in Database: " + this.core_controller.film_manager.getFilmsInDatabase());
-        this.total_screens_in_database_jlabel.setText("Total Screen Count: " + this.core_controller.screen_manager.getScreens().size());
-        this.total_screenings_in_database_jlabel.setText("Total Screening Count: " + this.core_controller.screen_manager.getScreeningCount());
+        this.films_in_database_jlabel.setText("Total Films in Database: " + nbFilm);
+        this.total_screens_in_database_jlabel.setText("Total Screen Count: " + nbScreen);
+        this.total_screenings_in_database_jlabel.setText("Total Screening Count: " + nbScreening);
     }
 
 
@@ -581,6 +583,11 @@ public class MainWindow extends javax.swing.JFrame {
         file_menu.add(jSeparator1);
 
         jMenuItem1.setText("Exit");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jMenuItem1ActionPerformed(evt);
+            }
+        });
         file_menu.add(jMenuItem1);
 
         main_menu.add(file_menu);
@@ -635,6 +642,10 @@ public class MainWindow extends javax.swing.JFrame {
         new AboutProgram(this).setVisible(true);
     }//GEN-LAST:event_about_menuitemActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt){
+    	this.dispose();
+    }
+    
     private void edit_screening_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_screening_jbuttonActionPerformed
         // TODO add your handling code here:
 }//GEN-LAST:event_edit_screening_jbuttonActionPerformed
@@ -678,6 +689,9 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_create_new_screening_menuitemActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private int nbFilm;
+    private int nbScreen;
+    private int nbScreening;
     private javax.swing.JMenuItem about_menuitem;
     private javax.swing.JPanel actions_panel;
     private javax.swing.JMenuItem create_new_film_menuitem;
@@ -721,5 +735,10 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton view_screens_jbutton;
     private javax.swing.JButton view_statistical_data_jbutton;
     // End of variables declaration//GEN-END:variables
+
+
+	public void setNbFilm(int nbFilm) {
+		this.nbFilm = nbFilm;
+	}
 
 }

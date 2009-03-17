@@ -13,11 +13,7 @@ package cinemacontroller.gui;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import cinemacontroller.filmcontroller.Film;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -216,6 +212,11 @@ public class FilmList extends javax.swing.JFrame {
     	        	
     	        	//write again all films
     	        	this.populateListControl();
+    	        	
+    	        	/*
+    	        	 * 
+    	        	 * DELETE ALSO THE TIMETABLE OF THIS FILM
+    	        	 */
     		 }
 
     	}
