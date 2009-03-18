@@ -1,7 +1,7 @@
 /*
- * CreateNewDistributor.java
+ * CreateNewExpectedAudience.java
  *
- * Created on 17 mars 2009, 19:06
+ * Created on 18 mars 2009, 13:30
  */
 
 package cinemacontroller.gui;
@@ -18,12 +18,12 @@ import databasecontroller.TextLimiter;
  *
  * @author  Frédéric
  */
-public class CreateNewDistributor extends javax.swing.JFrame {
+public class CreateNewExpectedAudience extends javax.swing.JFrame {
 
 
-	private static final long serialVersionUID = -6211947914039043913L;
-	/** Creates new form CreateNewDistributor */
-    public CreateNewDistributor() {
+	private static final long serialVersionUID = -4282473796849277914L;
+	/** Creates new form CreateNewExpectedAudience */
+    public CreateNewExpectedAudience() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -48,23 +48,23 @@ public class CreateNewDistributor extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Create New Distributor - Multiplex Manager");
+        setTitle("Create New Expected Audience - Multiplex Manager");
         setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/dvd_add.png")));
 
         jTextField1.setDocument(new TextLimiter(60));
-        
+
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Create New Distributor");
+        jLabel1.setText("Create New Expected Audience");
 
         jScrollPane3.setBorder(null);
 
         jTextPane_date_description.setBackground(new java.awt.Color(24, 24, 24));
         jTextPane_date_description.setEditable(false);
         jTextPane_date_description.setForeground(new java.awt.Color(255, 255, 255));
-        jTextPane_date_description.setText("You can create a new distributor by filling in the box to the right. ");
+        jTextPane_date_description.setText("You can create a new expected audience by filling in the box to the right. ");
         jScrollPane3.setViewportView(jTextPane_date_description);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -75,7 +75,7 @@ public class CreateNewDistributor extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -84,12 +84,12 @@ public class CreateNewDistributor extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel10.setText("Distributor");
+        jLabel10.setText("Expected Audience");
 
         jButton2.setText("Close");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +98,7 @@ public class CreateNewDistributor extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Add Distributor");
+        jButton1.setText("Add Expected Audience");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -118,7 +118,7 @@ public class CreateNewDistributor extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
@@ -156,7 +156,7 @@ public class CreateNewDistributor extends javax.swing.JFrame {
     			ResultSet r = connection.getData("SELECT LAST_INSERT_ID()");
     			
     			/*
-    			 * CHECK IF THE DISTRIBUTOR DOESN'T ALREADY EXIST !
+    			 * CHECK IF THE EXPECTED AUDIENCE DOESN'T ALREADY EXIST !
     			 */
     			while(r.next()){
     				System.out.println(r.getInt(1));   				
@@ -167,7 +167,7 @@ public class CreateNewDistributor extends javax.swing.JFrame {
     		}
         }
         else{
-        	JOptionPane.showMessageDialog(null, "Please fill the box.", "Invalid Distributor", JOptionPane.WARNING_MESSAGE);
+        	JOptionPane.showMessageDialog(null, "Please fill the box.", "Invalid Expected Audience", JOptionPane.WARNING_MESSAGE);
         }
 
     }
@@ -182,7 +182,7 @@ public class CreateNewDistributor extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreateNewDistributor().setVisible(true);
+                new CreateNewExpectedAudience().setVisible(true);
             }
         });
     }

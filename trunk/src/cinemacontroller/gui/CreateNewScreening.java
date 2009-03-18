@@ -17,12 +17,15 @@ import cinemacontroller.screencontroller.Screen;
 import cinemacontroller.screencontroller.Screening;
 import databasecontroller.MySqlController;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -73,7 +76,6 @@ public class CreateNewScreening extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        film_combo = new javax.swing.JComboBox();
         screen_combo = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         time_hour = new javax.swing.JSpinner();
@@ -127,9 +129,46 @@ public class CreateNewScreening extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Film");
-
+        
+        MySqlController connection;
+        ResultSet result;
+        
+		modelFilmCombo = new DefaultComboBoxModel();
+		
+        film_combo = new javax.swing.JComboBox(modelFilmCombo);
+        
+		try {
+			connection = MySqlController.getInstance();
+			result= connection.getData("SELECT NAME FROM MOVIES ORDER BY NAME");
+			film_combo.addItem("");
+			while (result.next()) {
+				film_combo.addItem(result.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Screen");
+        
+		modelScreenCombo = new DefaultComboBoxModel();
+		
+        screen_combo = new javax.swing.JComboBox(modelScreenCombo);
+        
+		try {
+			connection = MySqlController.getInstance();
+			result= connection.getData("SELECT ID_SCREEN FROM SCREENS");
+			screen_combo.addItem("");
+			while (result.next()) {
+				screen_combo.addItem(result.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
+        
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Time");
@@ -369,6 +408,8 @@ public class CreateNewScreening extends javax.swing.JFrame {
     private javax.swing.JComboBox date_month;
     private javax.swing.JComboBox date_year;
     private javax.swing.JComboBox film_combo;
+    private javax.swing.DefaultComboBoxModel modelFilmCombo;
+    private javax.swing.DefaultComboBoxModel modelScreenCombo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

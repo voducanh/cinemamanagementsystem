@@ -227,14 +227,28 @@ public class CreateNewFilm extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Expected Audience");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        MySqlController connection;
+        ResultSet result;
 
+        modelComboBox1 = new DefaultComboBoxModel();
+		
+        jComboBox1 = new javax.swing.JComboBox(modelComboBox1);
+        
+        try {
+			connection = MySqlController.getInstance();
+			result= connection.getData("SELECT NAME FROM EXPECTED_AUDIENCES ORDER BY NAME");
+			jComboBox1.addItem("");
+			while (result.next()) {
+				jComboBox1.addItem(result.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setText("Type");
 
-        MySqlController connection;
-        ResultSet result;
-        
 		modelComboBox2 = new DefaultComboBoxModel();
 		
         jComboBox2 = new javax.swing.JComboBox(modelComboBox2);
@@ -564,7 +578,8 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 }
 
 private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-// TODO add your handling code here:
+
+	CreateNewExpectedAudience expectedAudience = new CreateNewExpectedAudience();
 }
 
 private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {

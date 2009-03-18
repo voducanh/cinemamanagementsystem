@@ -287,6 +287,7 @@ public class MainWindow extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JToolBar.Separator();
         view_films_jbutton = new javax.swing.JButton();
         view_screens_jbutton = new javax.swing.JButton();
+        view_screens_jbutton1 = new javax.swing.JButton();
         status_bar = new javax.swing.JLabel();
         main_menu = new javax.swing.JMenuBar();
         file_menu = new javax.swing.JMenu();
@@ -559,6 +560,21 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         toolbar.add(view_screens_jbutton);
+        
+        view_screens_jbutton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/user.png"))); // NOI18N
+        view_screens_jbutton1.setToolTipText("Add or change user's information.");
+        view_screens_jbutton1.setFocusable(false);
+        view_screens_jbutton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        view_screens_jbutton1.setMaximumSize(new java.awt.Dimension(26, 28));
+        view_screens_jbutton1.setMinimumSize(new java.awt.Dimension(28, 28));
+        view_screens_jbutton1.setPreferredSize(new java.awt.Dimension(32, 32));
+        view_screens_jbutton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        view_screens_jbutton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                view_screens_jbutton1ActionPerformed(evt);
+            }
+        });
+        toolbar.add(view_screens_jbutton1);
 
         status_bar.setText("  Idle.");
 
@@ -716,6 +732,10 @@ public class MainWindow extends javax.swing.JFrame {
     private void exportHistoricalActionPerformed(java.awt.event.ActionEvent evt) {
 
     }
+    
+    private void view_screens_jbutton1ActionPerformed(java.awt.event.ActionEvent evt) {
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private int nbFilm;
@@ -765,6 +785,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton view_films_jbutton;
     private javax.swing.JButton view_historical_data_jbutton;
     private javax.swing.JButton view_screens_jbutton;
+    private javax.swing.JButton view_screens_jbutton1;
     private javax.swing.JButton view_statistical_data_jbutton;
     // End of variables declaration//GEN-END:variables
 

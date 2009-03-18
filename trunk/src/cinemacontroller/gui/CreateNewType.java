@@ -153,6 +153,9 @@ public class CreateNewType extends javax.swing.JFrame {
     			//connection.putData("INSERT INTO TYPES");
     			ResultSet r = connection.getData("SELECT LAST_INSERT_ID()");
     			
+    			/*
+    			 * CHECK IF THE TYPE DOESN'T ALREADY EXIST !
+    			 */
     			while(r.next()){
     				System.out.println(r.getInt(1));   				
     			}
