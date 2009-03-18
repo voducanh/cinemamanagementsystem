@@ -150,16 +150,32 @@ public class CreateNewExpectedAudience extends javax.swing.JFrame {
 
     	
         if(!this.jTextField1.getText().isEmpty()){
+        	
+        	boolean exist = false;
+        	
     		try {
     			MySqlController connection = MySqlController.getInstance();
-    			//connection.putData("INSERT INTO TYPES");
-    			ResultSet r = connection.getData("SELECT LAST_INSERT_ID()");
-    			
-    			/*
-    			 * CHECK IF THE EXPECTED AUDIENCE DOESN'T ALREADY EXIST !
-    			 */
+
+    			//test if the expected_audience doesn't already exist
+    			ResultSet r = connection.getData("SELECT NAME FROM EXPECTED_AUDIENCES WHERE NAME='"+jTextField1.getText().toLowerCase()+"'");
+
     			while(r.next()){
-    				System.out.println(r.getInt(1));   				
+    				if(r.getString(1).toLowerCase().equals(jTextField1.getText().toLowerCase())){
+    					exist = true;
+    					JOptionPane.showMessageDialog(null, "This name already exists.", "Invalid Expected Audience", JOptionPane.WARNING_MESSAGE);
+    					jTextField1.setText("");
+    					break;
+    				}
+    			}
+    			
+    			//if the expected audience doesn't exist, we add it into the database
+    			if(!exist){
+        			r = connection.getData("SHOW TABLE STATUS LIKE 'EXPECTED_AUDIENCES'");
+        			while(r.next()){
+            			connection.putData("INSERT INTO EXPECTED_AUDIENCES VALUES ('"+r.getString("Auto_increment")+"','"+jTextField1.getText()+"')");
+            			JOptionPane.showMessageDialog(null, "Data added successfully.", "Expected Audience", JOptionPane.INFORMATION_MESSAGE);
+            			jTextField1.setText("");
+        			}
     			}
 	
     		} catch (SQLException e) {
