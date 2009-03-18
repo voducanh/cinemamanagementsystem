@@ -101,7 +101,7 @@ public class FilmList extends javax.swing.JFrame {
         jTextPane_date_description.setBackground(new java.awt.Color(24, 24, 24));
         jTextPane_date_description.setEditable(false);
         jTextPane_date_description.setForeground(new java.awt.Color(255, 255, 255));
-        jTextPane_date_description.setText("This window contains a list of all the films that are stored in the database.\n\nYou can also add or removes films from the database. To do this, select a film from the list and press the corrosponding button.");
+        jTextPane_date_description.setText("This window contains a list of all the films that are stored in the database.\n\nYou can also see information, add or remove films from the database. To do this, select a film from the list and press the corresponding button.");
         jScrollPane3.setViewportView(jTextPane_date_description);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -216,6 +216,7 @@ public class FilmList extends javax.swing.JFrame {
 
     	        		for(int i=0;i<filmSelected.length;i++){
     	        			connection.putData("DELETE FROM MOVIES WHERE NAME='"+filmSelected[i]+"'");
+    	        			JOptionPane.showMessageDialog(null, "Data added successfully.", "Distributor", JOptionPane.INFORMATION_MESSAGE);
     	        		}	
     	        	}
     	        	catch (SQLException e) {

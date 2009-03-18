@@ -30,16 +30,20 @@ public class MainWindow extends javax.swing.JFrame {
 	private static final long serialVersionUID = -3688656990364226359L;
 	public CinemaSystemController core_controller;
     private TimetableTable timetable_control;
+    private String login ;
 
 
     /**
      * Constructer for the main window. This sets up all the required functionality and also
      * Renders all the components.
      */
-    public MainWindow(CinemaSystemController core_controller) {
+    public MainWindow(CinemaSystemController core_controller, String login) {
     	
         // Set the main controller
         this.core_controller = core_controller;
+        
+        // Curent login
+        this.login = login;
 
         // Creates all the default controls.
         this.initComponents();
@@ -236,22 +240,6 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
 
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -314,7 +302,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPopupMenu1.add(jMenuItem4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Multiplex Manager");
+        setTitle(login+" - Multiplex Manager");
         setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/images.png")));
 
         jSplitPane_main.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
@@ -734,7 +722,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void view_screens_jbutton1ActionPerformed(java.awt.event.ActionEvent evt) {
-
+        
+    	 new UserList(this).setVisible(true);  	
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -790,8 +779,8 @@ public class MainWindow extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 
-	public void setNbFilm(int nbFilm) {
-		this.nbFilm = nbFilm;
+	public String getLogin() {
+		return login;
 	}
 
 }

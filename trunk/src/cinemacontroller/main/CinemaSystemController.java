@@ -1,6 +1,7 @@
 package cinemacontroller.main;
 
 import cinemacontroller.filmcontroller.FilmController;
+import cinemacontroller.gui.LoginDialog;
 import cinemacontroller.rotationalcontroller.RotationEngine;
 import cinemacontroller.screencontroller.Screen;
 import cinemacontroller.screencontroller.ScreenManager;

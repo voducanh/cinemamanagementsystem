@@ -19,8 +19,9 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import cinemacontroller.main.CinemaSystemController;
 
 /**
  *
@@ -30,16 +31,17 @@ public class LoginDialog extends javax.swing.JDialog {
 
 
 	private static final long serialVersionUID = -1611023043186590817L;
-	private MainWindow main_window;
+	
+	private String login;
     
     /** Creates new form NewJDialog */
-    public LoginDialog(JFrame parent, boolean modal) {
-        super(parent, modal);
+    public LoginDialog() {
+        super();
         initComponents();
         
         // Center align the login window
         this.setLocationRelativeTo(null);
-        this.main_window = (MainWindow)parent;
+       
 
         this.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -234,10 +236,17 @@ public class LoginDialog extends javax.swing.JDialog {
         	MySqlController connection = MySqlController.getInstance();
 
         	ResultSet result = connection.getData("SELECT * FROM accounts WHERE username = '" + this.jTextField1.getText().trim() + "' AND password = '" + this.sha1(new String(this.jTextField2.getPassword()).trim()) + "'");
+
             if(result.next()){
+            	
+            	login = this.jTextField1.getText().trim();
                 this.dispose();
+                
+                //Create a new GUI for the system and set controller
+                MainWindow main_window = new MainWindow(new CinemaSystemController(), login);
                 main_window.setVisible(true);
                 main_window.setEnabled(true);
+                
             }else{
                 JOptionPane.showMessageDialog(null, "Sorry the username or password you entered are incorrect.", "Invalid Username or Password", JOptionPane.WARNING_MESSAGE);
             }
@@ -246,7 +255,7 @@ public class LoginDialog extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
         }
-}//GEN-LAST:event_jButton1ActionPerformed
+   }
     
     private String sha1(String pass) {
     	
@@ -291,6 +300,7 @@ public class LoginDialog extends javax.swing.JDialog {
     private javax.swing.JPasswordField jTextField2;
     private javax.swing.JTextPane jTextPane_date_description;
     // End of variables declaration//GEN-END:variables
+
 
 
 }

@@ -31,13 +31,9 @@ public class Main {
         try {
         	MySqlController connection = MySqlController.getInstance();
 
-            // Create a new GUI for the system and set controller
-            MainWindow main_window = new MainWindow(new CinemaSystemController());
-            main_window.setVisible(false);
-
             // Show the login dialog
-            new LoginDialog(main_window, true).setVisible(true);
-            
+            new LoginDialog().setVisible(true);
+
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Unfortunately no MySQL database was available to connect too. \nAs a result, the program will now exit.", "Database Connection Unavailable", JOptionPane.WARNING_MESSAGE);
         }
