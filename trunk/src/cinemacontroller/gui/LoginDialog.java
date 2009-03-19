@@ -11,10 +11,20 @@
 
 package cinemacontroller.gui;
 
-import databasecontroller.MySQLController;
+import databasecontroller.MySqlController;
+
+import java.awt.event.MouseEvent;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
-import javax.swing.JFrame;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import javax.swing.JOptionPane;
+
+import cinemacontroller.main.CinemaSystemController;
 
 /**
  *
@@ -22,19 +32,28 @@ import javax.swing.JOptionPane;
  */
 public class LoginDialog extends javax.swing.JDialog {
 
-    private MainWindow main_window;
+
+	private static final long serialVersionUID = -1611023043186590817L;
+	
+	private String login;
     
     /** Creates new form NewJDialog */
-    public LoginDialog(JFrame parent, boolean modal) {
-        super(parent, modal);
+    public LoginDialog() {
+        super();
         initComponents();
-
+        
         // Center align the login window
         this.setLocationRelativeTo(null);
-        this.main_window = (MainWindow)parent;
+       
 
         this.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
+                    	try {
+                    		MySqlController connection = MySqlController.getInstance();
+							connection.disconnect();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
                         System.exit(0);
                     }
                 });
@@ -77,7 +96,7 @@ public class LoginDialog extends javax.swing.JDialog {
         jTextPane_date_description.setBackground(new java.awt.Color(24, 24, 24));
         jTextPane_date_description.setEditable(false);
         jTextPane_date_description.setForeground(new java.awt.Color(255, 255, 255));
-        jTextPane_date_description.setText("To access this program you must provide a valid username and password. \n\nYou should have already recieved your login details, enter them and press \"login\" to proceed.");
+        jTextPane_date_description.setText("To access this program you must provide a valid username and password. \n\nYou should have already received your login details, enter them and press \"login\" to proceed.");
         jScrollPane3.setViewportView(jTextPane_date_description);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -108,8 +127,38 @@ public class LoginDialog extends javax.swing.JDialog {
         jLabel3.setText("Password");
 
         jTextField1.setText("scott");
+        jTextField1.addMouseListener(new java.awt.event.MouseListener() {
+            public void mouseClicked(MouseEvent evt) {
+            	if(evt.getSource() == jTextField1){
+            		jTextField1.setText("");
+            	}
+            }
+			public void mouseEntered(MouseEvent evt) {
+			}
+			public void mouseExited(MouseEvent evt) {
+			}
+			public void mousePressed(MouseEvent evt) {
+			}
+			public void mouseReleased(MouseEvent evt) {
+			}
+        });
 
         jTextField2.setText("test");
+        jTextField2.addMouseListener(new java.awt.event.MouseListener() {
+            public void mouseClicked(MouseEvent evt) {
+            	if(evt.getSource() == jTextField2){
+            		jTextField2.setText("");
+            	}
+            }
+			public void mouseEntered(MouseEvent evt) {
+			}
+			public void mouseExited(MouseEvent evt) {
+			}
+			public void mousePressed(MouseEvent evt) {
+			}
+			public void mouseReleased(MouseEvent evt) {
+			}
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -187,12 +236,30 @@ public class LoginDialog extends javax.swing.JDialog {
 
         try {
 
-            MySQLController mysql_stream = new MySQLController();
-            ResultSet result = mysql_stream.getData("SELECT * FROM accounts WHERE username = '" + this.jTextField1.getText() + "' AND password = '" + this.jTextField2.getText() + "'");
+        	MySqlController connection = MySqlController.getInstance();
+
+        	ResultSet result = connection.getData("SELECT * FROM accounts WHERE username = '" + this.jTextField1.getText().trim() + "' AND password = '" + this.sha1(new String(this.jTextField2.getPassword()).trim()) + "'");
 
             if(result.next()){
-                main_window.setEnabled(true);
+
+            	Locale locale = Locale.getDefault();
+            	Date current = new Date();
+            	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            	//Update the date of the last connection
+            	connection.putData("UPDATE ACCOUNTS SET LAST_LOG='"+dateFormat.format(current)+"' WHERE username = '" + this.jTextField1.getText().trim() + "' AND password = '" + this.sha1(new String(this.jTextField2.getPassword()).trim()) + "'");
+            	
+            	//increment the number of connection
+            	connection.putData("UPDATE ACCOUNTS SET NB_CONNECTION = NB_CONNECTION+1 WHERE username = '" + this.jTextField1.getText().trim() + "' AND password = '" + this.sha1(new String(this.jTextField2.getPassword()).trim()) + "'");
+            	
+            	login = this.jTextField1.getText().trim();
                 this.dispose();
+                
+                //Create a new GUI for the system and set controller
+                MainWindow main_window = new MainWindow(new CinemaSystemController(), login);
+                main_window.setVisible(true);
+                main_window.setEnabled(true);
+                
             }else{
                 JOptionPane.showMessageDialog(null, "Sorry the username or password you entered are incorrect.", "Invalid Username or Password", JOptionPane.WARNING_MESSAGE);
             }
@@ -201,7 +268,32 @@ public class LoginDialog extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
         }
-}//GEN-LAST:event_jButton1ActionPerformed
+   }
+    
+    private String sha1(String pass) {
+    	
+        String ret = "";
+        byte[] digest = null;
+        byte[] digestAsBytes = null;
+        
+        try {   
+        	
+            digestAsBytes = pass.getBytes();
+
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            md.update(digestAsBytes);
+            digest = md.digest();
+            
+            for (byte b : digest){
+                ret += Integer.toHexString(b & 0xff);
+            }
+            
+        }
+        catch(NoSuchAlgorithmException g){
+            return("");
+        };
+        return(ret);
+    }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        System.exit(0);
@@ -221,5 +313,7 @@ public class LoginDialog extends javax.swing.JDialog {
     private javax.swing.JPasswordField jTextField2;
     private javax.swing.JTextPane jTextPane_date_description;
     // End of variables declaration//GEN-END:variables
+
+
 
 }
