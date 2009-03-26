@@ -314,6 +314,7 @@ public class MainWindow extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JToolBar.Separator();
         view_films_jbutton = new javax.swing.JButton();
         view_screens_jbutton = new javax.swing.JButton();
+        edit_users_jbutton = new javax.swing.JButton();
         status_bar = new javax.swing.JLabel();
         main_menu = new javax.swing.JMenuBar();
         file_menu = new javax.swing.JMenu();
@@ -683,6 +684,22 @@ public class MainWindow extends javax.swing.JFrame {
         });
         toolbar.add(view_screens_jbutton);
 
+        edit_users_jbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/user.png"))); // NOI18N
+        edit_users_jbutton.setToolTipText("View users and add and delete users.");
+        edit_users_jbutton.setFocusable(false);
+        edit_users_jbutton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        edit_users_jbutton.setMaximumSize(new java.awt.Dimension(26, 28));
+        edit_users_jbutton.setMinimumSize(new java.awt.Dimension(28, 28));
+        edit_users_jbutton.setPreferredSize(new java.awt.Dimension(32, 32));
+        edit_users_jbutton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        edit_users_jbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edit_users_jbuttonActionPerformed(evt);
+            }
+        });
+        toolbar.add(edit_users_jbutton);
+        edit_users_jbutton.getAccessibleContext().setAccessibleDescription("View users and add and delete users.");
+
         status_bar.setText("  Idle.");
 
         file_menu.setText("File");
@@ -852,6 +869,10 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void edit_users_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_users_jbuttonActionPerformed
+        new UserList(this).setVisible(true);
+}//GEN-LAST:event_edit_users_jbuttonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about_menuitem;
     private javax.swing.JPanel actions_panel;
@@ -862,6 +883,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton delete_screening_jbutton;
     private javax.swing.JMenu edit_menu;
     private javax.swing.JButton edit_screening_jbutton;
+    private javax.swing.JButton edit_users_jbutton;
     private javax.swing.JMenu file_menu;
     private javax.swing.JLabel film_summary_title_jlabel;
     private javax.swing.JLabel film_summary_title_jlabel1;
