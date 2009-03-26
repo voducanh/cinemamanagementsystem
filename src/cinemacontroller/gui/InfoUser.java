@@ -9,11 +9,11 @@ package cinemacontroller.gui;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import databasecontroller.MySqlController;
+import databasecontroller.MySQLController;
 
 /**
  *
- * @author  Frédéric
+ * @author  Frï¿½dï¿½ric
  */
 public class InfoUser extends javax.swing.JFrame {
 
@@ -93,11 +93,12 @@ public class InfoUser extends javax.swing.JFrame {
                 .addContainerGap(64, Short.MAX_VALUE))
         );
         
-        MySqlController connection;
+        
         ResultSet result;
 
         try {
-			connection = MySqlController.getInstance();
+            
+			MySQLController connection = new MySQLController();
 			result= connection.getData("SELECT * FROM ACCOUNTS WHERE USERNAME='"+this.login+"'");
 
 			while (result.next()) {
@@ -128,7 +129,7 @@ public class InfoUser extends javax.swing.JFrame {
 
 				jButton2.setText("Change password");
 				
-				if(window.getLogin().equals(this.login)){
+				if(true/*window.getLogin().equals(this.login)*/){
 					jButton2.setEnabled(true);
 				}
 				else{

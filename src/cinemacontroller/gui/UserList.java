@@ -13,18 +13,18 @@ import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JOptionPane;
 
-import databasecontroller.MySqlController;
+import databasecontroller.MySQLController;
 
 /**
  *
- * @author  Frédéric
+ * @author  FrÃ©dÃ©ric
  */
 public class UserList extends javax.swing.JFrame {
 
-	
+
 	private static final long serialVersionUID = -5225027679953016435L;
 	private MainWindow window;
-	
+
 	/** Creates new form UserList */
     public UserList(MainWindow window) {
         initComponents();
@@ -34,28 +34,28 @@ public class UserList extends javax.swing.JFrame {
         // Center align the login window
         this.setLocationRelativeTo(null);
     }
-    
+
     public void populateListControl(){
         DefaultListModel model = new DefaultListModel();
 
-        MySqlController connection;
+        //MySQLController connection;
         ResultSet result;
 
 		try {
-			connection = MySqlController.getInstance();
+			MySQLController connection = new MySQLController();
 			result= connection.getData("SELECT USERNAME FROM ACCOUNTS ORDER BY USERNAME");
 
 			while (result.next()) {
 				model.addElement(result.getString(1));
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
         this.jList1.setModel(model);
     }
-    
+
     public int closeWindow(){
         this.window.setEnabled(true);
         return 0;
@@ -119,7 +119,7 @@ public class UserList extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(169, Short.MAX_VALUE))
         );
-        
+
         jList1.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
 
         jButton1.setText("Close");
@@ -198,36 +198,35 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 
+	new AddUser();
 }
 
 private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-    
+
 	Object[] userSelected = jList1.getSelectedValues();
-	
+
 	if(userSelected.length != 0){
 		//ask the password to be sure login/password is correct
-		PasswordDialog passDialog = new PasswordDialog(this,userSelected[0].toString());
+		new PasswordDialog(this,userSelected[0].toString());
 
 	}
 	else{
 		JOptionPane.showMessageDialog(null, "Please choose one user.", "Invalid Selection", JOptionPane.WARNING_MESSAGE);
 	}
 
-} 
+}
 
 private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-	
+
 	Object[] userSelected = jList1.getSelectedValues();
-	
+
 	if(userSelected.length != 0){
-		
-		//display the GUI with information
-		InfoUser info = new InfoUser(window,userSelected[0].toString());
+
+		new InfoUser(window,userSelected[0].toString());
 	}
 	else{
 		JOptionPane.showMessageDialog(null, "Please choose one user.", "Invalid Selection", JOptionPane.WARNING_MESSAGE);
 	}
-	
 }
 
 
