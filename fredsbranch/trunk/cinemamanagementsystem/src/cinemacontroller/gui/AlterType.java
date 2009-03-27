@@ -252,6 +252,7 @@ public class AlterType extends javax.swing.JFrame {
                 			
                 			JOptionPane.showMessageDialog(null, "Type updated successfully.", "Type", JOptionPane.INFORMATION_MESSAGE);
                 			jTextField1.setText("");
+                			jTextField2.setBackground(null);
                 			jComboBox1.setSelectedIndex(0);
             		
         			}
@@ -303,6 +304,17 @@ public class AlterType extends javax.swing.JFrame {
 
                 // Get selected color
                 newColor = colorChooser.getColor();
+                
+        		String color = cutColor();
+
+        		String red = color.substring(0, color.indexOf(","));
+        		color = color.substring(color.indexOf(",")+1, color.length());
+        		String green = color.substring(0, color.indexOf(","));
+        		color = color.substring(color.indexOf(",")+1, color.length());
+        		String blue = color;
+
+        		jTextField2.setBackground(new java.awt.Color(new Integer(red), new Integer(green), new Integer(blue)));
+
             }
         };
         

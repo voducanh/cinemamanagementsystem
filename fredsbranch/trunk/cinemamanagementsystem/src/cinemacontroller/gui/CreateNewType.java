@@ -26,7 +26,6 @@ import databasecontroller.TextLimiter;
  */
 public class CreateNewType extends javax.swing.JFrame {
 
-
 	private static final long serialVersionUID = -7833697399792950132L;
 	private Color newColor;
 	/** Creates new form CreateNewType */
@@ -55,6 +54,7 @@ public class CreateNewType extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create New Type - Multiplex Manager");
@@ -91,12 +91,12 @@ public class CreateNewType extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        
-        jTextField1.setDocument(new TextLimiter(40));
 
+        jTextField1.setDocument(new TextLimiter(40));
+        
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel10.setText("Type");
 
@@ -120,6 +120,8 @@ public class CreateNewType extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+        
+        jTextField2.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,12 +134,15 @@ public class CreateNewType extends javax.swing.JFrame {
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                        .addGap(236, 236, 236)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
-                .addGap(16, 16, 16))
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,22 +152,22 @@ public class CreateNewType extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
-                        .addContainerGap())))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3))
+                .addContainerGap(37, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(97, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>
-    
+
     public String cutColor() {
     	
     	String color = newColor.toString().substring(newColor.toString().indexOf("[")+1, newColor.toString().length()-1);
@@ -171,7 +176,7 @@ public class CreateNewType extends javax.swing.JFrame {
     	return color;
     	
     }
-
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
     	
@@ -203,6 +208,7 @@ public class CreateNewType extends javax.swing.JFrame {
                 			connection.putData("INSERT INTO TYPES VALUES ('"+r.getString("Auto_increment")+"','"+jTextField1.getText()+"','"+cutColor()+"')");
                 			JOptionPane.showMessageDialog(null, "Data added successfully.", "Type", JOptionPane.INFORMATION_MESSAGE);
                 			jTextField1.setText("");
+                			jTextField2.setBackground(null);
             			}
         			}
     	
@@ -236,6 +242,17 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
 
             // Get selected color
             newColor = colorChooser.getColor();
+            
+    		String color = cutColor();
+
+    		String red = color.substring(0, color.indexOf(","));
+    		color = color.substring(color.indexOf(",")+1, color.length());
+    		String green = color.substring(0, color.indexOf(","));
+    		color = color.substring(color.indexOf(",")+1, color.length());
+    		String blue = color;
+
+    		jTextField2.setBackground(new java.awt.Color(new Integer(red), new Integer(green), new Integer(blue)));
+
         }
     };
     
@@ -253,19 +270,17 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
     
 }
 
-
-
-
     // Variables declaration - do not modify
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JColorChooser colorChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JColorChooser colorChooser;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextPane jTextPane_date_description;
     // End of variables declaration
 
