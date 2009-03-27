@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Wed Mar 25 17:22:18 GMT 2009
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=cinemamanagementsystem_fat.jar
+manifest.mergeall=true
+manifest.mainclass=cinemacontroller.main.Main
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=
