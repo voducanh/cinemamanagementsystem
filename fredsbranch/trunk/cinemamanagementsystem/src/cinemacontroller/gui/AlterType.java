@@ -17,6 +17,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 
 import databasecontroller.MySqlController;
 import databasecontroller.TextLimiter;
@@ -30,6 +31,7 @@ public class AlterType extends javax.swing.JFrame {
 	private static final long serialVersionUID = 0L;
 	private Color newColor;
 	private ArrayList<String> colorRGB = new ArrayList<String>();
+	private ArrayList<String> index = new ArrayList<String>();
     /** Creates new form AlterType */
     public AlterType() {
         initComponents();
@@ -52,12 +54,17 @@ public class AlterType extends javax.swing.JFrame {
         jTextPane_date_description = new javax.swing.JTextPane();
         jLabel10 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         modelComboBox1 = new javax.swing.DefaultComboBoxModel();
+        jSpinner1 = new javax.swing.JSpinner(new SpinnerNumberModel(-1,-1,null,1));
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
         colorChooser= new javax.swing.JColorChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -75,7 +82,7 @@ public class AlterType extends javax.swing.JFrame {
         jTextPane_date_description.setBackground(new java.awt.Color(24, 24, 24));
         jTextPane_date_description.setEditable(false);
         jTextPane_date_description.setForeground(new java.awt.Color(255, 255, 255));
-        jTextPane_date_description.setText("You can alter a type that already exists by choosing it in the list. Then, fill in the box to the right with the new type and change the color if you want to. ");
+        jTextPane_date_description.setText("You can alter a type that already exists by choosing it in the list. Then, fill in the box to the right with the new type and change the color if you want to.\n\nThe index is use for the expected booking. It can be readjusted if the expected booking doesn't match at all with the number of seat booked.");
         jScrollPane3.setViewportView(jTextPane_date_description);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -95,21 +102,14 @@ public class AlterType extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTextField1.setDocument(new TextLimiter(40));
-
+        
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel10.setText("Type");
-
-        jButton3.setText("Change Color");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
 
         jButton2.setText("Close");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -128,6 +128,19 @@ public class AlterType extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel11.setText("Current Type");
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel12.setText("Current Index");
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel13.setText("Color");
+
+        jButton3.setText("Add Color");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         MySqlController connection;
         ResultSet result;
         
@@ -139,20 +152,21 @@ public class AlterType extends javax.swing.JFrame {
             	jComboBox1ActionPerformed(evt);
             }
         });
-        
-        
-        
+
 		try {
 			
 			connection = MySqlController.getInstance();
 			result= connection.getData("SELECT * FROM TYPES ORDER BY NAME");
 			jComboBox1.addItem("");
 			colorRGB.add("");
+			index.add("");
 			while (result.next()) {
 				jComboBox1.addItem(result.getString(2));
 				
 				//store all colors in an arrayList
 				colorRGB.add(result.getString(3));
+				
+				index.add(result.getString(4));
 			}
 			
 		} catch (SQLException e) {
@@ -161,28 +175,47 @@ public class AlterType extends javax.swing.JFrame {
 		
         jTextField2.setEditable(false);
 
+        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField3.setEditable(false);
+        
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel14.setText("Index");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBox1, 0, 294, Short.MAX_VALUE)
+                                .addComponent(jTextField1)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(140, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
-                        .addGap(23, 23, 23))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, 0, 294, Short.MAX_VALUE)
-                        .addComponent(jTextField1))))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,18 +229,25 @@ public class AlterType extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap())
         );
 
         pack();
@@ -215,9 +255,31 @@ public class AlterType extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
     	
-    	if(this.jComboBox1.getSelectedItem() != this.jComboBox1.getItemAt(0)){
+    	String sets= "";
+    	
+    	if(jComboBox1.getSelectedItem() != jComboBox1.getItemAt(0)){
+    		
+    		//list all posibilities
     		
     		if(!jTextField1.getText().trim().isEmpty()){
+        		sets += "NAME='"+jTextField1.getText().trim()+"',";
+        	}
+    		
+    		if(newColor != null){
+        		sets += "COLOR_RGB='"+cutColor()+"',";
+        	}
+    		
+    		if(!jSpinner1.getValue().toString().equals("-1")){
+        		sets += "`INDEX`='"+jSpinner1.getValue().toString()+"'";
+        	}
+    		
+    		if(!sets.isEmpty()){
+    			
+    			String lastChar = "";
+    			lastChar += sets.charAt(sets.length()-1);
+    			if(lastChar.equals(",")){
+    				sets = sets.substring(0, sets.length()-1);
+    			}
     			
     			boolean exist = false;
 
@@ -239,19 +301,14 @@ public class AlterType extends javax.swing.JFrame {
 
         			//if the type doesn't exist, we update it into the database (with the new color)
         			if(!exist){
-            			
+        				System.out.println("UPDATE TYPES SET "+sets+" WHERE NAME='"+jComboBox1.getSelectedItem()+"'");
+        					connection.putData("UPDATE TYPES SET "+sets+" WHERE NAME='"+jComboBox1.getSelectedItem()+"'");
             				
-            				if(newColor != null){
-            					connection.putData("UPDATE TYPES SET NAME='"+jTextField1.getText().trim()+"', COLOR_RGB='"+cutColor()+"' WHERE NAME='"+jComboBox1.getSelectedItem()+"'");
-            				}
-            				else{
-            					connection.putData("UPDATE TYPES SET NAME='"+jTextField1.getText().trim()+"' WHERE NAME='"+jComboBox1.getSelectedItem()+"'");
-            				}
-                			
                 			JOptionPane.showMessageDialog(null, "Type updated successfully.", "Type", JOptionPane.INFORMATION_MESSAGE);
                 			jTextField1.setText("");
                 			jTextField2.setBackground(null);
                 			jComboBox1.setSelectedIndex(0);
+                			jSpinner1.setValue(-1);
             		
         			}
     	
@@ -259,13 +316,16 @@ public class AlterType extends javax.swing.JFrame {
         			e.printStackTrace();
         		}
     			
+    			
+    			
+    			
     		}
     		else{
-            	JOptionPane.showMessageDialog(null, "Please write the new type.", "Invalid Type", JOptionPane.WARNING_MESSAGE);
+    			JOptionPane.showMessageDialog(null, "Please choose at least a data to update", "Invalid Data", JOptionPane.WARNING_MESSAGE);
             }
     	}
     	else{
-        	JOptionPane.showMessageDialog(null, "Please choose a type.", "Invalid Type", JOptionPane.WARNING_MESSAGE);
+        	JOptionPane.showMessageDialog(null, "Please choose a current type", "Invalid Type", JOptionPane.WARNING_MESSAGE);
         }
     }
     
@@ -276,7 +336,7 @@ public class AlterType extends javax.swing.JFrame {
     
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
     	
-    	if(this.jComboBox1.getSelectedItem() != this.jComboBox1.getItemAt(0)){
+    	if(jComboBox1.getSelectedItem() != jComboBox1.getItemAt(0)){
 
     		String color = colorRGB.get(jComboBox1.getSelectedIndex());
 
@@ -287,7 +347,11 @@ public class AlterType extends javax.swing.JFrame {
     		String blue = color;
 
     		jTextField2.setBackground(new java.awt.Color(new Integer(red), new Integer(green), new Integer(blue)));
-    		
+    		jTextField3.setText(index.get(jComboBox1.getSelectedIndex()));
+    	}
+    	else{
+    		jTextField2.setBackground(null);
+    		jTextField3.setText("");
     	}
     	
     }
@@ -344,10 +408,15 @@ public class AlterType extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextPane jTextPane_date_description;
     // End of variables declaration
 
