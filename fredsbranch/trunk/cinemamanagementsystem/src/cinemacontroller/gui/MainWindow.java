@@ -521,11 +521,7 @@ public class MainWindow extends javax.swing.JFrame {
         view_historical_data_jbutton.setMinimumSize(new java.awt.Dimension(28, 28));
         view_historical_data_jbutton.setPreferredSize(new java.awt.Dimension(32, 32));
         view_historical_data_jbutton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        view_historical_data_jbutton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                view_historical_data_jbuttonActionPerformed(evt);
-            }
-        });
+
         toolbar.add(view_historical_data_jbutton);
         toolbar.add(jSeparator3);
 
@@ -791,10 +787,6 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void view_screens_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_screens_jbuttonActionPerformed
        
-}
-
-    private void view_historical_data_jbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_historical_data_jbuttonActionPerformed
-        new HistoricalDatabase().setVisible(true);
 }
 
     private void timetable_date_picker_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timetable_date_picker_comboActionPerformed

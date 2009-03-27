@@ -22,6 +22,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import cinemacontroller.historicalcontroller.HistoricalExport;
 import cinemacontroller.main.CinemaSystemController;
 
 /**
@@ -209,6 +210,13 @@ public class LoginDialog extends javax.swing.JDialog {
         	ResultSet result = connection.getData("SELECT * FROM accounts WHERE username = '" + this.jTextField1.getText().trim() + "' AND password = '" + this.sha1(new String(this.jTextField2.getPassword()).trim()) + "'");
 
             if(result.next()){
+            	
+            	
+            	
+            	/*HistoricalExport hist = new HistoricalExport("2009-01-01","2009-01-08");
+            	//System.out.println(hist.createXmlContent());
+            	hist.writeXmlContent(hist.createXmlContent());*/
+            	
             	
             	login = this.jTextField1.getText().trim();
             	updateInfo(login);

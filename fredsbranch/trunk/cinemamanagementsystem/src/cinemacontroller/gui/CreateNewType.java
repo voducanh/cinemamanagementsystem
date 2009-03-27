@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 import databasecontroller.MySqlController;
 import databasecontroller.TextLimiter;
@@ -257,11 +256,6 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
     };
     
     colorChooser.setPreviewPanel(previewLabel);
-
-    AbstractColorChooserPanel [] panel = colorChooser.getChooserPanels ();
-
-    /*colorChooser.removeChooserPanel (panel [1]);
-    colorChooser.removeChooserPanel (panel [2]);*/
 
     JDialog d = colorChooser.createDialog(null,"Choose a color - Multiplex Manager",true,colorChooser,okListener,null);
     

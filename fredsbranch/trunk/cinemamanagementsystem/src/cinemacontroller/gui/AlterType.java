@@ -12,13 +12,11 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 import databasecontroller.MySqlController;
 import databasecontroller.TextLimiter;
@@ -319,11 +317,6 @@ public class AlterType extends javax.swing.JFrame {
         };
         
         colorChooser.setPreviewPanel(previewLabel);
-
-        AbstractColorChooserPanel [] panel = colorChooser.getChooserPanels ();
-
-        /*colorChooser.removeChooserPanel (panel [1]);
-        colorChooser.removeChooserPanel (panel [2]);*/
 
         JDialog d = colorChooser.createDialog(null,"Choose a color - Multiplex Manager",true,colorChooser,okListener,null);
         
