@@ -20,7 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 
 import databasecontroller.MySqlController;
-import databasecontroller.TextLimiter;
+import usefulmethods.TextLimiter;
+import usefulmethods.Useful;
 
 /**
  *
@@ -29,11 +30,13 @@ import databasecontroller.TextLimiter;
 public class AlterType extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 0L;
+	private Useful use;
 	private Color newColor;
 	private ArrayList<String> colorRGB = new ArrayList<String>();
 	private ArrayList<String> index = new ArrayList<String>();
     /** Creates new form AlterType */
     public AlterType() {
+    	use = new Useful();
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -58,7 +61,7 @@ public class AlterType extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         modelComboBox1 = new javax.swing.DefaultComboBoxModel();
-        jSpinner1 = new javax.swing.JSpinner(new SpinnerNumberModel(-1,-1,null,1));
+        jSpinner1 = new javax.swing.JSpinner(new SpinnerNumberModel(-1.0,-1.0,null,0.1));
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -266,10 +269,10 @@ public class AlterType extends javax.swing.JFrame {
         	}
     		
     		if(newColor != null){
-        		sets += "COLOR_RGB='"+cutColor()+"',";
+        		sets += "COLOR_RGB='"+use.cutColor(newColor)+"',";
         	}
     		
-    		if(!jSpinner1.getValue().toString().equals("-1")){
+    		if(new Float(this.jSpinner1.getValue().toString()) > -0.1){
         		sets += "`INDEX`='"+jSpinner1.getValue().toString()+"'";
         	}
     		
@@ -301,7 +304,7 @@ public class AlterType extends javax.swing.JFrame {
 
         			//if the type doesn't exist, we update it into the database (with the new color)
         			if(!exist){
-        				System.out.println("UPDATE TYPES SET "+sets+" WHERE NAME='"+jComboBox1.getSelectedItem()+"'");
+        				
         					connection.putData("UPDATE TYPES SET "+sets+" WHERE NAME='"+jComboBox1.getSelectedItem()+"'");
             				
                 			JOptionPane.showMessageDialog(null, "Type updated successfully.", "Type", JOptionPane.INFORMATION_MESSAGE);
@@ -367,7 +370,7 @@ public class AlterType extends javax.swing.JFrame {
                 // Get selected color
                 newColor = colorChooser.getColor();
                 
-        		String color = cutColor();
+        		String color = use.cutColor(newColor);
 
         		String red = color.substring(0, color.indexOf(","));
         		color = color.substring(color.indexOf(",")+1, color.length());
@@ -388,15 +391,7 @@ public class AlterType extends javax.swing.JFrame {
         d.setVisible(true);
 
     }
-    
-    public String cutColor() {
-    	
-    	String color = newColor.toString().substring(newColor.toString().indexOf("[")+1, newColor.toString().length()-1);
-    	color = color.replace("r=", "").replace("g=", "").replace("b=", "").trim();
-    	
-    	return color;
-    	
-    }
+
 
     // Variables declaration - do not modify
     private javax.swing.JButton jButton1;

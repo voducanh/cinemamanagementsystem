@@ -293,50 +293,7 @@ public class CreateNewScreening extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       
-        // Get the selected film and screen
-        Film selected_film = (Film)this.film_combo.getSelectedItem();
-        Screen selected_screen = (Screen)this.screen_combo.getSelectedItem();
-
-        // Check to see if the screen is free for the selected new screening
-        if(this.main_window.core_controller.screen_manager.checkScreenFree(selected_screen, this.getSelectedDate(), this.getSelectedTime(), this.getEndTimeFromSelectedTime(selected_film)) && this.getEndTimeFromSelectedTime(selected_film).before(this.main_window.core_controller.cinema_closing_time)){
-
-            // Create a new screening
-            Screening new_screening = new Screening(selected_film, this.getSelectedDate(), this.getSelectedTime());
-
-            // Add the new screening to the screen manager
-            main_window.core_controller.screen_manager.getScreen(selected_screen.getIDNumber()).addScreening(new_screening);
-
-            // Updates the main window with the new screening information
-            this.main_window.refreshTimetable();
-            this.main_window.updateSummaryPanel();
-
-            // Close the current window
-            this.dispose();
-
-
-            MySqlController connection;
-            try {
-
-                int uniqueid = Screen.generateID();
-
-                Date daterr = this.getSelectedTime().getTime();
-                Date daterr2 = this.getSelectedDate().getTime();
-
-                Format mysqltime = new SimpleDateFormat("kk:mm:ss");
-                Format mysqldate = new SimpleDateFormat("yyyy-M-dd");
-
-                connection = MySqlController.getInstance();
-                connection.putData("INSERT INTO `main_screening_list` ( film_id, screen_id, start_time, start_date) VALUES('"+selected_film.getID()+"','"+selected_screen.getIDNumber()+"','"+ mysqltime.format(daterr)+"', '"+mysqldate.format(daterr2)+"')");
-                                
-            } catch (SQLException ex) {
-               System.out.println(ex);
-            }
-            
-
-        }else{
-            // Show a warning dialog because the screen is booked at requested times
-            JOptionPane.showMessageDialog(null, "Sorry but the screen is already running a screening at the selected times.\nPlease select an alternative screen or time.", "Screen Unavailable", JOptionPane.WARNING_MESSAGE);
-        }
+       
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

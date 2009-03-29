@@ -13,7 +13,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import databasecontroller.MySqlController;
-import databasecontroller.TextLimiter;
+import usefulmethods.TextLimiter;
 
 /**
  *

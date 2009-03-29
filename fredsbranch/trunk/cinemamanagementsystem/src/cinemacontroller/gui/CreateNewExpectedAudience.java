@@ -10,9 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 
 import databasecontroller.MySqlController;
-import databasecontroller.TextLimiter;
+import usefulmethods.TextLimiter;
 
 /**
  *
@@ -46,13 +47,15 @@ public class CreateNewExpectedAudience extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jSpinner1 = new javax.swing.JSpinner(new SpinnerNumberModel(-1.0,-1.0,null,0.1));
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create New Expected Audience - Multiplex Manager");
         setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/dvd_add.png")));
 
         jTextField1.setDocument(new TextLimiter(60));
-
+        
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -64,7 +67,7 @@ public class CreateNewExpectedAudience extends javax.swing.JFrame {
         jTextPane_date_description.setBackground(new java.awt.Color(24, 24, 24));
         jTextPane_date_description.setEditable(false);
         jTextPane_date_description.setForeground(new java.awt.Color(255, 255, 255));
-        jTextPane_date_description.setText("You can create a new expected audience by filling in the box to the right. ");
+        jTextPane_date_description.setText("You can create a new expected audience by filling in the box to the right. \n\nThe index is use for the expected booking. It can be readjusted if the expected booking doesn't match at all with the number of seat booked.");
         jScrollPane3.setViewportView(jTextPane_date_description);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -84,8 +87,8 @@ public class CreateNewExpectedAudience extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -105,82 +108,97 @@ public class CreateNewExpectedAudience extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel11.setText("Index");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 693, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGap(16, 16, 16))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 123, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(31, 31, 31)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
     	
         if(!this.jTextField1.getText().isEmpty()){
         	
-        	boolean exist = false;
-        	
-    		try {
-    			MySqlController connection = MySqlController.getInstance();
+        	if(new Float(this.jSpinner1.getValue().toString()) > -0.1){
+        		
+            	boolean exist = false;
+            	
+        		try {
+        			MySqlController connection = MySqlController.getInstance();
 
-    			//test if the expected_audience doesn't already exist
-    			ResultSet r = connection.getData("SELECT NAME FROM EXPECTED_AUDIENCES WHERE NAME='"+jTextField1.getText().toLowerCase()+"'");
+        			//test if the expected_audience doesn't already exist
+        			ResultSet r = connection.getData("SELECT NAME FROM EXPECTED_AUDIENCES WHERE NAME='"+jTextField1.getText().toLowerCase()+"'");
 
-    			while(r.next()){
-    				if(r.getString(1).toLowerCase().equals(jTextField1.getText().toLowerCase())){
-    					exist = true;
-    					JOptionPane.showMessageDialog(null, "This name already exists.", "Invalid Expected Audience", JOptionPane.WARNING_MESSAGE);
-    					jTextField1.setText("");
-    					break;
-    				}
-    			}
-    			
-    			//if the expected audience doesn't exist, we add it into the database
-    			if(!exist){
-        			r = connection.getData("SHOW TABLE STATUS LIKE 'EXPECTED_AUDIENCES'");
         			while(r.next()){
-            			connection.putData("INSERT INTO EXPECTED_AUDIENCES VALUES ('"+r.getString("Auto_increment")+"','"+jTextField1.getText()+"')");
-            			JOptionPane.showMessageDialog(null, "Data added successfully.", "Expected Audience", JOptionPane.INFORMATION_MESSAGE);
-            			jTextField1.setText("");
+        				if(r.getString(1).toLowerCase().equals(jTextField1.getText().toLowerCase())){
+        					exist = true;
+        					JOptionPane.showMessageDialog(null, "This name already exists.", "Invalid Expected Audience", JOptionPane.WARNING_MESSAGE);
+        					jTextField1.setText("");
+        					break;
+        				}
         			}
-    			}
-	
-    		} catch (SQLException e) {
-    			e.printStackTrace();
-    		}
+        			
+        			//if the expected audience doesn't exist, we add it into the database
+        			if(!exist){
+            			r = connection.getData("SHOW TABLE STATUS LIKE 'EXPECTED_AUDIENCES'");
+            			while(r.next()){
+                			connection.putData("INSERT INTO EXPECTED_AUDIENCES VALUES ('"+r.getString("Auto_increment")+"','"+jTextField1.getText()+"','"+jSpinner1.getValue().toString()+"')");
+                			JOptionPane.showMessageDialog(null, "Data added successfully.", "Expected Audience", JOptionPane.INFORMATION_MESSAGE);
+                			jTextField1.setText("");
+                			jSpinner1.setValue(-1.0);
+            			}
+        			}
+    	
+        		} catch (SQLException e) {
+        			e.printStackTrace();
+        		}
+        		
+        	}
+        	else{
+        		JOptionPane.showMessageDialog(null, "Please choose a positive index", "Invalid Index", JOptionPane.WARNING_MESSAGE);
+        	}
+
         }
         else{
         	JOptionPane.showMessageDialog(null, "Please fill the box.", "Invalid Expected Audience", JOptionPane.WARNING_MESSAGE);
@@ -192,24 +210,15 @@ public class CreateNewExpectedAudience extends javax.swing.JFrame {
         this.dispose();
     }
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateNewExpectedAudience().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextPane jTextPane_date_description;
     // End of variables declaration

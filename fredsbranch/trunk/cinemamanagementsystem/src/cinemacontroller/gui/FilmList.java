@@ -37,6 +37,7 @@ public class FilmList extends javax.swing.JFrame {
 
         // Center align the login window
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
 

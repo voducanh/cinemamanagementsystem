@@ -1,4 +1,4 @@
-package databasecontroller;
+package usefulmethods;
 
 import java.awt.Toolkit;
 
@@ -46,3 +46,4 @@ public class TextLimiter extends PlainDocument {
 		}
 	}
 }
+

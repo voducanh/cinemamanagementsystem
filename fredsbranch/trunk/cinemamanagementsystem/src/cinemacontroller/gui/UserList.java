@@ -33,6 +33,7 @@ public class UserList extends javax.swing.JFrame {
 
         // Center align the login window
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
     
     public void populateListControl(){

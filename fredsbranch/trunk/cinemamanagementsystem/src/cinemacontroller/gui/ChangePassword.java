@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
+import usefulmethods.Useful;
+
 import databasecontroller.MySqlController;
 
 /**
@@ -178,8 +180,8 @@ public class ChangePassword extends javax.swing.JFrame {
         			try {
 
         	        	MySqlController connection = MySqlController.getInstance();
-
-        	        	ResultSet result = connection.getData("SELECT * FROM accounts WHERE PASSWORD = '"+sha1(new String(jTextField1.getPassword()).trim())+"'");
+        	        	Useful use = new Useful();
+        	        	ResultSet result = connection.getData("SELECT * FROM accounts WHERE PASSWORD = '"+use.sha1(new String(jTextField1.getPassword()).trim())+"'");
 
         	            if(result.next()){
         	            	//current password correct
@@ -191,7 +193,7 @@ public class ChangePassword extends javax.swing.JFrame {
         	            		if(new String(jTextField2.getPassword()).trim().length() > 3 && new String(jTextField3.getPassword()).trim().length() > 3
         	            			&& new String(jTextField2.getPassword()).trim().matches("[a-z0-9]+") && new String(jTextField3.getPassword()).trim().matches("[a-z0-9]+")){
         	            			
-            	            		connection.putData("UPDATE ACCOUNTS SET PASSWORD='"+sha1(new String(jTextField2.getPassword()).trim())+"' WHERE USERNAME='"+login+"'");
+            	            		connection.putData("UPDATE ACCOUNTS SET PASSWORD='"+use.sha1(new String(jTextField2.getPassword()).trim())+"' WHERE USERNAME='"+login+"'");
             	            		JOptionPane.showMessageDialog(null, "Password updated successfully.", "Update Password", JOptionPane.INFORMATION_MESSAGE);
             	            		jTextField1.setText("");
             	            		jTextField2.setText("");
@@ -238,32 +240,6 @@ public class ChangePassword extends javax.swing.JFrame {
 
     	this.dispose();
     }
-    
-    private String sha1(String pass) {
-    	
-        String ret = "";
-        byte[] digest = null;
-        byte[] digestAsBytes = null;
-        
-        try {   
-        	
-            digestAsBytes = pass.getBytes();
-
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            md.update(digestAsBytes);
-            digest = md.digest();
-            
-            for (byte b : digest){
-                ret += Integer.toHexString(b & 0xff);
-            }
-            
-        }
-        catch(NoSuchAlgorithmException g){
-            return("");
-        };
-        return(ret);
-    }
-
 
     // Variables declaration - do not modify
     private javax.swing.JButton jButton1;

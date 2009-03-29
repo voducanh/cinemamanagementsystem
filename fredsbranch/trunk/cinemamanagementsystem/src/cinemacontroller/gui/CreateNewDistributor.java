@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import databasecontroller.MySqlController;
-import databasecontroller.TextLimiter;
+import usefulmethods.TextLimiter;
 
 /**
  *

@@ -2,7 +2,6 @@ package cinemacontroller.main;
 
 import cinemacontroller.filmcontroller.FilmController;
 import cinemacontroller.gui.LoginDialog;
-import cinemacontroller.rotationalcontroller.RotationEngine;
 import cinemacontroller.screencontroller.Screen;
 import cinemacontroller.screencontroller.ScreenManager;
 import cinemacontroller.screencontroller.Screening;
@@ -25,7 +24,6 @@ import javax.swing.JOptionPane;
 public class CinemaSystemController {
 	public ScreenManager screen_manager;
 	public FilmController film_manager;
-	public RotationEngine rotation_manager;
 
     public final GregorianCalendar cinema_opening_time;
     public final GregorianCalendar cinema_closing_time;
@@ -34,7 +32,6 @@ public class CinemaSystemController {
         
         // Initialize all the controllers that this controller allows access too
         film_manager = new FilmController();
-        rotation_manager = new RotationEngine();
         screen_manager = new ScreenManager();
 
         // Set the opening and closing times of the cinema

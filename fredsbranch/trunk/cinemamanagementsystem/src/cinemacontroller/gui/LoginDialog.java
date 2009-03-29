@@ -13,36 +13,37 @@ package cinemacontroller.gui;
 
 import databasecontroller.MySqlController;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
-import cinemacontroller.historicalcontroller.HistoricalExport;
-import cinemacontroller.main.CinemaSystemController;
+import usefulmethods.Useful;
+
 
 /**
  *
- * @author Scott
+ * @author Frédéric
  */
 public class LoginDialog extends javax.swing.JDialog {
 
 
 	private static final long serialVersionUID = -1611023043186590817L;
-	
+	private Useful use;
 	private String login;
     
     /** Creates new form NewJDialog */
     public LoginDialog() {
-        super();
+    	super();
+    	use = new Useful();
         initComponents();
         
         // Center align the login window
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
        
 
         this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -206,26 +207,18 @@ public class LoginDialog extends javax.swing.JDialog {
         try {
 
         	MySqlController connection = MySqlController.getInstance();
-
-        	ResultSet result = connection.getData("SELECT * FROM accounts WHERE username = '" + this.jTextField1.getText().trim() + "' AND password = '" + this.sha1(new String(this.jTextField2.getPassword()).trim()) + "'");
-
+        	
+        	ResultSet result = connection.getData("SELECT * FROM accounts WHERE username = '" + this.jTextField1.getText().trim() + "' AND password = '" + use.sha1(new String(this.jTextField2.getPassword()).trim()) + "'");
+        	
             if(result.next()){
-            	
-            	
-            	
-            	/*HistoricalExport hist = new HistoricalExport("2009-01-01","2009-01-08");
-            	//System.out.println(hist.createXmlContent());
-            	hist.writeXmlContent(hist.createXmlContent());*/
-            	
             	
             	login = this.jTextField1.getText().trim();
             	updateInfo(login);
+            	checkPeriod(use.dateToday());
                 this.dispose();
                 
                 //Create a new GUI for the system and set controller
-                MainWindow main_window = new MainWindow(new CinemaSystemController(), login);
-                main_window.setVisible(true);
-                main_window.setEnabled(true);
+                new MainWindow(login);
                 
             }else{
                 JOptionPane.showMessageDialog(null, "Sorry the username or password you entered are incorrect.", "Invalid Username or Password", JOptionPane.WARNING_MESSAGE);
@@ -240,15 +233,11 @@ public class LoginDialog extends javax.swing.JDialog {
     public void updateInfo(String login){
     	
         try {
-        	
-        	String format = "yyyy-MM-dd";
-        	//date of today
-        	SimpleDateFormat formater = new SimpleDateFormat(format);
-        	Date date = new Date();
 
+        	String dateToday = use.dateToday();
         	MySqlController connection = MySqlController.getInstance();
 
-        	connection.putData("UPDATE ACCOUNTS SET LAST_LOG='"+formater.format(date)+"',NB_CONNECTION=NB_CONNECTION+1 WHERE USERNAME='"+login+"'");
+        	connection.putData("UPDATE ACCOUNTS SET LAST_LOG='"+dateToday+"',NB_CONNECTION=NB_CONNECTION+1 WHERE USERNAME='"+login+"'");
 
 
         } catch (Exception e) {
@@ -257,34 +246,43 @@ public class LoginDialog extends javax.swing.JDialog {
     	
     }
     
-    private String sha1(String pass) {
+    public void checkPeriod(String dateToday){
     	
-        String ret = "";
-        byte[] digest = null;
-        byte[] digestAsBytes = null;
-        
-        try {   
+    	Calendar dateCal = null;
+    	
+        try {
+
+        	MySqlController connection = MySqlController.getInstance();
+        	//date end of period
+        	ResultSet r = connection.getData("SELECT END_DATE FROM PERIOD");
+        	String dateEnd = "";
         	
-            digestAsBytes = pass.getBytes();
+        	
+        	while (r.next()) {
+        		
+        		dateEnd = r.getString(1);
+        		dateCal = use.toCalendar(dateEnd);
+        		
+        		//while date today > date end period, add 15
+        		while(dateToday.compareTo(use.calendarToString(dateCal)) > 0){
+        			dateCal = use.changeDate(dateCal,15);
+        		}
 
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            md.update(digestAsBytes);
-            digest = md.digest();
-            
-            for (byte b : digest){
-                ret += Integer.toHexString(b & 0xff);
-            }
-            
+			}
+        	
+        	connection.putData("UPDATE PERIOD SET END_DATE='"+use.calendarToString(dateCal)+"'");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
         }
-        catch(NoSuchAlgorithmException g){
-            return("");
-        };
-        return(ret);
+    	
     }
+    
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
        System.exit(0);
-}//GEN-LAST:event_jButton2ActionPerformed
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

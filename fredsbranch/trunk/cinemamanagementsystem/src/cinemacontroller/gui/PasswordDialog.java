@@ -13,6 +13,8 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import usefulmethods.Useful;
+
 import databasecontroller.MySqlController;
 
 /**
@@ -158,8 +160,8 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
 			
 			  MySqlController connection = MySqlController.getInstance();
-
-	          ResultSet result = connection.getData("SELECT * FROM accounts WHERE username = '" + this.login + "' AND password = '" + this.sha1(new String(jTextField1.getPassword()).trim()) + "'");
+			  Useful use = new Useful();
+	          ResultSet result = connection.getData("SELECT * FROM accounts WHERE username = '" + this.login + "' AND password = '" + use.sha1(new String(jTextField1.getPassword()).trim()) + "'");
 
 	          if(result.next()){
 	        	  
@@ -169,7 +171,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 	        	
 	    		 //if the user wants to delete a profile
 	    		 if (answer == JOptionPane.YES_OPTION){
-	    			 connection.putData("DELETE FROM ACCOUNTS WHERE USERNAME='"+this.login+"' AND password = '" + this.sha1(new String(jTextField1.getPassword()).trim()) + "'");
+	    			 connection.putData("DELETE FROM ACCOUNTS WHERE USERNAME='"+this.login+"' AND password = '" + use.sha1(new String(jTextField1.getPassword()).trim()) + "'");
 	    			 JOptionPane.showMessageDialog(null, "User deleted successfully.", "Delete User", JOptionPane.INFORMATION_MESSAGE);
 	    			 this.dispose();
 	    			 userList.populateListControl();
@@ -191,34 +193,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
     }
 	
 }
-
-
-private String sha1(String pass) {
-	
-    String ret = "";
-    byte[] digest = null;
-    byte[] digestAsBytes = null;
-    
-    try {   
-    	
-        digestAsBytes = pass.getBytes();
-
-        MessageDigest md = MessageDigest.getInstance("SHA-1");
-        md.update(digestAsBytes);
-        digest = md.digest();
-        
-        for (byte b : digest){
-            ret += Integer.toHexString(b & 0xff);
-        }
-        
-    }
-    catch(NoSuchAlgorithmException g){
-        return("");
-    };
-    return(ret);
-}
-
-
 
     // Variables declaration - do not modify
     private javax.swing.JButton jButton1;

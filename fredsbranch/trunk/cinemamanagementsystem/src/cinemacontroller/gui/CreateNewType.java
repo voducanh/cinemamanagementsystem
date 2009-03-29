@@ -18,7 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 
 import databasecontroller.MySqlController;
-import databasecontroller.TextLimiter;
+import usefulmethods.TextLimiter;
+import usefulmethods.Useful;
 
 /**
  *
@@ -27,6 +28,7 @@ import databasecontroller.TextLimiter;
 public class CreateNewType extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = -7833697399792950132L;
+	private Useful use;
 	private Color newColor;
 	/** Creates new form CreateNewType */
     public CreateNewType() {
@@ -56,7 +58,7 @@ public class CreateNewType extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner(new SpinnerNumberModel(-1,-1,null,1));
+        jSpinner1 = new javax.swing.JSpinner(new SpinnerNumberModel(-1.0,-1.0,null,0.1));
         jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -185,22 +187,13 @@ public class CreateNewType extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
-
-    public String cutColor() {
-    	
-    	String color = newColor.toString().substring(newColor.toString().indexOf("[")+1, newColor.toString().length()-1);
-    	color = color.replace("r=", "").replace("g=", "").replace("b=", "").trim();
-    	
-    	return color;
-    	
-    }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
     	
         if(!this.jTextField1.getText().isEmpty()){
         	
-        	if(!this.jSpinner1.getValue().toString().equals("-1")){
+        	if(new Float(this.jSpinner1.getValue().toString()) > -0.1){
         		
             	if(newColor != null){
             		
@@ -225,11 +218,11 @@ public class CreateNewType extends javax.swing.JFrame {
             			if(!exist){
                 			r = connection.getData("SHOW TABLE STATUS LIKE 'TYPES'");
                 			while(r.next()){
-                    			connection.putData("INSERT INTO TYPES VALUES ('"+r.getString("Auto_increment")+"','"+jTextField1.getText()+"','"+cutColor()+"','"+jSpinner1.getValue().toString()+"')");
+                    			connection.putData("INSERT INTO TYPES VALUES ('"+r.getString("Auto_increment")+"','"+jTextField1.getText()+"','"+use.cutColor(newColor)+"','"+jSpinner1.getValue().toString()+"')");
                     			JOptionPane.showMessageDialog(null, "Data added successfully.", "Type", JOptionPane.INFORMATION_MESSAGE);
                     			jTextField1.setText("");
                     			jTextField2.setBackground(null);
-                    			jSpinner1.setValue(-1);
+                    			jSpinner1.setValue(-1.0);
                 			}
             			}
         	
@@ -270,7 +263,7 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
             // Get selected color
             newColor = colorChooser.getColor();
             
-    		String color = cutColor();
+    		String color = use.cutColor(newColor);
 
     		String red = color.substring(0, color.indexOf(","));
     		color = color.substring(color.indexOf(",")+1, color.length());

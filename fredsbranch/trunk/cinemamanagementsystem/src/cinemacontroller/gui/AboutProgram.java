@@ -27,6 +27,7 @@ public class AboutProgram extends javax.swing.JFrame {
 
         // Center align the login window
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
    

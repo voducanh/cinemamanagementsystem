@@ -14,6 +14,8 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import usefulmethods.Useful;
+
 import databasecontroller.MySqlController;
 
 /**
@@ -203,8 +205,8 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
     	                    	Date date = new Date();
     	                    	
     	            			while(result.next()){
-    	            				
-            	            		connection.putData("INSERT INTO ACCOUNTS VALUES('"+result.getString("Auto_increment")+"','"+jTextField1.getText().trim()+"','"+sha1(new String(jTextField2.getPassword()).trim())+"','"+formater.format(date)+"','"+formater.format(date)+"',0)");
+    	            				Useful use = new Useful();
+            	            		connection.putData("INSERT INTO ACCOUNTS VALUES('"+result.getString("Auto_increment")+"','"+jTextField1.getText().trim()+"','"+use.sha1(new String(jTextField2.getPassword()).trim())+"','"+formater.format(date)+"','"+formater.format(date)+"',0)");
             	            		
             	            		JOptionPane.showMessageDialog(null, "User added successfully.", "Add User", JOptionPane.INFORMATION_MESSAGE);
             	            		jTextField1.setText("");
@@ -252,31 +254,6 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
     }
 
 
-}
-
-private String sha1(String pass) {
-	
-    String ret = "";
-    byte[] digest = null;
-    byte[] digestAsBytes = null;
-    
-    try {   
-    	
-        digestAsBytes = pass.getBytes();
-
-        MessageDigest md = MessageDigest.getInstance("SHA-1");
-        md.update(digestAsBytes);
-        digest = md.digest();
-        
-        for (byte b : digest){
-            ret += Integer.toHexString(b & 0xff);
-        }
-        
-    }
-    catch(NoSuchAlgorithmException g){
-        return("");
-    };
-    return(ret);
 }
 
 

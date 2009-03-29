@@ -1,6 +1,5 @@
 package cinemacontroller.main;
 
-import cinemacontroller.gui.MainWindow;
 import cinemacontroller.gui.LoginDialog;
 import databasecontroller.MySqlController;
 import javax.swing.JOptionPane;
@@ -32,7 +31,7 @@ public class Main {
         	MySqlController connection = MySqlController.getInstance();
 
             // Show the login dialog
-            new LoginDialog().setVisible(true);
+            new LoginDialog();
 
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Unfortunately no MySQL database was available to connect too. \nAs a result, the program will now exit.", "Database Connection Unavailable", JOptionPane.WARNING_MESSAGE);
