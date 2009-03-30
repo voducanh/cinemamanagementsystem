@@ -9,6 +9,7 @@ package cinemacontroller.gui;
 import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.DefaultTableColumnModel;
 
+import cinemacontroller.rotationalcontroller.AutomaticRotation;
 import cinemacontroller.rotationalcontroller.AutomaticRotationCurrentPeriod;
 
 /**
@@ -52,16 +53,36 @@ public class MainWindow extends javax.swing.JFrame {
         historical = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         viewFilms = new javax.swing.JButton();
-        viewScreens = new javax.swing.JButton();
+        options = new javax.swing.JButton();
         user = new javax.swing.JButton();
         comboDay = new javax.swing.JComboBox();
         comboWeek = new javax.swing.JComboBox();
-        displayDay = new javax.swing.JButton();
         displayWeek = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JSeparator();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jTabbedPane2 = new javax.swing.JTabbedPane();
+        jTabbedPane3 = new javax.swing.JTabbedPane();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -153,16 +174,16 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jToolBar1.add(viewFilms);
 
-        viewScreens.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/house.png"))); // NOI18N
-        viewScreens.setFocusable(false);
-        viewScreens.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        viewScreens.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        viewScreens.addActionListener(new java.awt.event.ActionListener() {
+        options.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/options.png"))); // NOI18N
+        options.setFocusable(false);
+        options.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        options.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        options.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewScreensActionPerformed(evt);
+                optionsActionPerformed(evt);
             }
         });
-        jToolBar1.add(viewScreens);
+        jToolBar1.add(options);
 
         user.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/user.png"))); // NOI18N
         user.setFocusable(false);
@@ -181,13 +202,6 @@ public class MainWindow extends javax.swing.JFrame {
         comboWeek.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "" }));
         comboWeek.setBorder(null);
 
-        displayDay.setText("Display");
-        displayDay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                displayDayActionPerformed(evt);
-            }
-        });
-
         displayWeek.setText("Display");
         displayWeek.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,11 +209,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        
         jLabel1.setText("Day");
 
         jLabel2.setText("Week");
 
         jTabbedPane1.addTab("Summary", jTabbedPane2);
+        jTabbedPane1.addTab("Actions", jTabbedPane3);
 
         jLabel3.setText("Idle.");
 
@@ -226,7 +242,6 @@ public class MainWindow extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10", "Title 11", "Title 12"
             }
         ));
-        
         jScrollPane1.setViewportView(jTable1);
 
         jLabel4.setText("14:00");
@@ -372,9 +387,7 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(comboDay, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(displayDay)
-                                .addGap(33, 33, 33)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(6, 6, 6)
                                 .addComponent(comboWeek, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -405,10 +418,9 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(displayWeek)
                             .addComponent(jLabel1)
                             .addComponent(comboDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(displayDay)
+                            .addComponent(displayWeek)
                             .addComponent(jLabel2)
                             .addComponent(comboWeek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -489,7 +501,7 @@ public class MainWindow extends javax.swing.JFrame {
     	}
 
     	private void timetableActionPerformed(java.awt.event.ActionEvent evt) {
-    		new AutomaticRotationCurrentPeriod();
+    		new AutomaticRotation(0);
     	}
 
     	private void timetable2ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -515,11 +527,14 @@ public class MainWindow extends javax.swing.JFrame {
     	private void userActionPerformed(java.awt.event.ActionEvent evt) {
     	new UserList(this);
     	}
+    	
+    	private void optionsActionPerformed(java.awt.event.ActionEvent evt) {
+
+        	}
 
     // Variables declaration - do not modify
     private javax.swing.JComboBox comboDay;
     private javax.swing.JComboBox comboWeek;
-    private javax.swing.JButton displayDay;
     private javax.swing.JButton displayWeek;
     private javax.swing.JButton historical;
     private javax.swing.JLabel jLabel1;
@@ -529,12 +544,23 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu12;
     private javax.swing.JMenu jMenu13;
     private javax.swing.JMenu jMenu14;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
@@ -542,24 +568,34 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JButton options;
     private javax.swing.JButton statistics;
     private javax.swing.JButton timetable;
     private javax.swing.JButton timetable2;
     private javax.swing.JButton user;
     private javax.swing.JButton viewFilms;
-    private javax.swing.JButton viewScreens;
     // End of variables declaration
     
 	public String getLogin() {

@@ -215,6 +215,7 @@ public class LoginDialog extends javax.swing.JDialog {
             	login = this.jTextField1.getText().trim();
             	updateInfo(login);
             	checkPeriod(use.dateToday());
+            	deleteTempTable();
                 this.dispose();
                 
                 //Create a new GUI for the system and set controller
@@ -276,6 +277,18 @@ public class LoginDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
         }
     	
+    }
+    
+    public void deleteTempTable(){
+        try {
+
+        	MySqlController connection = MySqlController.getInstance();
+
+        	connection.putData("DROP TABLE IF EXISTS TEMPTIMETABLES");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
+        }
     }
     
 

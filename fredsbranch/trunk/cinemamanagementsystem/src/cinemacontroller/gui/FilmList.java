@@ -210,7 +210,7 @@ public class FilmList extends javax.swing.JFrame {
     	
     	if(filmSelected.length != 0){
     		
-    		JOptionPane.showMessageDialog(null, "If you delete the film, it will automatically delete its timetable. If the timetable of the film was exported in the historical, it could be not imported anymore.", "Delete film", JOptionPane.WARNING_MESSAGE);
+    		JOptionPane.showMessageDialog(null, "If you delete the film, it will automatically delete its timetable. If the timetable of the film was exported in the historical, it could not be imported anymore.", "Delete film", JOptionPane.WARNING_MESSAGE);
     		
     		String[] choice = {"Yes", "Cancel"};
     		int answer = JOptionPane.showOptionDialog(this,"Would you really delete the film selected?","Delete film",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,choice,choice[1]);

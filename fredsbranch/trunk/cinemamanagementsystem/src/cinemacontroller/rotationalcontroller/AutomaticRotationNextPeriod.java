@@ -1,8 +1,8 @@
 package cinemacontroller.rotationalcontroller;
 
-public class AutomaticRotationNextPeriod extends AutomaticRotationCurrentPeriod {
+public class AutomaticRotationNextPeriod {
 
 	public AutomaticRotationNextPeriod(){
-		super();
+	
 	}
 }
