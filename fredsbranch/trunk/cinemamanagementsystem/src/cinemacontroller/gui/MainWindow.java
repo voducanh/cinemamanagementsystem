@@ -141,6 +141,7 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar1.add(jSeparator2);
 
         statistics.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/chart_pie.png"))); // NOI18N
+        statistics.setToolTipText("View statistical data.");
         statistics.setFocusable(false);
         statistics.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         statistics.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -164,6 +165,7 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar1.add(jSeparator3);
 
         viewFilms.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/images.png"))); // NOI18N
+        viewFilms.setToolTipText("Open the film manager to browse, add and edit films stored in the database.");
         viewFilms.setFocusable(false);
         viewFilms.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         viewFilms.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -186,6 +188,7 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar1.add(options);
 
         user.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/user.png"))); // NOI18N
+        user.setToolTipText("Add or change user's information.");
         user.setFocusable(false);
         user.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         user.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

@@ -85,6 +85,8 @@ public class FilmList extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -123,11 +125,11 @@ public class FilmList extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(345, Short.MAX_VALUE))
+                .addContainerGap(331, Short.MAX_VALUE))
         );
-
-        jList1.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
         
+        jList1.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+
         jScrollPane1.setViewportView(jList1);
 
         jButton1.setText("Close");
@@ -151,6 +153,9 @@ public class FilmList extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Films in database:");
+        getNbFilms();
+
         jButton4.setText("Film Information");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,7 +171,13 @@ public class FilmList extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel2)
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 239, Short.MAX_VALUE)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -188,7 +199,10 @@ public class FilmList extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -216,20 +230,20 @@ public class FilmList extends javax.swing.JFrame {
     		int answer = JOptionPane.showOptionDialog(this,"Would you really delete the film selected?","Delete film",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,choice,choice[1]);
         	
     		 if (answer == JOptionPane.YES_OPTION){
-    	    		try {
-    	        		MySqlController connection = MySqlController.getInstance();
+    			 try {
+ 	        		MySqlController connection = MySqlController.getInstance();
 
-        	    		//delete the timetable of the film if it exists
-    	        		connection.putData("DELETE FROM TIMETABLES WHERE ID_MOVIE IN (SELECT ID_MOVIE FROM MOVIES WHERE NAME='"+filmSelected[0]+"')");
+     	    		//delete the timetable of the film if it exists
+ 	        		connection.putData("DELETE FROM TIMETABLES WHERE ID_MOVIE IN (SELECT ID_MOVIE FROM MOVIES WHERE NAME='"+filmSelected[0]+"')");
 
-    	        		//delete the film
-    	        		connection.putData("DELETE FROM MOVIES WHERE NAME='"+filmSelected[0]+"'");
-    	        		JOptionPane.showMessageDialog(null, "Film removed successfully.", "Delete Film", JOptionPane.INFORMATION_MESSAGE);	
-    	        	
-    	    		}
-    	        	catch (SQLException e) {
-    	        			e.printStackTrace();
-    	        	} 
+ 	        		//delete the film
+ 	        		connection.putData("DELETE FROM MOVIES WHERE NAME='"+filmSelected[0]+"'");
+ 	        		JOptionPane.showMessageDialog(null, "Film removed successfully.", "Delete Film", JOptionPane.INFORMATION_MESSAGE);	
+ 	        		getNbFilms();
+ 	    		}
+ 	        	catch (SQLException e) {
+ 	        			e.printStackTrace();
+ 	        	} 
     	        	
     	        	//write again all films
     	        	this.populateListControl();
@@ -254,6 +268,23 @@ public class FilmList extends javax.swing.JFrame {
     		JOptionPane.showMessageDialog(null, "Please choose a film.", "Invalid Selection", JOptionPane.WARNING_MESSAGE);
     	}
     }
+    
+    public void getNbFilms() {
+    	
+    	try {
+    		MySqlController connection = MySqlController.getInstance();
+
+    		//delete the timetable of the film if it exists
+    		ResultSet r = connection.getData("SELECT COUNT(*) FROM MOVIES");
+    		if(r.next()){
+    			jLabel3.setText(r.getString(1));
+    		}
+
+		}
+    	catch (SQLException e) {
+    			e.printStackTrace();
+    	} 
+    }
 
 
     // Variables declaration - do not modify
@@ -262,6 +293,8 @@ public class FilmList extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
