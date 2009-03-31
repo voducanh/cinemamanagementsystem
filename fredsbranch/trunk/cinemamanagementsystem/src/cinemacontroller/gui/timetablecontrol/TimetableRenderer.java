@@ -1,6 +1,6 @@
 package cinemacontroller.gui.timetablecontrol;
 
-import cinemacontroller.screencontroller.Screen;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -75,16 +75,16 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
         box.setBackground(default_screen_background_color);
 
         // Cast the current object to Screen
-        Screen current_screen = (Screen)value;
+       // Screen current_screen = (Screen)value;
 
         // Create a jlabel with the screens ID number
-        JLabel title_label = new JLabel("" + current_screen.getIDNumber());
-        title_label.setForeground(default_screen_text_color);
+        //JLabel title_label = new JLabel("" + current_screen.getIDNumber());
+        //title_label.setForeground(default_screen_text_color);
 
         // A spacer
         box.add(new JLabel(" "), c);
         // The title
-        box.add(title_label, c);
+        //box.add(title_label, c);
 
         return box;
     }
@@ -102,21 +102,21 @@ public class TimetableRenderer extends DefaultTableCellRenderer {
         box.setLayout(new BoxLayout(box, BoxLayout.PAGE_AXIS));
         box.setBackground(current_box.getBoxBackgroundColor());
 
-        JLabel title_label = new JLabel(current_box.getScreening().getFilm().getTitle());
-        title_label.setForeground(current_box.getBoxForegroundColor());
+        //JLabel title_label = new JLabel(current_box.getScreening().getFilm().getTitle());
+       // title_label.setForeground(current_box.getBoxForegroundColor());
 
         JLabel title_null = new JLabel(" ");
         title_null.setForeground(current_box.getBoxForegroundColor());
 
-        JLabel time_label = new JLabel(getFriendlyTime(current_box.getScreening().getStartTime()) + " - " + getFriendlyTime(current_box.getScreening().getEndTime()));
-        time_label.setForeground(current_box.getBoxForegroundColor());
+       // JLabel time_label = new JLabel(getFriendlyTime(current_box.getScreening().getStartTime()) + " - " + getFriendlyTime(current_box.getScreening().getEndTime()));
+       //.setForeground(current_box.getBoxForegroundColor());
+//
+       // title_label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //time_label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        title_label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        time_label.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        box.add(title_null);
-        box.add(title_label);
-        box.add(time_label);
+       // box.add(title_null);
+       // box.add(title_label);
+       // box.add(time_label);
 
         box.setBackground(current_box.getBoxBackgroundColor());
         box.setForeground(current_box.getBoxForegroundColor());

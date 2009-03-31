@@ -36,7 +36,7 @@ public class TimetableCellPainter extends BasicTableUI
         int sk=((TimetableTable)table).map.visibleCell(2,i);
         paintCell(row,sk,g,r1);
         // increment the column counter
-        i+=((TimetableTable)table).map.span(row,sk)-1;
+        //i+=((TimetableTable)table).map.span(row,sk)-1;
       }
     }
   }

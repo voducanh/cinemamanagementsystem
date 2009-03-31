@@ -13,8 +13,6 @@ package cinemacontroller.gui;
 
 import cinemacontroller.filmcontroller.Film;
 
-import cinemacontroller.screencontroller.Screen;
-import cinemacontroller.screencontroller.Screening;
 import databasecontroller.MySqlController;
 
 import java.sql.ResultSet;

@@ -51,10 +51,10 @@ public class TimetableTable extends JTable {
    // add widths of all spanned logical cells
     int sk=map.visibleCell(row,column);
     Rectangle r1=super.getCellRect(row,sk,includeSpacing);
-    if (map.span(row,sk)!=1)
-    for (int i=1; i<map.span(row,sk); i++){
-        r1.width+=getColumnModel().getColumn(sk+i).getWidth();
-      }
+    //if (map.span(row,sk)!=1)
+    //for (int i=1; i<map.span(row,sk); i++){
+    //    r1.width+=getColumnModel().getColumn(sk+i).getWidth();
+    //  }
     return r1;
   }
   

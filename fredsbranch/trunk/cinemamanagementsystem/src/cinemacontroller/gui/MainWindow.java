@@ -9,6 +9,7 @@ package cinemacontroller.gui;
 import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.DefaultTableColumnModel;
 
+import cinemacontroller.historicalcontroller.ImportController;
 import cinemacontroller.screencontroller.ScreenManager;
 
 /**
@@ -105,7 +106,6 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
         jMenu14 = new javax.swing.JMenu();
-        jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenu12 = new javax.swing.JMenu();
         jMenuItem24 = new javax.swing.JMenuItem();
@@ -363,11 +363,6 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu13.add(jMenuItem18);
 
         jMenuItem25.setText("BBFC");
-        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem25ActionPerformed(evt);
-            }
-        });
         jMenu13.add(jMenuItem25);
 
         jMenuItem19.setText("Distributor");
@@ -390,15 +385,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jMenu14.setText("Historical");
 
-        jMenuItem21.setText("Import a day");
-        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem21ActionPerformed(evt);
-            }
-        });
-        jMenu14.add(jMenuItem21);
-
-        jMenuItem22.setText("Import a period");
+        jMenuItem22.setText("Import");
         jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem22ActionPerformed(evt);
@@ -558,6 +545,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
+
     private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {
     	this.dispose();
     	}
@@ -599,7 +587,7 @@ public class MainWindow extends javax.swing.JFrame {
     	}
 
     	private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {
-//    	 TODO add your handling code here:
+   	 		new ImportController();
     	}
 
     	private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -650,7 +638,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         	}
 
-
     // Variables declaration - do not modify
     private javax.swing.JComboBox comboDay;
     private javax.swing.JComboBox comboWeek;
@@ -698,7 +685,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
@@ -718,8 +704,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton user;
     private javax.swing.JButton viewFilms;
     // End of variables declaration
-
+    
 	public String getLogin() {
 		return login;
 	}
+
 }

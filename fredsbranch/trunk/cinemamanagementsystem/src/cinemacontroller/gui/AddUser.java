@@ -6,8 +6,6 @@
 
 package cinemacontroller.gui;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
