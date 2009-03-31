@@ -180,8 +180,8 @@ public class FilmInfo extends javax.swing.JFrame {
 			result= connection.getData("SELECT RUNNING_TIME FROM MOVIES WHERE NAME='"+filmName+"'");
 			while (result.next()) {
 				String length = result.getString(1);
-				String hour = length.substring(0,1);
-				String mins = length.substring(2,4);
+				String hour = length.substring(0,2);
+				String mins = length.substring(3,5);
 
 				jTextField4.setText(hour);
 				jTextField5.setText(mins);

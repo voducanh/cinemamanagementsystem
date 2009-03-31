@@ -197,7 +197,7 @@ public class CreateNewFilm extends javax.swing.JFrame {
         
 		try {
 			connection = MySqlController.getInstance();
-			result= connection.getData("SELECT NAME FROM BBFC_RATING");
+			result= connection.getData("SELECT NAME FROM BBFC_RATING ORDER BY NAME");
 			jComboBox3.addItem("");
 			while (result.next()) {
 				jComboBox3.addItem(result.getString(1));

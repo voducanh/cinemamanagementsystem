@@ -213,9 +213,9 @@ public class LoginDialog extends javax.swing.JDialog {
             if(result.next()){
             	
             	login = this.jTextField1.getText().trim();
+            	deleteTableTemp();
             	updateInfo(login);
-            	checkPeriod(use.dateToday());
-            	deleteTempTable();
+            	checkPeriod(use.getDateToday());
                 this.dispose();
                 
                 //Create a new GUI for the system and set controller
@@ -235,7 +235,7 @@ public class LoginDialog extends javax.swing.JDialog {
     	
         try {
 
-        	String dateToday = use.dateToday();
+        	String dateToday = use.getDateToday();
         	MySqlController connection = MySqlController.getInstance();
 
         	connection.putData("UPDATE ACCOUNTS SET LAST_LOG='"+dateToday+"',NB_CONNECTION=NB_CONNECTION+1 WHERE USERNAME='"+login+"'");
@@ -278,23 +278,23 @@ public class LoginDialog extends javax.swing.JDialog {
         }
     	
     }
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+       System.exit(0);
+    }
     
-    public void deleteTempTable(){
+    public void deleteTableTemp(){
         try {
 
         	MySqlController connection = MySqlController.getInstance();
 
+        	connection.putData("DROP TABLE IF EXISTS TEMPCLOSEDSCREENS");
+        	connection.putData("DROP TABLE IF EXISTS TEMPEXPECTEDBOOKING");
         	connection.putData("DROP TABLE IF EXISTS TEMPTIMETABLES");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
         }
-    }
-    
-
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-       System.exit(0);
     }
 
 

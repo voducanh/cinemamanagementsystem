@@ -32,7 +32,7 @@ public class CinemaSystemController {
         
         // Initialize all the controllers that this controller allows access too
         film_manager = new FilmController();
-        screen_manager = new ScreenManager();
+        //screen_manager = new ScreenManager();
 
         // Set the opening and closing times of the cinema
         this.cinema_opening_time = new GregorianCalendar();
@@ -46,7 +46,7 @@ public class CinemaSystemController {
 
         try {
             // Setup all the cinema screens
-            this.loadScreensFromDatabase();
+            //this.loadScreensFromDatabase();
             // Load all films from database
             this.film_manager.film_database_controller.getFilmsFromDatabase();
             // Load all the screenings from database
@@ -61,7 +61,7 @@ public class CinemaSystemController {
 
     public void loadScreeningsFromDatabase() throws SQLException {
         // Cycle through all the screens in the database
-        for(Screen current_screen : this.screen_manager.getScreens()){
+        /*for(Screen current_screen : this.screen_manager.getScreens()){
 
             // Create a new mysql connection and query database
         	MySqlController connection = MySqlController.getInstance();
@@ -83,7 +83,7 @@ public class CinemaSystemController {
                 this.screen_manager.addScreening(current_screen, current_screeing);
             }
             
-        }
+        }*/
     }
 
     /**
@@ -92,7 +92,7 @@ public class CinemaSystemController {
      * @throws java.sql.SQLException
      * @throws java.lang.ClassNotFoundException
      */
-    public void loadScreensFromDatabase() throws SQLException {
+   /* public void loadScreensFromDatabase() throws SQLException {
         String table_name = "main_screen_list";
 
         // Create a new mysql connection and query database
@@ -103,6 +103,6 @@ public class CinemaSystemController {
         while(result.next()){
             this.screen_manager.addNewScreen(result.getInt("uniqueid"), result.getInt("seat_count"));
         }
-    }
+    }*/
 	
 }
