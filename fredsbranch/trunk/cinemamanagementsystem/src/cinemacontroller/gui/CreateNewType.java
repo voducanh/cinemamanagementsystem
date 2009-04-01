@@ -32,6 +32,7 @@ public class CreateNewType extends javax.swing.JFrame {
 	private Color newColor;
 	/** Creates new form CreateNewType */
     public CreateNewType() {
+    	use = new Useful();
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);

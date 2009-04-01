@@ -24,10 +24,7 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
 		Calendar dateToday = use.toCalendar(use.getDateToday());
 		
 		if(checkContentPeriod(dateToday,getDateEndPeriod())){
-			//we can modify
-			//for(long i=0;i<1000000000;i++){
-				
-			//}
+
 			startRotation(dateToday,getDateEndPeriod());
 			auto.getJProgressBar().setIndeterminate(false);
 			auto.dispose();
@@ -47,15 +44,31 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
 		Calendar begindateSecondWeek = (Calendar)endDate.clone();
 		begindateSecondWeek = use.changeDate(begindateSecondWeek, -6);
 		
+		Calendar endDateFirstWeek = (Calendar)begindateSecondWeek.clone();
+		endDateFirstWeek = use.changeDate(endDateFirstWeek, -1);
 		//System.out.println(use.calendarToString(endDate));
 		//System.out.println(use.calendarToString(begindateSecondWeek));
 		
-		//get all films in the previous period
-		getMoviesPreviousPeriod(endDate);
+		Calendar beginPreviousWeek = (Calendar)endDate.clone();
+		beginPreviousWeek = use.changeDate(beginPreviousWeek, -20);
 		
-		getMoviesFirstWeekPeriod(beginDate,endDate);
+		if(beginDate.compareTo(begindateSecondWeek) < 0){
 
-		screeningFilms2(beginDate,begindateSecondWeek);
+			getMoviesPreviousPeriod(endDate);
+			
+			getMoviesFirstWeekPeriod(beginPreviousWeek,beginDate);
+			screeningFilms(beginDate,endDateFirstWeek,0);
+			
+			getMoviesPreviousPeriod(endDate);
+			getMoviesSecondWeekPeriod(beginPreviousWeek,beginDate,endDate);
+			screeningFilms(begindateSecondWeek,endDate,1);
+		}
+		else{
+			getMoviesPreviousPeriod(endDate);
+			getMoviesSecondWeekPeriod(beginPreviousWeek,beginDate,endDate);
+			screeningFilms(beginDate,endDate,1);
+		}
+		
 		
 	}
 	
@@ -74,7 +87,9 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
         	MySqlController connection = MySqlController.getInstance();
         	
         	connection.putData("CREATE TABLE IF NOT EXISTS TEMPEXPECTEDBOOKING(ID_MOVIE INT(6) NOT NULL, EXPECTED_BOOKING INT(5) , WEEK INT(1) NOT NULL, PRIMARY KEY(ID_MOVIE))");
+        	connection.putData("TRUNCATE TABLE TEMPEXPECTEDBOOKING");
         	
+        	//System.out.println("SELECT DISTINCT(ID_MOVIE) FROM TIMETABLES WHERE DAY BETWEEN '"+use.calendarToString(previousPeriodDateBegin)+"' AND '"+use.calendarToString(previousPeriodDateEnd)+"'");
         	ResultSet r = connection.getData("SELECT DISTINCT(ID_MOVIE) FROM TIMETABLES WHERE DAY BETWEEN '"+use.calendarToString(previousPeriodDateBegin)+"' AND '"+use.calendarToString(previousPeriodDateEnd)+"'");
 
         	while (r.next()) {
@@ -89,26 +104,25 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
 	}
 	
 	
-	public void getMoviesFirstWeekPeriod(Calendar dateToday, Calendar endDate){
+	public void getMoviesFirstWeekPeriod(Calendar beginPreviousWeek, Calendar endDate){
 		
 		//System.out.println(use.calendarToString(dateToday));
 		//System.out.println(use.calendarToString(endDate));
 		
-		Calendar beginDateFirstWeek = (Calendar)endDate.clone();
-		beginDateFirstWeek = use.changeDate(beginDateFirstWeek, -20);
+		Calendar beginDateFirstWeek = (Calendar)beginPreviousWeek.clone();
 		//System.out.println(use.calendarToString(beginDateFirstWeek));
-		
-		
+
         try {
-        	//System.out.println("SELECT ID_MOVIE FROM MOVIES WHERE RELEASE_DATE BETWEEN '"+use.calendarToString(beginDateFirstWeek)+"' AND '"+use.calendarToString(dateToday)+"'");
+        	//System.out.println("SELECT ID_MOVIE FROM MOVIES WHERE RELEASE_DATE BETWEEN '"+use.calendarToString(beginDateFirstWeek)+"' AND '"+use.calendarToString(endDate)+"'");
         	MySqlController connection = MySqlController.getInstance();
-        
-        	ResultSet r = connection.getData("SELECT ID_MOVIE FROM MOVIES WHERE RELEASE_DATE BETWEEN '"+use.calendarToString(beginDateFirstWeek)+"' AND '"+use.calendarToString(dateToday)+"'");
+
+        	ResultSet r = connection.getData("SELECT ID_MOVIE FROM MOVIES WHERE RELEASE_DATE BETWEEN '"+use.calendarToString(beginDateFirstWeek)+"' AND '"+use.calendarToString(endDate)+"'");
 
         	while (r.next()) {
         		
         		ResultSet rbis = connection.getData("SELECT ID_MOVIE FROM TEMPEXPECTEDBOOKING WHERE ID_MOVIE='"+r.getString(1)+"'");
         		if(!rbis.next()){
+        			//System.out.println("INSERT INTO TEMPEXPECTEDBOOKING (ID_MOVIE,WEEK) VALUES ('"+r.getString(1)+"',1)");
         			connection.putData("INSERT INTO TEMPEXPECTEDBOOKING (ID_MOVIE,WEEK) VALUES ('"+r.getString(1)+"',1)");
         		}
         		
@@ -156,7 +170,46 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
 	}
 	
 	
-	public void calculationExpectedBooking(){
+	public void getMoviesSecondWeekPeriod(Calendar beginPreviousWeek, Calendar endDatePreviousWeek, Calendar endDate){
+		
+		Calendar beginDateClone = (Calendar)beginPreviousWeek.clone();
+		beginDateClone = use.changeDate(beginDateClone, 1);
+		
+		Calendar beginFirstWeek = (Calendar)endDate.clone();
+		beginFirstWeek = use.changeDate(beginFirstWeek, -13);
+		
+		Calendar endFirstWeek = (Calendar)endDate.clone();
+		endFirstWeek = use.changeDate(endFirstWeek, -7);
+		
+		
+		getMoviesFirstWeekPeriod(beginPreviousWeek,endDatePreviousWeek);
+		
+        try {
+        	//System.out.println("SELECT ID_MOVIE FROM MOVIES WHERE RELEASE_DATE BETWEEN '"+use.calendarToString(beginDateFirstWeek)+"' AND '"+use.calendarToString(endDate)+"'");
+        	MySqlController connection = MySqlController.getInstance();
+
+        	ResultSet r = connection.getData("SELECT ID_MOVIE FROM MOVIES WHERE RELEASE_DATE BETWEEN '"+use.calendarToString(beginFirstWeek)+"' AND '"+use.calendarToString(endFirstWeek)+"'");
+
+        	while (r.next()) {
+        		
+        		ResultSet rbis = connection.getData("SELECT ID_MOVIE FROM TEMPEXPECTEDBOOKING WHERE ID_MOVIE='"+r.getString(1)+"'");
+        		if(!rbis.next()){
+        			//System.out.println("INSERT INTO TEMPEXPECTEDBOOKING (ID_MOVIE,WEEK) VALUES ('"+r.getString(1)+"',2)");
+        			connection.putData("INSERT INTO TEMPEXPECTEDBOOKING (ID_MOVIE,WEEK) VALUES ('"+r.getString(1)+"',2)");
+        		}
+        		
+			}
+        	
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
+        }
+		
+		
+		
+		
+	}
+	
+	public void calculationExpectedBooking(int week){
 		
         try {
 
@@ -164,20 +217,21 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
         	
         	//for week 0
         	ResultSet r = connection.getData("SELECT ID_MOVIE FROM TEMPEXPECTEDBOOKING WHERE WEEK='0'");
+        	
+        	ResultSet r7 = connection.getData("SELECT VALUE FROM INDEXES WHERE NAME='PREVIOUS_PERIOD_MALUS'");
         	float malus = 0.0f;
+    		if (r7.next()) {
+    			malus = r7.getFloat(1);
+			}
+        	
         	while (r.next()) {
         		//System.out.println("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
 
-            	ResultSet r1 = connection.getData("SELECT VALUE FROM INDEXES WHERE NAME='PREVIOUS_PERIOD_MALUS'");
-        		while (r1.next()) {
-        			malus = r1.getFloat(1);
-    			}
-        		
         		ResultSet r2 = connection.getData("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
             	float tempExpectedBooking = 400f;
         		
         		while (r2.next()) {
-        			tempExpectedBooking = tempExpectedBooking*r2.getFloat(1)*r2.getFloat(2)*r2.getFloat(3)*malus;
+        			tempExpectedBooking = tempExpectedBooking*r2.getFloat(1)*r2.getFloat(2)*r2.getFloat(3)*(malus+(malus*week));
         			//System.out.println(tempExpectedBooking);
         			connection.putData("UPDATE TEMPEXPECTEDBOOKING SET EXPECTED_BOOKING='"+tempExpectedBooking+"' WHERE ID_MOVIE='"+r.getString(1)+"'");
     			}
@@ -192,7 +246,30 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
             	float tempExpectedBooking = 400f;
         		
         		while (r2.next()) {
+        			if(week == 0){
+        				tempExpectedBooking = tempExpectedBooking*r2.getFloat(1)*r2.getFloat(2)*r2.getFloat(3);
+        			}
+        			else{
+        				tempExpectedBooking = tempExpectedBooking*r2.getFloat(1)*r2.getFloat(2)*r2.getFloat(3)*malus;
+        			}
+        			
+        			//System.out.println(tempExpectedBooking);
+        			connection.putData("UPDATE TEMPEXPECTEDBOOKING SET EXPECTED_BOOKING='"+tempExpectedBooking+"' WHERE ID_MOVIE='"+r.getString(1)+"'");
+    			}
+			}
+        	
+        	
+        	//for week 2
+        	r = connection.getData("SELECT ID_MOVIE FROM TEMPEXPECTEDBOOKING WHERE WEEK='2'");
+        	while (r.next()) {
+        		
+        		ResultSet r2 = connection.getData("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
+            	float tempExpectedBooking = 400f;
+        		
+        		while (r2.next()) {
+        			
         			tempExpectedBooking = tempExpectedBooking*r2.getFloat(1)*r2.getFloat(2)*r2.getFloat(3);
+
         			//System.out.println(tempExpectedBooking);
         			connection.putData("UPDATE TEMPEXPECTEDBOOKING SET EXPECTED_BOOKING='"+tempExpectedBooking+"' WHERE ID_MOVIE='"+r.getString(1)+"'");
     			}
@@ -226,13 +303,11 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
         
 	}
 	
-	public void screeningFilms2(Calendar dateToday, Calendar begindateSecondWeek){
+	public void screeningFilms(Calendar dateToday, Calendar endDate, int week){
 
 		Calendar workingDate = (Calendar)dateToday.clone();
 		workingDate = use.changeDate(workingDate, -1);
-		Calendar endDateFirstWeek = (Calendar)begindateSecondWeek.clone();
-		endDateFirstWeek = use.changeDate(endDateFirstWeek, -1);
-		
+
 		int minCountScreenUsed = 0;
 
 		//System.out.println(use.calendarToString(workingDate));
@@ -247,11 +322,11 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
 		 		minCountScreenUsed = r.getInt(1);
 		 	}
 			
-		while(!workingDate.equals(endDateFirstWeek)){
+		while(!workingDate.equals(endDate)){
 			workingDate = use.changeDate(workingDate, 1);
 			//System.out.println(use.calendarToString(workingDate));
 			
-			calculationExpectedBooking();
+			calculationExpectedBooking(week);
 			int countScreenUsed=0;
 			
 			ResultSet r1 = connection.getData("SELECT * FROM SCREENS ORDER BY NB_SEATS DESC");
@@ -262,7 +337,7 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
 					int bestExpectedBooking = r2.getInt(2);
 					ResultSet r3 = connection.getData("SELECT * FROM TEMPCLOSEDSCREENS WHERE ID_SCREEN='"+r1.getInt(1)+"' AND DAY='"+use.calendarToString(workingDate)+"'");
 					if(r3.next()){
-						connection.putData("INSERT INTO TEMPTIMETABLES (ID_SCREEN,DAY) VALUES ('"+r1.getInt(1)+"','"+use.calendarToString(workingDate)+"')");
+						connection.putData("INSERT INTO TEMPTIMETABLES (ID_SCREEN,ID_MOVIE,DAY) VALUES ('"+r1.getInt(1)+"','0','"+use.calendarToString(workingDate)+"')");
 					}
 					else{
 						if(bestExpectedBooking <= 0){
@@ -300,19 +375,18 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
 				}
 				
 			}
-		
+			
+			connection.putData("INSERT TIMETABLES (ID_SCREEN,ID_MOVIE,DAY,EXPECTED_BOOKING,NB_SEATS_BOOKED) SELECT ID_SCREEN,ID_MOVIE,DAY,EXPECTED_BOOKING,NB_SEATS_BOOKED FROM TEMPTIMETABLES");
+			connection.putData("TRUNCATE TABLE TEMPTIMETABLES");
 
 		}
-		
 		
 		}
 		catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
         }
 	}
-
-			
-			
+		
 	public Boolean checkContentPeriod(Calendar dateToday, Calendar dateEndPeriod){
 		
 		boolean content = false;

@@ -120,7 +120,6 @@ public class ScreenManager extends javax.swing.JFrame {
 
 		try {
 			connection = MySqlController.getInstance();
-			
 			result= connection.getData("SELECT END_DATE FROM PERIOD");
 			while (result.next()) {
 				endDateDatabase = use.toCalendar(result.getString(1));
@@ -145,6 +144,17 @@ public class ScreenManager extends javax.swing.JFrame {
         else{
         	if(index == 1){
         		
+            	startDate = (Calendar)endDateDatabase.clone();
+            	startDate = use.changeDate(startDate, 1);
+            	
+            	endDate = (Calendar)startDate.clone();
+            	endDate = use.changeDate(endDate, 14);
+            	
+            	jComboBox2.addItem("");
+            	while(!startDate.equals(endDate)){
+            		jComboBox2.addItem(use.calendarToString(startDate));
+            		startDate = use.changeDate(startDate, 1);
+            	}
         	}
         }
 
@@ -363,6 +373,7 @@ public void createTempTable(){
     	MySqlController connection = MySqlController.getInstance();
 
     	connection.putData("CREATE TABLE IF NOT EXISTS TEMPCLOSEDSCREENS(ID_SCREEN INT(2) NOT NULL, DAY DATE NOT NULL, PRIMARY KEY(ID_SCREEN,DAY))");
+		connection.putData("TRUNCATE TABLE TEMPCLOSEDSCREENS");
 
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);

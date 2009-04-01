@@ -1,37 +1,34 @@
 /*
- * AutomaticRotation.java
+ * TimetableRunning.java
  *
- * Created on 30 mars 2009, 01:46
+ * Created on 1 avril 2009, 04:25
  */
 
-package cinemacontroller.rotationalcontroller;
-
-import java.awt.Color;
+package cinemacontroller.gui.timetablecontrol;
 
 import javax.swing.JProgressBar;
 
 import cinemacontroller.gui.MainWindow;
-import cinemacontroller.gui.timetablecontrol.TimetableController;
-import cinemacontroller.gui.timetablecontrol.TimetableGenerating;
-
+import cinemacontroller.rotationalcontroller.AutomaticRotationCurrentPeriod;
+import cinemacontroller.rotationalcontroller.AutomaticRotationNextPeriod;
 
 /**
  *
  * @author  Frédéric
  */
-public class AutomaticRotation extends javax.swing.JFrame {
+public class TimetableRunning extends javax.swing.JFrame {
 
-	private static final long serialVersionUID = 0L;
-	private int index = 0;
-	/** Creates new form AutomaticRotation */
-    public AutomaticRotation(int index) {
-    	this.index = index;
+
+	private static final long serialVersionUID = 4540848159313898482L;
+	private MainWindow window;
+	/** Creates new form TimetableRunning */
+    public TimetableRunning(MainWindow window) {
+    	this.window = window;
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        rotation();
+        //start();
     }
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -46,29 +43,23 @@ public class AutomaticRotation extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextPane_date_description = new javax.swing.JTextPane();
-        jLabel10 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
+        jLabel10 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Automatic Rotation - Multiplex Manager");
-        
-        setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/timetable.png")));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        
-        jLabel1.setText("Automatic Rotation");
+        jLabel1.setText("Display timetable");
 
         jScrollPane3.setBorder(null);
 
         jTextPane_date_description.setBackground(new java.awt.Color(24, 24, 24));
         jTextPane_date_description.setEditable(false);
         jTextPane_date_description.setForeground(new java.awt.Color(255, 255, 255));
-        
-       	jTextPane_date_description.setText("The automatic rotation is running. Please wait.");
-
+        jTextPane_date_description.setText("The timetable is being generated. Please wait.");
         jScrollPane3.setViewportView(jTextPane_date_description);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -92,16 +83,18 @@ public class AutomaticRotation extends javax.swing.JFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        
-        jLabel10.setText("Automatic Rotation is running...");
+        jProgressBar1.setAutoscrolls(true);
+        jProgressBar1.setIndeterminate(true);
 
-        
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("The timetable is being generated...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 653, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -113,6 +106,7 @@ public class AutomaticRotation extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 123, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(45, Short.MAX_VALUE)
@@ -124,21 +118,10 @@ public class AutomaticRotation extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
-    
-    public void rotation(){
+    public void start(){
 		try {
-			Thread thread;
-			if(index == 0){
-				   thread = new Thread(new AutomaticRotationCurrentPeriod(this));
-			       thread.start();    
-			}
-			else{
-				if(index == 1){
-					thread = new Thread(new AutomaticRotationNextPeriod(this));
-				    thread.start();
-				}
-			}
-
+			Thread thread = new Thread(new TimetableGenerating(this,window));
+			thread.start();    
 		}
 		catch (Exception ex) {
 		        ex.printStackTrace();
@@ -156,6 +139,10 @@ public class AutomaticRotation extends javax.swing.JFrame {
     
     public JProgressBar getJProgressBar(){
     	return jProgressBar1;
+    }
+    
+    public MainWindow getWindow(){
+    	return window;
     }
 
 }
