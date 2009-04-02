@@ -221,9 +221,7 @@ public class CreateNewType extends javax.swing.JFrame {
                 			while(r.next()){
                     			connection.putData("INSERT INTO TYPES VALUES ('"+r.getString("Auto_increment")+"','"+jTextField1.getText()+"','"+use.cutColor(newColor)+"','"+jSpinner1.getValue().toString()+"')");
                     			JOptionPane.showMessageDialog(null, "Data added successfully.", "Type", JOptionPane.INFORMATION_MESSAGE);
-                    			jTextField1.setText("");
-                    			jTextField2.setBackground(null);
-                    			jSpinner1.setValue(-1.0);
+                    			this.dispose();
                 			}
             			}
         	

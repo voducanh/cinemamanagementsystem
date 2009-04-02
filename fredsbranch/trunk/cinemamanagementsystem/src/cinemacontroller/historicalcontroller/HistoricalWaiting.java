@@ -1,33 +1,33 @@
 /*
- * TimetableRunning.java
+ * HistoricalWaiting.java
  *
- * Created on 1 avril 2009, 04:25
+ * Created on 2 avril 2009, 09:11
  */
 
-package cinemacontroller.gui.timetablecontrol;
+package cinemacontroller.historicalcontroller;
 
 import javax.swing.JProgressBar;
-
-import cinemacontroller.gui.MainWindow;
-import cinemacontroller.rotationalcontroller.AutomaticRotationCurrentPeriod;
-import cinemacontroller.rotationalcontroller.AutomaticRotationNextPeriod;
 
 /**
  *
  * @author  Frédéric
  */
-public class TimetableRunning extends javax.swing.JFrame {
+public class HistoricalWaiting extends javax.swing.JFrame {
 
-
-	private static final long serialVersionUID = 4540848159313898482L;
-	private MainWindow window;
-	/** Creates new form TimetableRunning */
-    public TimetableRunning(MainWindow window) {
-    	this.window = window;
+	private static final long serialVersionUID = -1977863089874299249L;
+	private String dateBegin = "";
+	private String dateEnd = "";
+	private int index = 0;
+	
+    /** Creates new form HistoricalWaiting */
+    public HistoricalWaiting(String dateBegin, String dateEnd, int index) {
+    	this.dateBegin = dateBegin;
+    	this.dateEnd = dateEnd;
+    	this.index = index;
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        //start();
+        historicalImport();
     }
 
     /** This method is called from within the constructor to
@@ -46,20 +46,22 @@ public class TimetableRunning extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel10 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Import Historical - Multiplex Manager");
+        setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/import.png")));
 
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Display timetable");
+        jLabel1.setText("Import Historicals");
 
         jScrollPane3.setBorder(null);
 
         jTextPane_date_description.setBackground(new java.awt.Color(24, 24, 24));
         jTextPane_date_description.setEditable(false);
         jTextPane_date_description.setForeground(new java.awt.Color(255, 255, 255));
-        jTextPane_date_description.setText("The timetable is being generated. Please wait.");
+        jTextPane_date_description.setText("The historical is being imported. Please wait.\n");
         jScrollPane3.setViewportView(jTextPane_date_description);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -88,7 +90,7 @@ public class TimetableRunning extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("The timetable is being generated...");
+        jLabel10.setText("Historical is being imported...");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,16 +119,27 @@ public class TimetableRunning extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
-
-    public void start(){
+    
+    public void historicalImport(){
 		try {
-			Thread thread = new Thread(new TimetableGenerating(this,window));
-			thread.start();    
+			Thread thread;
+			if(index == 0){
+				   thread = new Thread(new HistoricalImport(this,dateBegin));
+			       thread.start();    
+			}
+			else{
+				if(index == 1){
+					thread =new Thread(new HistoricalImport(this,dateBegin,dateEnd));
+				    thread.start();
+				}
+			}
+
 		}
 		catch (Exception ex) {
 		        ex.printStackTrace();
 		}
     }
+
 
     // Variables declaration - do not modify
     private javax.swing.JLabel jLabel1;
@@ -139,10 +152,6 @@ public class TimetableRunning extends javax.swing.JFrame {
     
     public JProgressBar getJProgressBar(){
     	return jProgressBar1;
-    }
-    
-    public MainWindow getWindow(){
-    	return window;
     }
 
 }

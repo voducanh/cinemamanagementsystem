@@ -12,6 +12,7 @@ public class AutomaticRotationNextPeriod implements Runnable {
 	
 	private Useful use;
 	private AutomaticRotation auto;
+	private int startValue = 0;
 	
 	public AutomaticRotationNextPeriod(AutomaticRotation auto){
 		this.auto = auto;
@@ -40,8 +41,14 @@ public class AutomaticRotationNextPeriod implements Runnable {
         try {
 
         	MySqlController connection = MySqlController.getInstance();
-        	System.out.println("DELETE FROM TIMETABLES WHERE DAY BETWEEN '"+use.calendarToString(beginDate)+"' AND '"+use.calendarToString(endDate)+"'");
+        	//System.out.println("DELETE FROM TIMETABLES WHERE DAY BETWEEN '"+use.calendarToString(beginDate)+"' AND '"+use.calendarToString(endDate)+"'");
         	connection.putData("DELETE FROM TIMETABLES WHERE DAY BETWEEN '"+use.calendarToString(beginDate)+"' AND '"+use.calendarToString(endDate)+"'");
+        	
+        	ResultSet r = connection.getData("SELECT VALUE FROM INDEXES WHERE NAME='START_VALUE'");
+        	
+        	if(r.next()){
+        		startValue = r.getInt(1);
+        	}
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
@@ -57,7 +64,7 @@ public class AutomaticRotationNextPeriod implements Runnable {
 		beginPreviousWeek = use.changeDate(beginPreviousWeek, -20);
 
 		getMoviesPreviousPeriod(endDate);
-			
+		
 		getMoviesFirstWeekPeriod(beginPreviousWeek,beginDate);
 		screeningFilms(beginDate,endDateFirstWeek,0);
 			
@@ -223,7 +230,7 @@ public class AutomaticRotationNextPeriod implements Runnable {
         		//System.out.println("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
 
         		ResultSet r2 = connection.getData("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
-            	float tempExpectedBooking = 400f;
+            	float tempExpectedBooking = startValue;
         		
         		while (r2.next()) {
         			tempExpectedBooking = tempExpectedBooking*r2.getFloat(1)*r2.getFloat(2)*r2.getFloat(3)*(malus+(malus*week));
@@ -238,7 +245,7 @@ public class AutomaticRotationNextPeriod implements Runnable {
         	while (r.next()) {
         		
         		ResultSet r2 = connection.getData("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
-            	float tempExpectedBooking = 400f;
+            	float tempExpectedBooking = startValue;
         		
         		while (r2.next()) {
         			if(week == 0){
@@ -259,7 +266,7 @@ public class AutomaticRotationNextPeriod implements Runnable {
         	while (r.next()) {
         		
         		ResultSet r2 = connection.getData("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
-            	float tempExpectedBooking = 400f;
+            	float tempExpectedBooking = startValue;
         		
         		while (r2.next()) {
         			
@@ -282,7 +289,7 @@ public class AutomaticRotationNextPeriod implements Runnable {
     			}
         		
         		ResultSet r2 = connection.getData("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
-            	float tempExpectedBooking = 400f;
+            	float tempExpectedBooking = startValue;
         		
         		while (r2.next()) {
         			tempExpectedBooking = tempExpectedBooking*r2.getFloat(1)*r2.getFloat(2)*r2.getFloat(3)*malus3;
@@ -305,8 +312,6 @@ public class AutomaticRotationNextPeriod implements Runnable {
 
 		int minCountScreenUsed = 0;
 
-		//System.out.println(use.calendarToString(workingDate));
-		//System.out.println(use.calendarToString(endDateFirstWeek));
 		try{
 			MySqlController connection = MySqlController.getInstance();
 			
@@ -319,8 +324,7 @@ public class AutomaticRotationNextPeriod implements Runnable {
 			
 		while(!workingDate.equals(endDate)){
 			workingDate = use.changeDate(workingDate, 1);
-			//System.out.println(use.calendarToString(workingDate));
-			
+
 			calculationExpectedBooking(week);
 			int countScreenUsed=0;
 			

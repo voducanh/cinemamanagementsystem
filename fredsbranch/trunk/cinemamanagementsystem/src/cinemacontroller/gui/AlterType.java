@@ -137,7 +137,7 @@ public class AlterType extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel13.setText("Color");
 
-        jButton3.setText("Add Color");
+        jButton3.setText("Change Color");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -308,11 +308,7 @@ public class AlterType extends javax.swing.JFrame {
         					connection.putData("UPDATE TYPES SET "+sets+" WHERE NAME='"+jComboBox1.getSelectedItem()+"'");
             				
                 			JOptionPane.showMessageDialog(null, "Type updated successfully.", "Type", JOptionPane.INFORMATION_MESSAGE);
-                			jTextField1.setText("");
-                			jTextField2.setBackground(null);
-                			jComboBox1.setSelectedIndex(0);
-                			jSpinner1.setValue(-1);
-            		
+                			this.dispose();
         			}
     	
         		} catch (SQLException e) {

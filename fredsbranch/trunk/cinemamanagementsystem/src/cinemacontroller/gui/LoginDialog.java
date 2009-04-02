@@ -21,6 +21,8 @@ import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
+import cinemacontroller.historicalcontroller.HistoricalExport;
+
 import usefulmethods.Useful;
 
 
@@ -216,6 +218,7 @@ public class LoginDialog extends javax.swing.JDialog {
             	deleteTableTemp();
             	updateInfo(login);
             	checkPeriod(use.getDateToday());
+            	exportTimetable();
                 this.dispose();
                 
                 //Create a new GUI for the system and set controller
@@ -230,6 +233,33 @@ public class LoginDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
         }
    }
+    
+    public void exportTimetable(){
+    	
+        try {
+        	HistoricalExport hist = new HistoricalExport();
+        	
+        	Calendar dateEndPeriod = use.getDateEndPeriod();
+        	Calendar dateBeginPeriod = (Calendar)dateEndPeriod.clone();
+        	dateBeginPeriod = use.changeDate(dateBeginPeriod, -13);
+        	
+        	MySqlController connection = MySqlController.getInstance();
+        	//System.out.println("SELECT DISTINCT(DAY) FROM TIMETABLES WHERE DAY<'"+use.calendarToString(dateBeginPeriod)+"'");
+        	ResultSet r = connection.getData("SELECT DISTINCT(DAY) FROM TIMETABLES WHERE DAY<'"+use.calendarToString(dateBeginPeriod)+"'");
+
+        	while(r.next()){
+        		
+        		hist.createXmlContent(r.getString(1));
+        		hist.writeXmlContent();
+        		hist.deleteContent();
+        		System.out.println("ok export");
+        	}
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }
     
     public void updateInfo(String login){
     	
@@ -291,6 +321,7 @@ public class LoginDialog extends javax.swing.JDialog {
         	connection.putData("DROP TABLE IF EXISTS TEMPCLOSEDSCREENS");
         	connection.putData("DROP TABLE IF EXISTS TEMPEXPECTEDBOOKING");
         	connection.putData("DROP TABLE IF EXISTS TEMPTIMETABLES");
+        	connection.putData("TRUNCATE TABLE TEMPHISTORICALTIMETABLES");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);

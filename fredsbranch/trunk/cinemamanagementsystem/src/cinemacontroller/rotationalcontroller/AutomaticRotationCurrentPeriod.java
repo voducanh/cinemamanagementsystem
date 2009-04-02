@@ -12,34 +12,51 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
 	
 	private Useful use;
 	private AutomaticRotation auto;
-	
+	private int startValue = 0;
+
 	public AutomaticRotationCurrentPeriod(AutomaticRotation auto){
 		this.auto = auto;
+
 	}
-	
+
 	public void run() {
+
 		auto.getJProgressBar().setIndeterminate(true);
-		
+				
 		use = new Useful();
 		Calendar dateToday = use.toCalendar(use.getDateToday());
-		
-		if(checkContentPeriod(dateToday,getDateEndPeriod())){
+				
+		if(checkContentPeriod(dateToday,use.getDateEndPeriod())){
 
-			startRotation(dateToday,getDateEndPeriod());
+			startRotation(dateToday,use.getDateEndPeriod());
 			auto.getJProgressBar().setIndeterminate(false);
 			auto.dispose();
 			JOptionPane.showMessageDialog(null, "Automatic Rotation runned sucessfully.", "Automatic Rotation", JOptionPane.INFORMATION_MESSAGE);
-			
+
 		}
 		else{
-			auto.getJProgressBar().setIndeterminate(false);
-			auto.dispose();
-			JOptionPane.showMessageDialog(null, "This period has already been generated.", "Period Generated", JOptionPane.WARNING_MESSAGE);
+				auto.getJProgressBar().setIndeterminate(false);
+				auto.dispose();
+				JOptionPane.showMessageDialog(null, "This period has already been generated.", "Period Generated", JOptionPane.WARNING_MESSAGE);
+					
 		}
-		
 	}
 	
 	public void startRotation(Calendar beginDate, Calendar endDate){
+		
+        try {
+
+        	MySqlController connection = MySqlController.getInstance();
+
+        	ResultSet r = connection.getData("SELECT VALUE FROM INDEXES WHERE NAME='START_VALUE'");
+        	
+        	if(r.next()){
+        		startValue = r.getInt(1);
+        	}
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
+        }
 
 		Calendar begindateSecondWeek = (Calendar)endDate.clone();
 		begindateSecondWeek = use.changeDate(begindateSecondWeek, -6);
@@ -52,13 +69,16 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
 		Calendar beginPreviousWeek = (Calendar)endDate.clone();
 		beginPreviousWeek = use.changeDate(beginPreviousWeek, -20);
 		
+		Calendar specialDay = (Calendar)beginDate.clone();
+		specialDay = use.changeDate(specialDay, 1);
+
 		if(beginDate.compareTo(begindateSecondWeek) < 0){
 
 			getMoviesPreviousPeriod(endDate);
 			
 			getMoviesFirstWeekPeriod(beginPreviousWeek,beginDate);
-			screeningFilms(beginDate,endDateFirstWeek,0);
-			
+			screeningFilms(specialDay,endDateFirstWeek,0);
+				
 			getMoviesPreviousPeriod(endDate);
 			getMoviesSecondWeekPeriod(beginPreviousWeek,beginDate,endDate);
 			screeningFilms(begindateSecondWeek,endDate,1);
@@ -66,13 +86,13 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
 		else{
 			getMoviesPreviousPeriod(endDate);
 			getMoviesSecondWeekPeriod(beginPreviousWeek,beginDate,endDate);
-			screeningFilms(beginDate,endDate,1);
+			screeningFilms(specialDay,endDate,1);
 		}
-		
-		
+
+
 	}
 	
-	public void getMoviesPreviousPeriod(Calendar endDate){
+public void getMoviesPreviousPeriod(Calendar endDate){
 		
 		Calendar previousPeriodDateEnd = (Calendar)endDate.clone();
 		previousPeriodDateEnd = use.changeDate(previousPeriodDateEnd, -14);
@@ -228,7 +248,7 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
         		//System.out.println("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
 
         		ResultSet r2 = connection.getData("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
-            	float tempExpectedBooking = 400f;
+            	float tempExpectedBooking = startValue;
         		
         		while (r2.next()) {
         			tempExpectedBooking = tempExpectedBooking*r2.getFloat(1)*r2.getFloat(2)*r2.getFloat(3)*(malus+(malus*week));
@@ -243,7 +263,7 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
         	while (r.next()) {
         		
         		ResultSet r2 = connection.getData("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
-            	float tempExpectedBooking = 400f;
+            	float tempExpectedBooking = startValue;
         		
         		while (r2.next()) {
         			if(week == 0){
@@ -264,7 +284,7 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
         	while (r.next()) {
         		
         		ResultSet r2 = connection.getData("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
-            	float tempExpectedBooking = 400f;
+            	float tempExpectedBooking = startValue;
         		
         		while (r2.next()) {
         			
@@ -287,7 +307,7 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
     			}
         		
         		ResultSet r2 = connection.getData("SELECT B.INDEX,T.INDEX,E.INDEX FROM MOVIES M,BBFC_RATING B,TYPES T,EXPECTED_AUDIENCES E WHERE M.ID_MOVIE='"+r.getString(1)+"' AND M.ID_BBFC=B.ID_BBFC AND M.ID_TYPE=T.ID_TYPE AND M.ID_EXPECTED_AUDIENCE=E.ID_EXPECTED_AUDIENCE");
-            	float tempExpectedBooking = 400f;
+            	float tempExpectedBooking = startValue;
         		
         		while (r2.next()) {
         			tempExpectedBooking = tempExpectedBooking*r2.getFloat(1)*r2.getFloat(2)*r2.getFloat(3)*malus3;
@@ -409,31 +429,7 @@ public class AutomaticRotationCurrentPeriod implements Runnable {
         return content;
 	}
 
-	public Calendar getDateEndPeriod(){
-		
-		String dateEnd = "";
-		Calendar dateEndCal;
-		
-        try {
 
-        	MySqlController connection = MySqlController.getInstance();
-
-        	ResultSet r = connection.getData("SELECT END_DATE FROM PERIOD");
-        	
-        	
-        	while (r.next()) {
-        		
-        		dateEnd = r.getString(1);
-			}
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
-        }
-        
-        dateEndCal = use.toCalendar(dateEnd);
-        
-        return dateEndCal;
-	}
 
 
 

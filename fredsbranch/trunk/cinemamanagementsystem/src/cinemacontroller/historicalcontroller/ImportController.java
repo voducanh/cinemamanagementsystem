@@ -6,6 +6,9 @@
 
 package cinemacontroller.historicalcontroller;
 
+import java.util.Calendar;
+
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import usefulmethods.TextLimiter;
@@ -264,26 +267,27 @@ public class ImportController extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
     	
+    	Calendar dateEndPeriod = use.getDateEndPeriod();
+    	Calendar dateBeginPeriod = (Calendar)dateEndPeriod.clone();
+    	dateBeginPeriod = use.changeDate(dateBeginPeriod, -13);
+    	
     	//just a day
     	if(jRadioButton1.isSelected()){
     		
     		if(!jTextField1.getText().isEmpty() && !jTextField2.getText().isEmpty() && !jTextField3.getText().isEmpty()){
     			
     			if(jTextField1.getText().length() == 2 && jTextField2.getText().length() == 2 && jTextField3.getText().length() == 4
-    				&& jTextField1.getText().matches("[0-9]*") && jTextField2.getText().matches("[0-9]*") && jTextField3.getText().matches("[0-9]*")){
+    					&& jTextField1.getText().matches("[0-9]*") && jTextField2.getText().matches("[0-9]*") && jTextField3.getText().matches("[0-9]*")){
     				
     				String date = jTextField3.getText()+"-"+jTextField2.getText()+"-"+jTextField1.getText();
-    				if(date.compareTo(use.getDateToday()) > 0){
-    					JOptionPane.showMessageDialog(null, "Please enter a date lower or equals to today.", "No Historical", JOptionPane.WARNING_MESSAGE);
-    					jTextField1.setText("");
-    					jTextField2.setText("");
-    					jTextField3.setText("");
+    				if(date.compareTo(use.calendarToString(dateBeginPeriod)) < 0){
+    					this.dispose();
+    					new HistoricalWaiting(date,"",0);
+    					
+
     				}
     				else{
-    					HistoricalExport hist = new HistoricalExport();
-    					hist.createXmlContent("2008-10-12", date);
-    					hist.writeXmlContent();
-    					System.out.println("ok");
+    					JOptionPane.showMessageDialog(null, "Please enter a date lower than the period beginning ("+use.calendarToString(dateBeginPeriod)+")", "No Historical", JOptionPane.WARNING_MESSAGE);
     				}
 	
     			}
@@ -294,18 +298,51 @@ public class ImportController extends javax.swing.JFrame {
     			
     		}
     		else{
-		    	JOptionPane.showMessageDialog(null, "Please enter a date.", "Invalid Data", JOptionPane.WARNING_MESSAGE);
+		    	JOptionPane.showMessageDialog(null, "Please enter a day.", "Invalid Data", JOptionPane.WARNING_MESSAGE);
 		    }
     	}
     	else{
     		//a period
     		if(jRadioButton2.isSelected()){
-    			System.out.println("r2");
+
+    			if(!jTextField4.getText().isEmpty() && !jTextField5.getText().isEmpty() && !jTextField6.getText().isEmpty()
+    				&& !jTextField7.getText().isEmpty() && !jTextField8.getText().isEmpty() && !jTextField9.getText().isEmpty()	){
+    				
+    				if(jTextField4.getText().length() == 2 && jTextField5.getText().length() == 2 && jTextField6.getText().length() == 4
+    					&& jTextField7.getText().length() == 2 && jTextField8.getText().length() == 2 && jTextField9.getText().length() == 4
+    					&& jTextField4.getText().matches("[0-9]*") && jTextField5.getText().matches("[0-9]*") && jTextField6.getText().matches("[0-9]*")
+    					&& jTextField7.getText().matches("[0-9]*") && jTextField8.getText().matches("[0-9]*") && jTextField9.getText().matches("[0-9]*")){
+    					
+    					
+    					String date1 = jTextField6.getText()+"-"+jTextField5.getText()+"-"+jTextField4.getText();
+    					String date2 = jTextField9.getText()+"-"+jTextField8.getText()+"-"+jTextField7.getText();
+    					
+    					if(date2.compareTo(date1) >= 0){
+    						
+    						if(date2.compareTo(use.calendarToString(dateBeginPeriod)) < 0){
+    							this.dispose();
+    							new HistoricalWaiting(date1,date2,1);
+    						}
+    						else{
+            					JOptionPane.showMessageDialog(null, "Please enter a second date is lower than the period beginning ("+use.calendarToString(dateBeginPeriod)+").", "Invalid Date", JOptionPane.WARNING_MESSAGE);
+            				}
+
+        				}
+    					else{
+        					JOptionPane.showMessageDialog(null, "Please enter a second date greater or equals to the first date.", "Invalid Date", JOptionPane.WARNING_MESSAGE);
+        				}
+
+    				}
+    				else{
+        		    	JOptionPane.showMessageDialog(null, "Please enter two days with a correct format.", "Invalid Date", JOptionPane.WARNING_MESSAGE);
+        		    }
+    				
+    			}
+        		else{
+    		    	JOptionPane.showMessageDialog(null, "Please enter two days.", "Invalid Data", JOptionPane.WARNING_MESSAGE);
+    		    }
         	}
     	}
-
-    	
-  
 
     }
     

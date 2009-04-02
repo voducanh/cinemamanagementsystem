@@ -246,7 +246,7 @@ public class FilmList extends javax.swing.JFrame {
  	        	} 
     	        	
     	        	//write again all films
-    	        	this.populateListControl();
+ 	        	this.populateListControl();
 
     		 }
 
@@ -262,7 +262,7 @@ public class FilmList extends javax.swing.JFrame {
     	Object[] filmSelected = jList1.getSelectedValues();
     	
     	if(filmSelected.length != 0){
-    		new FilmInfo(filmSelected[0].toString());
+    		new FilmInfo(filmSelected[0].toString().replace("'", "''"));
     	}
     	else{
     		JOptionPane.showMessageDialog(null, "Please choose a film.", "Invalid Selection", JOptionPane.WARNING_MESSAGE);

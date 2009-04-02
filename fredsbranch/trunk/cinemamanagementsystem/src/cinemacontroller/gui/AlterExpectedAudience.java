@@ -263,9 +263,7 @@ public class AlterExpectedAudience extends javax.swing.JFrame {
 
                 			connection.putData("UPDATE EXPECTED_AUDIENCES SET "+sets+" WHERE NAME='"+jComboBox1.getSelectedItem()+"'");
                     		JOptionPane.showMessageDialog(null, "Expected audience updated successfully.", "Expected Audience", JOptionPane.INFORMATION_MESSAGE);
-                    		jTextField1.setText("");
-                    		jComboBox1.setSelectedIndex(0);
-                    		jSpinner1.setValue(-1);
+                    		this.dispose();
             			}
         	
             		} catch (SQLException e) {

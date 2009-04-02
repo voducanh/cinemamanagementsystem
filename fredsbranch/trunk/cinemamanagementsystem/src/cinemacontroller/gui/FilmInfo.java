@@ -127,7 +127,7 @@ public class FilmInfo extends javax.swing.JFrame {
         	jLabel13.setText("Synopsis");
 
         	jTextField1.setEditable(false);
-        	jTextField1.setText(filmName);
+        	jTextField1.setText(filmName.replace("''", "'"));
 
         	jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         	jLabel5.setText("Film Title");

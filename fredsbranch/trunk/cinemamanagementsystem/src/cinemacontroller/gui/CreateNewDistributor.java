@@ -174,7 +174,7 @@ public class CreateNewDistributor extends javax.swing.JFrame {
         			while(r.next()){
             			connection.putData("INSERT INTO DISTRIBUTORS VALUES ('"+r.getString("Auto_increment")+"','"+jTextField1.getText()+"')");
             			JOptionPane.showMessageDialog(null, "Data added successfully.", "Distributor", JOptionPane.INFORMATION_MESSAGE);
-            			jTextField1.setText("");
+            			this.dispose();
         			}
     			}
 	

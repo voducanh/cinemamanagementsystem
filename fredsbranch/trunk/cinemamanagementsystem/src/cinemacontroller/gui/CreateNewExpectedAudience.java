@@ -185,8 +185,7 @@ public class CreateNewExpectedAudience extends javax.swing.JFrame {
             			while(r.next()){
                 			connection.putData("INSERT INTO EXPECTED_AUDIENCES VALUES ('"+r.getString("Auto_increment")+"','"+jTextField1.getText()+"','"+jSpinner1.getValue().toString()+"')");
                 			JOptionPane.showMessageDialog(null, "Data added successfully.", "Expected Audience", JOptionPane.INFORMATION_MESSAGE);
-                			jTextField1.setText("");
-                			jSpinner1.setValue(-1.0);
+                			this.dispose();
             			}
         			}
     	

@@ -216,8 +216,7 @@ public class AlterBbfc extends javax.swing.JFrame {
 
             			connection.putData("UPDATE BBFC_RATING SET `INDEX`='"+jSpinner1.getValue().toString()+"' WHERE NAME='"+jComboBox1.getSelectedItem()+"'");
                     	JOptionPane.showMessageDialog(null, "BBFC index updated successfully.", "BBFC Rating", JOptionPane.INFORMATION_MESSAGE);
-                    	jComboBox1.setSelectedIndex(0);
-                    	jSpinner1.setValue(-1);
+                    	this.dispose();
         	
             		} catch (SQLException e) {
             			e.printStackTrace();

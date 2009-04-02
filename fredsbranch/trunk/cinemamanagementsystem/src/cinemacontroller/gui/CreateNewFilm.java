@@ -513,17 +513,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
         				        			}
         				        			
-            				    			jTextField1.setText("");
-    				            			jComboBox1.setSelectedIndex(0);
-    				            			jComboBox2.setSelectedIndex(0);
-    				            			jComboBox3.setSelectedIndex(0);
-    				            			jComboBox4.setSelectedIndex(0);
-    				            			jTextArea1.setText("");
-    				            			jTextField2.setText("");
-    				            			jTextField6.setText("");
-    				            			jTextField7.setText("");
-    				            			jTextField4.setText("");
-    				            			jTextField5.setText("");
+        				        			this.dispose();
         				    			}
 
         				    		} catch (SQLException e) {

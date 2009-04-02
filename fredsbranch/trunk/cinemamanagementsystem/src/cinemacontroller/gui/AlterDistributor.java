@@ -200,8 +200,7 @@ public class AlterDistributor extends javax.swing.JFrame {
             			
             			connection.putData("UPDATE DISTRIBUTORS SET NAME='"+jTextField1.getText().trim()+"' WHERE NAME='"+jComboBox1.getSelectedItem()+"'");
                 		JOptionPane.showMessageDialog(null, "Distributor updated successfully.", "Distributor", JOptionPane.INFORMATION_MESSAGE);
-                		jTextField1.setText("");
-                		jComboBox1.setSelectedIndex(0);
+                		this.dispose();
         			}
     	
         		} catch (SQLException e) {

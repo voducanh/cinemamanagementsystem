@@ -6,27 +6,21 @@
 
 package cinemacontroller.gui;
 
-import java.awt.Component;
 import java.sql.ResultSet;
-import java.sql.Time;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Iterator;
 
-import javax.swing.JComboBox;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
-import usefulmethods.Useful;
 
 import cinemacontroller.gui.timetablecontrol.TimetableController;
-import cinemacontroller.gui.timetablecontrol.TimetableGenerating;
-import cinemacontroller.gui.timetablecontrol.TimetableRunning;
 import cinemacontroller.historicalcontroller.ImportController;
-import cinemacontroller.rotationalcontroller.AutomaticRotation;
+import cinemacontroller.historicalcontroller.ImportList;
+import cinemacontroller.screencontroller.ChangeFilm;
 import cinemacontroller.screencontroller.ScreenManager;
 import databasecontroller.MySqlController;
+import usefulmethods.Hour;
+import usefulmethods.Useful;
 
 /**
  *
@@ -37,8 +31,8 @@ public class MainWindow extends javax.swing.JFrame {
 	private static final long serialVersionUID = -3688656990364226359L;
     private String login ;
     private Useful use ;
-    private ArrayList<JTextField> shows = new ArrayList<JTextField>();
     private TimetableController timetableD = new TimetableController();
+    private Calendar screeningDay;
     
     /** Creates new form MainW */
     public MainWindow(String login) {
@@ -69,19 +63,72 @@ public class MainWindow extends javax.swing.JFrame {
         timetable2 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         statistics = new javax.swing.JButton();
-        historical = new javax.swing.JButton();
+        historicalList = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         viewFilms = new javax.swing.JButton();
         options = new javax.swing.JButton();
         user = new javax.swing.JButton();
+        comboDisplayType = new javax.swing.JComboBox();
         comboDay = new javax.swing.JComboBox();
-        comboWeek = new javax.swing.JComboBox();
-        display = new javax.swing.JButton();
+        displayWeek = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JSeparator();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel32 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel33 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel37 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox();
+        jLabel50 = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        jLabel54 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -129,6 +176,26 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenu12 = new javax.swing.JMenu();
         jMenuItem24 = new javax.swing.JMenuItem();
+        jLabel36 = new javax.swing.JLabel();
+        comboWeek = new javax.swing.JComboBox();
+        jMenuBar3 = new javax.swing.JMenuBar();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuItem26 = new javax.swing.JMenuItem();
+        jMenu15 = new javax.swing.JMenu();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem28 = new javax.swing.JMenuItem();
+        jMenuItem29 = new javax.swing.JMenuItem();
+        jMenu16 = new javax.swing.JMenu();
+        jMenuItem30 = new javax.swing.JMenuItem();
+        jMenuItem31 = new javax.swing.JMenuItem();
+        jMenuItem32 = new javax.swing.JMenuItem();
+        jMenuItem33 = new javax.swing.JMenuItem();
+        jMenuItem34 = new javax.swing.JMenuItem();
+        jMenu17 = new javax.swing.JMenu();
+        jMenuItem35 = new javax.swing.JMenuItem();
+        jMenu18 = new javax.swing.JMenu();
+        jMenuItem36 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(login+" - Multiplex Manager");
@@ -138,6 +205,7 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         timetable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/timetable.png"))); // NOI18N
+        timetable.setToolTipText("Run automatic rotation for current period.");
         timetable.setFocusable(false);
         timetable.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         timetable.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -149,6 +217,7 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar1.add(timetable);
 
         timetable2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/timetable.png"))); // NOI18N
+        timetable2.setToolTipText("Run automatic rotation for next period.");
         timetable2.setFocusable(false);
         timetable2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         timetable2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -172,16 +241,17 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jToolBar1.add(statistics);
 
-        historical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/hourglass.png"))); // NOI18N
-        historical.setFocusable(false);
-        historical.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        historical.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        historical.addActionListener(new java.awt.event.ActionListener() {
+        historicalList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/house.png"))); // NOI18N
+        historicalList.setToolTipText("List historicals that are imported.");
+        historicalList.setFocusable(false);
+        historicalList.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        historicalList.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        historicalList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                historicalActionPerformed(evt);
+                historicalListActionPerformed(evt);
             }
         });
-        jToolBar1.add(historical);
+        jToolBar1.add(historicalList);
         jToolBar1.add(jSeparator3);
 
         viewFilms.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/images.png"))); // NOI18N
@@ -197,6 +267,7 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar1.add(viewFilms);
 
         options.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cinemacontroller/gui/icons/options.png"))); // NOI18N
+        options.setToolTipText("Options");
         options.setFocusable(false);
         options.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         options.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -219,6 +290,14 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jToolBar1.add(user);
 
+        comboDisplayType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Period", "Historical" }));
+        comboDisplayType.setBorder(null);
+        comboDisplayType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	comboDisplayTypeActionPerformed(evt);
+            }
+        });
+
         comboDay.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday" }));
         comboDay.setBorder(null);
         
@@ -226,22 +305,336 @@ public class MainWindow extends javax.swing.JFrame {
 		while(it.hasNext()){
 			comboWeek.addItem(it.next().toString());
 		}
-
         comboWeek.setBorder(null);
 
-        display.setText("Display");
-        display.addActionListener(new java.awt.event.ActionListener() {
+        displayWeek.setText("Display");
+        displayWeek.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 displayActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Day");
+        jLabel1.setText("Display type:");
 
-        jLabel2.setText("Week");
+        jLabel2.setText("Day:");
 
-        jTabbedPane1.addTab("Summary", jTabbedPane2);
-        jTabbedPane1.addTab("Actions", jTabbedPane3);
+        jPanel1.setBackground(new java.awt.Color(238, 238, 238));
+        jPanel1.setForeground(new java.awt.Color(238, 238, 238));
+
+        MySqlController connection;
+        ResultSet result;
+        
+        try {
+			connection = MySqlController.getInstance();
+			result= connection.getData("SELECT * FROM SCREENS ORDER BY ID_SCREEN");
+			while (result.next()) {
+				jComboBox1.addItem("Screen "+result.getString(1));
+				jLabel35.setText(result.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        
+        disableComponents();
+
+        jLabel29.setText("Choose a screen:");
+
+        jLabel30.setText("Title:");
+
+        jButton1.setText("Change Film");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel32.setText("Expected Booking:");
+
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel33.setText("Seats Booked:");
+
+        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jButton2.setText("Close Screen");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Cancel");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Apply");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel34.setText("Screen size:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel29))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4)
+                        .addGap(29, 29, 29))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addContainerGap(84, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel33)
+                        .addGap(38, 38, 38)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel32)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addContainerGap(88, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel30)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34)
+                    .addComponent(jLabel35))
+                .addGap(44, 44, 44)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel31))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addGap(51, 51, 51)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addContainerGap(195, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Screening", jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel37.setText("Choose a period:");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Current Period", "Next Period" }));
+        /*jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jComboBox2ActionPerformed(evt);
+            }
+        });*/
+        
+        jLabel38.setText("Best Film (exp.):");
+        jLabel38.setToolTipText("Film with the best expected audience for this period.");
+
+        //jLabel39.setText("dsqdsfddddddddddddddddddddddd");
+        //jLabel39.setToolTipText("sddddddddddddd");
+
+        jLabel40.setText("Worst Film (exp.):");
+        jLabel40.setToolTipText("Film with the worst expected audience for this period.");
+
+        //jLabel41.setText("dsqdsfddddddddddddddddddddddd");
+        //jLabel41.setToolTipText("sddddddddddddd");
+
+        //jLabel43.setToolTipText("sddddddddddddd");
+
+        jLabel42.setText("Best Film (done):");
+        jLabel42.setToolTipText("Film with the best number of seats booked for this period.");
+
+        jLabel44.setText("Worst Film (done):");
+        jLabel44.setToolTipText("Film with the worst number of seats booked for this period.");
+
+        //jLabel45.setText("dsqdsfddddddddddddddddddddddd");
+        //jLabel45.setToolTipText("sddddddddddddd");
+
+        //jLabel46.setText("dsqdsfddddddddddddddddddddddd");
+        //jLabel46.setToolTipText("sddddddddddddd");
+
+        jLabel47.setText("Number of films:");
+        jLabel47.setToolTipText("Number of films on screens for this period.");
+
+        jLabel49.setText("Choose a type:");
+        
+        /*jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jComboBox3ActionPerformed(evt);
+            }
+        });*/
+
+		try {
+			connection = MySqlController.getInstance();
+			result= connection.getData("SELECT NAME FROM TYPES ORDER BY NAME");
+
+			jComboBox3.addItem("All");
+			while (result.next()) {
+				jComboBox3.addItem(result.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+        jLabel50.setText("Best Film (rat.):");
+        jLabel50.setToolTipText("Film with the best ratio expected audience / seats booked for this period.");
+
+        jLabel51.setText("Worst Film (rat.):");
+        jLabel51.setToolTipText("Film with the worst ratio expected audience / seats booked for this period.");
+
+        //jLabel52.setText("dsqdsfddddddddddddddddddddddd");
+        //jLabel52.setToolTipText("sddddddddddddd");
+
+        //jLabel53.setText("dsqdsfddddddddddddddddddddddd");
+        //jLabel53.setToolTipText("sddddddddddddd");
+
+        //jLabel54.setText("dsqdsfddddddddddddddddddddddd");
+        //jLabel54.setToolTipText("sddddddddddddd");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel50)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel37)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel49)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel38)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel39, 0, 0, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel40)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel41, 0, 0, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel42)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel45, 0, 0, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel44)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel51)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel47)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel49)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel43))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel38)
+                            .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel40)
+                    .addComponent(jLabel41))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel42)
+                    .addComponent(jLabel45))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel44)
+                    .addComponent(jLabel46))
+                .addGap(38, 38, 38)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel52))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel51)
+                    .addComponent(jLabel53))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel47)
+                    .addComponent(jLabel54))
+                .addGap(145, 145, 145))
+        );
+
+        jTabbedPane1.addTab("Information", jPanel2);
 
         jLabel3.setText("Idle.");
 
@@ -295,15 +688,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel28.setText("02:00");
 
-       //JTextField jTextField1 = new JTextField();
-       //jTextField1 .setText("jTextField1");
-        //jTextField1.setBounds(10, 40, 59, 170);
-        //jLayeredPane1.add(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        
-
         displayJtable();
         
-        jScrollPane1.setBounds(-10, 2, 1060, 560);
+        jScrollPane1.setViewportView(jTable1);
+
+        jScrollPane1.setBounds(-10, 2, 1060, 550);
         jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenu7.setText("File");
@@ -372,14 +761,6 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jMenu13.add(jMenuItem18);
 
-        jMenuItem25.setText("BBFC");
-        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem25ActionPerformed(evt);
-            }
-        });
-        jMenu13.add(jMenuItem25);
-
         jMenuItem19.setText("Distributor");
         jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -422,7 +803,125 @@ public class MainWindow extends javax.swing.JFrame {
 
         jMenuBar2.add(jMenu12);
 
-        setJMenuBar(jMenuBar2);
+        jLabel36.setText("Week:");
+
+        jMenu8.setText("File");
+
+        jMenuItem26.setText("Exit");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem23ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem26);
+
+        jMenuBar3.add(jMenu8);
+
+        jMenu15.setText("New");
+
+        jMenuItem21.setText("Film");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu15.add(jMenuItem21);
+
+        jMenuItem27.setText("Type");
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu15.add(jMenuItem27);
+
+        jMenuItem28.setText("Distributor");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu15.add(jMenuItem28);
+
+        jMenuItem29.setText("Expected Audience");
+        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu15.add(jMenuItem29);
+
+        jMenuBar3.add(jMenu15);
+
+        jMenu16.setText("Alter");
+
+        jMenuItem30.setText("Film");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu16.add(jMenuItem30);
+
+        jMenuItem31.setText("Type");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jMenu16.add(jMenuItem31);
+
+        jMenuItem32.setText("BBFC");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+        jMenu16.add(jMenuItem32);
+
+        jMenuItem33.setText("Distributor");
+        jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jMenu16.add(jMenuItem33);
+
+        jMenuItem34.setText("Expected Audience");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        jMenu16.add(jMenuItem34);
+
+        jMenuBar3.add(jMenu16);
+
+        jMenu17.setText("Historical");
+
+        jMenuItem35.setText("Import");
+        jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
+        jMenu17.add(jMenuItem35);
+
+        jMenuBar3.add(jMenu17);
+
+        jMenu18.setText("Help");
+
+        jMenuItem36.setText("About");
+        jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem24ActionPerformed(evt);
+            }
+        });
+        jMenu18.add(jMenuItem36);
+
+        jMenuBar3.add(jMenu18);
+
+        setJMenuBar(jMenuBar3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -438,15 +937,19 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(16, 16, 16)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboDay, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(comboDisplayType, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(comboWeek, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(display))
+                                .addComponent(comboDay, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(comboWeek, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(displayWeek))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel13)
@@ -493,10 +996,12 @@ public class MainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(comboDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(display)
+                            .addComponent(comboDisplayType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
-                            .addComponent(comboWeek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel36)
+                            .addComponent(comboWeek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(displayWeek))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
@@ -560,24 +1065,139 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
-    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {
-    	this.dispose();
-    	}
+    private void updateTimetable(String idScreen, int index){
+    	//0 -> apply changes
+    	//1 -> closed screen
+    	
+    	try {
+			MySqlController connection = MySqlController.getInstance();
+			
+			if(index == 0){
+				//System.out.println("SELECT ID_MOVIE FROM MOVIES WHERE NAME='"+jLabel31.getText().replace("'", "''")+"'");
+				ResultSet r = connection.getData("SELECT ID_MOVIE FROM MOVIES WHERE NAME='"+jLabel31.getText().replace("'", "''")+"'");
+				
+	            String[] choice = {"Yes", "Cancel"};
+	    		int answer = JOptionPane.showOptionDialog(this,"Would you really apply these changes?","Screening Changes",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,choice,choice[1]);
+	        	
+	    		 if (answer == JOptionPane.YES_OPTION){
+	 				if(r.next()){
+						//System.out.println("UPDATE TIMETABLES SET ID_MOVIE='"+r.getInt(1)+"', EXPECTED_BOOKING='"+jTextField1.getText()+"', NB_SEATS_BOOKED='"+jTextField2.getText()+"' WHERE ID_SCREEN='"+idScreen+"' AND DAY='"+use.calendarToString(screeningDay)+"'");
+						connection.putData("UPDATE TIMETABLES SET ID_MOVIE='"+r.getInt(1)+"', EXPECTED_BOOKING='"+jTextField1.getText()+"', NB_SEATS_BOOKED='"+jTextField2.getText()+"' WHERE ID_SCREEN='"+idScreen+"' AND DAY='"+use.calendarToString(screeningDay)+"'");
+						displayTimetable();
+					}
+	    		 }
+			}
+			else{
+				if(index == 1){
+
+		            String[] choice = {"Yes", "Cancel"};
+		    		int answer = JOptionPane.showOptionDialog(this,"Would you really close this screen?","Screening Changes",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,choice,choice[1]);
+		        	
+		    		 if (answer == JOptionPane.YES_OPTION){
+						connection.putData("UPDATE TIMETABLES SET ID_MOVIE='0', EXPECTED_BOOKING='0', NB_SEATS_BOOKED='0' WHERE ID_SCREEN='"+idScreen+"' AND DAY='"+use.calendarToString(screeningDay)+"'");
+						displayTimetable();
+		    		 }
+				}
+			}
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
+private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+    	String idScreen = jComboBox1.getSelectedItem().toString();
+    	idScreen = idScreen.replace("Screen", "").trim();
+    	disableComponents();
+    	updateScreening(screeningDay, new Integer(idScreen));
+
+    }
+ 
+ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+	 new ChangeFilm(this,screeningDay);
+
+ }
+    
+ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+	 
+	 String idScreen = jComboBox1.getSelectedItem().toString();
+	 idScreen = idScreen.replace("Screen", "").trim();
+	 updateTimetable(idScreen, 1);
+ }
+ 
+ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+	 
+     String[] choice = {"Yes", "Cancel"};
+		int answer = JOptionPane.showOptionDialog(this,"Would you really cancel your changes?","Screening Changes",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,choice,choice[1]);
+ 	
+		 if (answer == JOptionPane.YES_OPTION){
+			 String idScreen = jComboBox1.getSelectedItem().toString();
+			 idScreen = idScreen.replace("Screen", "").trim();
+			 updateScreening(screeningDay, new Integer(idScreen));
+		 }
+
+
+ }
+ 
+ private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
+	 
+	 if(!jTextField1.getText().isEmpty()){
+		 
+		 if(!jTextField2.getText().isEmpty()){
+			 
+			 if(jTextField1.getText().matches("[0-9]*")){
+				 
+				 if(jTextField2.getText().matches("[0-9]*")){
+					 
+					String idScreen = jComboBox1.getSelectedItem().toString();
+					idScreen = idScreen.replace("Screen", "").trim();
+				    updateTimetable(idScreen,0);
+ 
+				 }
+				 else{
+					 JOptionPane.showMessageDialog(null, "Please enter a postive number.", "Invalid Seats Booked", JOptionPane.WARNING_MESSAGE);
+					 jTextField2.setText("0");
+				 }
+			 }
+			 else{
+				 JOptionPane.showMessageDialog(null, "Please enter a postive number.", "Invalid Expected Booking", JOptionPane.WARNING_MESSAGE);
+				 jTextField1.setText("0");
+			 }
+		 }
+		 else{
+			 JOptionPane.showMessageDialog(null, "The number of seats booked is empty. Please enter a positive number.", "Invalid Seats Booked", JOptionPane.WARNING_MESSAGE);
+			 jTextField2.setText("0");
+		 }
+
+	 }
+	 else{
+		 JOptionPane.showMessageDialog(null, "The expected booking is empty. Please enter a positive number.", "Invalid Expected Booking", JOptionPane.WARNING_MESSAGE);
+		 jTextField1.setText("0");
+	 }
+
+
+ }
+
+ private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {
+		this.dispose();
+}
 
     	private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {
-    	new CreateNewFilm();
+    		new CreateNewFilm();
     	}
 
     	private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {
-    	new CreateNewType();
+    		new CreateNewType();
     	}
 
     	private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {
-    	new CreateNewDistributor();
+    		new CreateNewDistributor();
     	}
 
     	private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {
-    	new CreateNewExpectedAudience();
+    		new CreateNewExpectedAudience();
     	}
 
     	private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -585,30 +1205,27 @@ public class MainWindow extends javax.swing.JFrame {
     	}
 
     	private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {
-    	new AlterType();
+    		new AlterType();
     	}
 
     	private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {
-    	new AlterDistributor();
+    		new AlterDistributor();
     	}
 
     	private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {
-    	new AlterExpectedAudience();
-    	}
-
-    	private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {
-//    	 TODO add your handling code here:
+    		new AlterExpectedAudience();
     	}
 
     	private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {
    	 		new ImportController();
+	
     	}
 
     	private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {
-    	new AboutProgram(this);
+    		new AboutProgram(this);
     	}
 
-    	private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {
+    	private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {
         	new AlterBbfc();
         }
 
@@ -621,12 +1238,20 @@ public class MainWindow extends javax.swing.JFrame {
     	}
 
     	private void statisticsActionPerformed(java.awt.event.ActionEvent evt) {
-//    	 TODO add your handling code here:
-    	}
+//       	 TODO add your handling code here:
+       	}
 
     	private void historicalActionPerformed(java.awt.event.ActionEvent evt) {
 //    	 TODO add your handling code here:
     	}
+    	
+    	private void historicalListActionPerformed(java.awt.event.ActionEvent evt) {
+    		new ImportList();
+      	}
+    	
+    	private void historicalDisplayActionPerformed(java.awt.event.ActionEvent evt) {
+//      	 TODO add your handling code here:
+      	}
 
     	private void viewFilmsActionPerformed(java.awt.event.ActionEvent evt) {
     	new FilmList(this);
@@ -641,11 +1266,100 @@ public class MainWindow extends javax.swing.JFrame {
     	}
     	
     	private void optionsActionPerformed(java.awt.event.ActionEvent evt) {
+    		new Options();
+        } 
+    	
+    	/*private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {
+    		
+    		Calendar endPeriod = use.getDateEndPeriod();
+    		
+    		//next period
+    		if(jComboBox2.getSelectedItem() == jComboBox2.getItemAt(1)){
+    			endPeriod = use.changeDate(endPeriod,14);
+    		}
+    		
+    		displayInformation(endPeriod,jComboBox3.getSelectedItem().toString());
+        } 
+    	
+    	private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {
+    		
+    		Calendar endPeriod = use.getDateEndPeriod();
+    		
+    		//next period
+    		if(jComboBox2.getSelectedItem() == jComboBox2.getItemAt(1)){
+    			endPeriod = use.changeDate(endPeriod,14);
+    		}
+    		
+    		displayInformation(endPeriod,jComboBox3.getSelectedItem().toString());
 
-        	}         
+        }*/
+    	
+    	
+    	public void displayInformation(Calendar endPeriod, String typeName){
+    		
+    		String temp = "WHERE NAME="+typeName;
+    		Calendar beginPeriod = use.changeDate(endPeriod, -13);
+    		
+    		try {
+    			MySqlController connection = MySqlController.getInstance();
 
-private void displayActionPerformed(java.awt.event.ActionEvent evt) {   
+    			if(jComboBox3.getSelectedItem() == jComboBox3.getItemAt(0)){
+    				temp = "";
+    			}
+    			
+    			ResultSet r = connection.getData("SELECT * FROM TIMETABLES WHERE DAY BETWEEN '"+use.calendarToString(beginPeriod)+"' AND '"+use.calendarToString(endPeriod)+"'");
+
+    			
+				
+
+
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+
+    	}
+    	
+        private void comboDisplayTypeActionPerformed(java.awt.event.ActionEvent evt) {
+        	
+        	//period
+        	if(comboDisplayType.getSelectedItem() == comboDisplayType.getItemAt(0)){
+        		comboWeek.removeAllItems();
+        		Iterator it = timetableD.fillComboBoxWeekRotation().iterator();
+        		while(it.hasNext()){
+        			comboWeek.addItem(it.next().toString());
+        		}
+        	}
+        	else{
+            	//historical
+            	if(comboDisplayType.getSelectedItem() == comboDisplayType.getItemAt(1)){
+            		comboWeek.removeAllItems();
+            		Iterator it = timetableD.fillComboBoxWeekHistoricalRotation().iterator();
+            		while(it.hasNext()){
+            			comboWeek.addItem(it.next().toString());
+            		}
+            	}
+        	}
+    		
+    }
+
+private void displayActionPerformed(java.awt.event.ActionEvent evt) {
 	
+	displayTimetable();
+}   
+
+
+public void displayTimetable(){
+	
+	String table = "";
+	
+	if(comboDisplayType.getSelectedItem() == comboDisplayType.getItemAt(0)){
+		table = "TIMETABLES";
+	}
+	else{
+		if(comboDisplayType.getSelectedItem() == comboDisplayType.getItemAt(1)){
+			table = "TEMPHISTORICALTIMETABLES";
+		}
+	}
 	timetableD.goNewWeek();
 
 	int day = comboDay.getSelectedIndex();
@@ -654,32 +1368,34 @@ private void displayActionPerformed(java.awt.event.ActionEvent evt) {
 	String temp = (String)comboWeek.getItemAt(index);
 	temp = temp.substring(0,temp.indexOf(" ")).trim();
 
-	Calendar beginSelectedWeek = use.toCalendar(temp);
-	beginSelectedWeek = use.changeDate(beginSelectedWeek, day);
+	Calendar selectedDay = use.toCalendar(temp);
+	selectedDay = use.changeDate(selectedDay, day);
+	
+	this.screeningDay = selectedDay;
 
 	try {
 
     	MySqlController connection = MySqlController.getInstance();
     	//System.out.println("SELECT * FROM OPERATING_HOUR WHERE BEGIN_DATE<'"+use.calendarToString(beginSelectedWeek)+"' && END_DATE IS NULL");
-    	ResultSet r4 = connection.getData("SELECT * FROM OPERATING_HOUR WHERE BEGIN_DATE<'"+use.calendarToString(beginSelectedWeek)+"' && END_DATE IS NULL");
+    	ResultSet r4 = connection.getData("SELECT * FROM OPERATING_HOUR WHERE BEGIN_DATE<'"+use.calendarToString(selectedDay)+"' && END_DATE IS NULL");
     
-    	String pausedTime = "";
-    	String startHour = "";
+    	Hour pauseTime = null;
+    	Hour startHour = null;
     	
     	if(r4.next()){
     		
     		if(day == 1 || day == 2 || day == 3){
-    			pausedTime = r4.getString(6);
-    			startHour = r4.getString(5);
+    			pauseTime = new Hour(r4.getString(6));
+    			startHour = new Hour(r4.getString(5));
     		}
     		else{
-    			pausedTime = r4.getString(3);
-    			startHour = r4.getString(2);
+    			pauseTime = new Hour(r4.getString(3));
+    			startHour = new Hour(r4.getString(2));
     		}
     		
     	}
 
-    	ResultSet r2 = connection.getData("SELECT * FROM TIMETABLES WHERE DAY='"+use.calendarToString(beginSelectedWeek)+"'");
+    	ResultSet r2 = connection.getData("SELECT * FROM "+table+" WHERE DAY='"+use.calendarToString(selectedDay)+"'");
     	if(!r2.next()){
     		//enableAllComponents();
     		JOptionPane.showMessageDialog(null, "No shows scheduled for this day.", "Display Timetable", JOptionPane.WARNING_MESSAGE);
@@ -688,25 +1404,22 @@ private void displayActionPerformed(java.awt.event.ActionEvent evt) {
         	ResultSet r = connection.getData("SELECT * FROM SCREENS ORDER BY ID_SCREEN");
         	
         	while(r.next()){
-        		//System.out.println("SELECT * FROM TIMETABLES WHERE DAY='"+use.calendarToString(beginSelectedWeek)+"' AND ID_SCREEN='"+r.getInt(1)+"'");
-        		ResultSet r1 = connection.getData("SELECT * FROM TIMETABLES WHERE DAY='"+use.calendarToString(beginSelectedWeek)+"' AND ID_SCREEN='"+r.getInt(1)+"'");
+        		//System.out.println("SELECT * FROM "+table+" WHERE DAY='"+use.calendarToString(beginSelectedWeek)+"' AND ID_SCREEN='"+r.getInt(1)+"'");
+        		ResultSet r1 = connection.getData("SELECT * FROM "+table+" WHERE DAY='"+use.calendarToString(selectedDay)+"' AND ID_SCREEN='"+r.getInt(1)+"'");
         		
         		if(r1.next()){
         			int idMovie = r1.getInt(2);
         			
         			if(idMovie != 0){
             			int nbShows = 0;
-            			nbShows = use.numberShows(r1.getString(2), beginSelectedWeek);
+            			nbShows = use.numberShows(r1.getString(2), selectedDay);
             			
             			ResultSet r3 = connection.getData("SELECT * FROM MOVIES WHERE ID_MOVIE='"+idMovie+"'");
             			
             			if(r3.next()){
-            				String runningTime = r3.getString(10);
+            				Hour runningTime = new Hour(r3.getString(10));
 
-            				int hour = use.getHour(runningTime);
-            				int mins = use.getMins(runningTime);
-
-            				timetableD.addOpenScreen(nbShows,hour,mins,idMovie,r1.getInt(4),r1.getInt(5),pausedTime,startHour);
+            				timetableD.addOpenScreen(nbShows,runningTime,idMovie,r1.getInt(4),r1.getInt(5),pauseTime,startHour);
             				
             			}
         			}
@@ -726,13 +1439,103 @@ private void displayActionPerformed(java.awt.event.ActionEvent evt) {
     	JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
     }
     
+    
     for(int i=0;i<timetableD.getShows().size();i++){
 		jLayeredPane1.add(timetableD.getShows().get(i), javax.swing.JLayeredPane.DRAG_LAYER);
 	}
     
     displayJtable();
+    
+    jComboBox1.setSelectedIndex(0);
+    updateScreening(selectedDay,1);
+	
+}
 
-}     
+public void  updateScreening(Calendar selectedDay,int idScreen){
+	
+	disableComponents();
+	
+	try {
+
+    	MySqlController connection = MySqlController.getInstance();
+    	
+    	ResultSet r2 = connection.getData("SELECT * FROM SCREENS WHERE ID_SCREEN='"+idScreen+"'");
+    	
+    	if(r2.next()){
+    		jLabel35.setText(r2.getString(2));
+    	}
+
+    	ResultSet r = connection.getData("SELECT * FROM TIMETABLES WHERE DAY='"+use.calendarToString(selectedDay)+"' AND ID_SCREEN='"+idScreen+"'");
+
+    	if(r.next()){
+    		
+    		ResultSet r1 = connection.getData("SELECT NAME FROM MOVIES WHERE ID_MOVIE='"+r.getInt(2)+"'");
+
+	        
+    		if(r1.next()){
+    	        jLabel31.setText(r1.getString(1));
+    	        jLabel31.setToolTipText(r1.getString(1));
+
+    	        jTextField1.setText(r.getString(4));
+    	        jTextField2.setText(r.getString(5));
+    	        
+    	        if(selectedDay.compareTo(use.toCalendar(use.getDateToday())) > 0){
+            		enableComponents();
+            	}
+            	else if(selectedDay.compareTo(use.toCalendar(use.getDateToday())) < 0){
+            		jComboBox1.setEnabled(true);
+            		jTextField2.setEditable(true);
+            		jButton3.setEnabled(true);
+            		jButton4.setEnabled(true);
+            	}
+            	else{
+            		jComboBox1.setEnabled(true);
+            		jTextField2.setEditable(true);
+            		jButton2.setEnabled(true);
+            		jButton3.setEnabled(true);
+            		jButton4.setEnabled(true);
+            	}
+    		}
+    		else{
+    			disableComponents();
+    			
+    	        if(selectedDay.compareTo(use.toCalendar(use.getDateToday())) > 0){
+        	    	jButton1.setEnabled(true);
+            	}
+    	    	jComboBox1.setEnabled(true);
+    	        jLabel31.setText("Closed Screen");
+    	        jLabel31.setToolTipText("Closed Screen");
+    		}
+    	}
+
+    } catch (Exception e) {
+    	JOptionPane.showMessageDialog(null, "Unable to connect to MySQL database.\n" + e, "Database Error", JOptionPane.WARNING_MESSAGE);
+    }
+	
+}
+
+public void disableComponents(){
+	jLabel31.setText("");
+	jTextField1.setText("");
+	jTextField2.setText("");
+	jTextField1.setEditable(false);
+	jTextField2.setEditable(false);
+	jButton1.setEnabled(false);
+	jButton2.setEnabled(false);
+	jButton3.setEnabled(false);
+	jButton4.setEnabled(false);
+	jComboBox1.setEnabled(false);
+}
+
+public void enableComponents(){
+	jTextField1.setEditable(true);
+	jTextField2.setEditable(true);
+	jButton1.setEnabled(true);
+	jButton2.setEnabled(true);
+	jButton3.setEnabled(true);
+	jButton4.setEnabled(true);
+	jComboBox1.setEnabled(true);
+}
 
 public void displayJtable(){
 	
@@ -740,57 +1543,61 @@ public void displayJtable(){
     jTable1.getTableHeader().setResizingAllowed(false);
     jTable1.setEnabled(false);
     jTable1.setShowHorizontalLines(false);
-    //jTable1.setBorder(new Border());
     jTable1.setModel(new javax.swing.table.DefaultTableModel(
-        new Object [][] {
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null}
-        },
-        new String [] {
-            "Screen 1", "Screen 2", "Screen 3", "Screen 4", "Screen 5", "Screen 6", "Screen 7", "Screen 8", "Screen 9", "Screen 10", "Screen 11", "Screen 12"
-        }
-    ));
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Screen 1", "Screen 2", "Screen 3", "Screen 4", "Screen 5", "Screen 6", "Screen 7", "Screen 8", "Screen 9", "Screen 10", "Screen 11", "Screen 12"
+            }
+        ));
     jScrollPane1.setViewportView(jTable1);
 
 }
 
-
-
-
     // Variables declaration - do not modify
     private javax.swing.JComboBox comboDay;
+    private javax.swing.JComboBox comboDisplayType;
     private javax.swing.JComboBox comboWeek;
-    private javax.swing.JButton display;
-    private javax.swing.JButton historical;
+    private javax.swing.JButton displayWeek;
+    private javax.swing.JButton historicalList;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -812,20 +1619,62 @@ public void displayJtable(){
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu12;
     private javax.swing.JMenu jMenu13;
     private javax.swing.JMenu jMenu14;
+    private javax.swing.JMenu jMenu15;
+    private javax.swing.JMenu jMenu16;
+    private javax.swing.JMenu jMenu17;
+    private javax.swing.JMenu jMenu18;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
@@ -833,18 +1682,41 @@ public void displayJtable(){
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
+    private javax.swing.JMenuItem jMenuItem29;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
+    private javax.swing.JMenuItem jMenuItem33;
+    private javax.swing.JMenuItem jMenuItem34;
+    private javax.swing.JMenuItem jMenuItem35;
+    private javax.swing.JMenuItem jMenuItem36;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton options;
     private javax.swing.JButton statistics;
@@ -854,19 +1726,22 @@ public void displayJtable(){
     private javax.swing.JButton viewFilms;
     // End of variables declaration
     
+    
 	public String getLogin() {
 		return login;
 	}
 	
-	public JComboBox getComboDay() {
-		return comboDay;
+	public void setLabelFilm(String name) {
+		jLabel31.setText(name);
+		jLabel31.setToolTipText(name);
 	}
 	
-	public JComboBox getComboWeek() {
-		return comboWeek;
+	public void setExpectedBooking(String value) {
+		jTextField1.setText(value);
 	}
-	public JLayeredPane getLayeredPane() {
-		return jLayeredPane1;
+	
+	public void setNbSeats(String value) {
+		jTextField2.setText(value);
 	}
 
 }

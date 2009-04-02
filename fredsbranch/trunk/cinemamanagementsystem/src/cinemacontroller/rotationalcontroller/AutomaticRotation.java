@@ -6,14 +6,7 @@
 
 package cinemacontroller.rotationalcontroller;
 
-import java.awt.Color;
-
 import javax.swing.JProgressBar;
-
-import cinemacontroller.gui.MainWindow;
-import cinemacontroller.gui.timetablecontrol.TimetableController;
-import cinemacontroller.gui.timetablecontrol.TimetableGenerating;
-
 
 /**
  *
@@ -49,7 +42,7 @@ public class AutomaticRotation extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Automatic Rotation - Multiplex Manager");
         
         setIconImage(getToolkit().getImage(getClass().getResource("/cinemacontroller/gui/icons/timetable.png")));
@@ -97,7 +90,6 @@ public class AutomaticRotation extends javax.swing.JFrame {
         
         jLabel10.setText("Automatic Rotation is running...");
 
-        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
